@@ -98,7 +98,7 @@ const VFormReactstrap = () => {
                       value            = {adate}
                       required         = {false}
                       checkValidityOnKeyup= {true}
-                      onChange         = {(v) => setAdate(v)}
+                      onChange         = {(v) => {console.log(v); setAdate(v)}}
                       label            = "A date"
                   /> 
                   <VInputTimeRS

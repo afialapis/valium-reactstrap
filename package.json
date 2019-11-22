@@ -74,6 +74,6 @@
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "reactstrap": "^8.0.1",
-    "valium": "0.0.2"
+    "valium": "0.0.3"
   }
 }
