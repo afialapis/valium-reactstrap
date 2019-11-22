@@ -1,3 +1,3 @@
-# valium
+# valium-reactstrap
 
-A Form validator for React using browser's validation Api
+A Reactstrap implementation of Valium 
