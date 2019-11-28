@@ -1,0 +1,15 @@
+/**
+ * fix inline
+ */
+ .valium-reactstrap .form-group.inline {
+  margin-bottom :0;
+  display: inline-block;
+}
+
+/**
+ * fix for checkbox
+ **/
+ .form-check-input {
+  position: relative;
+  left: 2em;
+}

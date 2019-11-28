@@ -12,7 +12,7 @@ const VFormReactstrap = () => {
   const [apwd, setApwd] = useState('123456')
   const [aarea, setAarea] = useState('Long text\nLong Text\nYes')
   const [anumber, setAnumber] = useState(123)
-  const [adate, setAdate] = useState('12/12/2019')
+  const [adate, setAdate] = useState("2019-06-01T00:22:33.547Z")
   const [atime, setAtime] = useState('11:45')
   const [acolor, setAcolor] = useState('#F5F5F5')
   const [acheck, setAcheck] = useState(false)
@@ -98,7 +98,7 @@ const VFormReactstrap = () => {
                       value            = {adate}
                       required         = {false}
                       checkValidityOnKeyup= {true}
-                      onChange         = {(v) => {console.log(v); setAdate(v)}}
+                      onChange         = {(v) => {console.log(v); console.log(new Date(v)); setAdate(v)}}
                       label            = "A date"
                   /> 
                   <VInputTimeRS

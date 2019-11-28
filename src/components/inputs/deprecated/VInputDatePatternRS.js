@@ -1,6 +1,6 @@
 import React            from 'react'
 import PropTypes        from 'prop-types'
-import VInputAddon      from './VInputAddon'
+import VInputAddon      from '../VInputAddon'
 import {VInputDate}     from 'valium'
 import {Input}          from 'reactstrap'
 

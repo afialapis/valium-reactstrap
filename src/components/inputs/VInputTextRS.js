@@ -57,15 +57,11 @@ const VInputTextRS = ({name, value, defaultValue, label, feedback, icon, inline,
 VInputTextRS.propTypes = {
   name                : PropTypes.string.isRequired,
   value               : function(props, _propName, _componentName) {
-      if (props['defaultValue'] == undefined && props['value'] == undefined) {
+      if (! ('value' in props) && ! ('defaultValue' in props)) {
           return new Error('Please provide a {value} or a {defaultValue}');
       }
   },
-  defaultValue        : function(props, _propName, _componentName) {
-    if (props['defaultValue'] == undefined && props['value'] == undefined) {
-          return new Error('Please provide a {value} or a {defaultValue}');
-      }
-  },
+  defaultValue        : PropTypes.string,
   label               : PropTypes.string,
   feedback            : PropTypes.string,
   icon                : PropTypes.string,

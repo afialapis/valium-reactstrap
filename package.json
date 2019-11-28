@@ -1,6 +1,6 @@
 {
-  "name": "valium-reactsrap",
-  "version": "0.0.1",
+  "name": "valium-reactstrap",
+  "version": "0.0.2",
   "description": "A Valium implementation for Reactstrap",
   "author": "Donato Lorenzo <donato@afialapis.com>",
   "contributors": [
@@ -74,6 +74,7 @@
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "reactstrap": "^8.0.1",
+    "reactstrap-date-picker": "0.0.2",
     "valium": "0.0.3"
   }
 }

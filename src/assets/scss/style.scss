@@ -1,4 +1,11 @@
 @import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-@import 'sform-reactstrap';
+@import 'vars_override';
+@import 'fixes';
+@import 'is_unsaved';
+@import 'label';
+@import 'feedback';
+@import 'buttons';
+@import 'select_search';
+
 
 

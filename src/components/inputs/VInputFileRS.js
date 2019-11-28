@@ -107,7 +107,7 @@ class VInputFileRS extends React.Component {
     }
   }
 
-  get feedback() {
+  get progress() {
     if (this.state.status!=undefined)
       return (
         <ProgressBar progress={this.state.progress} label={this.state.status_msg}/>
@@ -119,7 +119,7 @@ class VInputFileRS extends React.Component {
 
   render() {
     const {name, value, defaultValue, label, icon, inline, readOnly, 
-           required, checkValue, allowedValues, disallowedValues, checkValidityOnKeyup}= this.props
+           required, feedback, checkValue, allowedValues, disallowedValues, checkValidityOnKeyup}= this.props
 
     let vprops= {}
     
@@ -134,20 +134,23 @@ class VInputFileRS extends React.Component {
     
     
     return (
-      <VInputFile feedback        = {undefined} 
+      <VInputFile feedback       = {feedback} 
                  checkValue      = {checkValue}
                  allowedValues   = {allowedValues}
                  disallowedValues= {disallowedValues}
                  checkValidityOnKeyup= {checkValidityOnKeyup}
-                 render  = {({valid, _message}, inputRef) => 
+                 render  = {({valid, message}, inputRef) => 
                   <VInputAddon name        = {name}
                               label       = {label}
-                              //feedback    = {this.feedback}
+                              feedback    = {feedback || message}
                               value       = {nvalue}
                               icon        = {icon || 'file'}
                               isValid     = {valid}
                               inline      = {inline}>
                     <Input  name        = {name}
+                            // Do not lose the form-control class
+                            // TODO maybe open PR on reactstrap?
+                            className   = "form-control"
                             innerRef    = {inputRef}
                             type        = {"file"}
                             onChange    = {(e) => this.handleChange(e)}
@@ -181,6 +184,7 @@ VInputFileRS.propTypes = {
   },
   */
   label               : PropTypes.string,
+  feedback            : PropTypes.string,
   icon                : PropTypes.string,
   inline              : PropTypes.bool,
   readOnly            : PropTypes.bool,

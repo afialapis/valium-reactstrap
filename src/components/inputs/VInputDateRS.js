@@ -1,46 +1,17 @@
-import React            from 'react'
-import PropTypes        from 'prop-types'
-import VInputAddon      from './VInputAddon'
-import {VInputDate}     from 'valium'
-import {Input}          from 'reactstrap'
-
+import React         from 'react'
+import PropTypes     from 'prop-types'
+import VInputAddon   from './VInputAddon'
+import {VInputDate}  from 'valium'
+import  DatePicker   from 'reactstrap-date-picker'
 
 class VInputDateRS extends React.Component {
   
   constructor(props) {
     super(props)
-    this.dateLabelRef= React.createRef()
     this.state= {
       setValidity: undefined
     }    
   }
-
-  componentDidMount() {
-    this.dateLabelRef.current.value= this.props.defaultValue!=undefined ? this.props.defaultValue: this.props.value
-  }
-  
-  onChange(value, hiddenRef) {
-    
-    this.dateLabelRef.current.value= value
-    hiddenRef.current.value= value
-    this.state.setValidity()
-
-    if (this.props.onChange!=undefined) { 
-      this.props.onChange(value)
-    }
-  }
-
-  componentDidUpdate(prevProps, _prevState, _snapshot) {
-    if (this.props.value != prevProps.value) {
-      this.dateLabelRef.current.value= this.props.value
-      this.state.setValidity()
-    } else if (this.props.defaultValue != prevProps.defaultValue ) {
-      this.dateLabelRef.current.value= this.props.defaultValue
-      this.state.setValidity()
-    }    
-  }
-
-
 
   render() {
 
@@ -64,40 +35,23 @@ class VInputDateRS extends React.Component {
                 disallowedValues= {disallowedValues}
                 bindSetValidity = {(f) => this.setState({setValidity: f})}
                 render  = {({valid, message}, inputRef) => 
-                  <div className="sform-reactstrap-date">
-                    <VInputAddon name        = {name}
-                                label       = {label}
-                                feedback    = {feedback || message}
-                                value       = {nvalue}
-                                icon        = {icon || 'calendar'}
-                                isValid     = {valid}
-                                inline      = {inline}>
-                      <Input    name        = {name}
-                                className   = "sform-reactstrap-date-hidden"
-                                type        = "hidden"
-                                innerRef    = {inputRef}
-                                required    = {required}
-                                onChange    = {(_ev) => console.log('HEY HEY HEY HEY')}
-                                valid       = {nvalue!=undefined && nvalue!='' && valid}
-                                invalid     = {! valid}
-                                {...vprops}/>
-                      <Input  name        = {name}
-                              className   = "sform-reactstrap-date-shown"
-                              type        = {"text"}
-                              innerRef    = {this.dateLabelRef}
-                              placeholder = {placeholder || ""}
-                              pattern     = {"(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).(19|20)[0-9]{2}"}
-                      />
-                      <Input  name        = {name}
-                              className   = "sform-reactstrap-date-date"
-                              type        = {"date"}
-                              onChange    = {(ev) => this.onChange(ev.target.value, inputRef)}
-                              readOnly    = {readOnly!=undefined ? readOnly  : false}
-                      />
-                    
-                    </VInputAddon>
-                  </div>
-
+                  <VInputAddon name        = {name}
+                              label       = {label}
+                              feedback    = {feedback || message}
+                              value       = {nvalue}
+                              icon        = {icon || 'calendar'}
+                              isValid     = {valid}
+                              inline      = {inline}
+                              inputGroupStyle= {{flexWrap: "unset"}}
+                              >
+                    <DatePicker onChange    = {(v) => this.props.onChange(v)} 
+                                weekStartsOn= {1} 
+                                placeholder = {placeholder}
+                                inputRef    = {inputRef}
+                                dateFormat  = {"DD/MM/YYYY"}
+                                
+                                {...vprops} />
+                  </VInputAddon>
                 }
       />
     )
@@ -108,15 +62,11 @@ class VInputDateRS extends React.Component {
 VInputDateRS.propTypes = {
   name                : PropTypes.string.isRequired,
   value               : function(props, _propName, _componentName) {
-      if (props['defaultValue'] == undefined && props['value'] == undefined) {
+      if (! ('value' in props) && ! ('defaultValue' in props)) {
           return new Error('Please provide a {value} or a {defaultValue}');
       }
   },
-  defaultValue        : function(props, _propName, _componentName) {
-    if (props['defaultValue'] == undefined && props['value'] == undefined) {
-          return new Error('Please provide a {value} or a {defaultValue}');
-      }
-  },
+  defaultValue        : PropTypes.string,
   label               : PropTypes.string,
   feedback            : PropTypes.string,
   icon                : PropTypes.string,

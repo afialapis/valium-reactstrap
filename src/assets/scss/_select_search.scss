@@ -1,0 +1,22 @@
+/**
+ *  select search
+ **/
+.valium-reactstrap .valium-reactstrap-select-search .valium-reactstrap-select-search-list {
+  background-color: white;
+  list-style: none;
+  position: relative;
+  left: calc(1.95rem + 20px);
+  width: calc(100% - (1.95rem + 20px));
+  margin-bottom:1.5rem;
+}
+
+.valium-reactstrap .valium-reactstrap-select-search .valium-reactstrap-select-search-list-item {
+  cursor: pointer;
+}
+
+
+.valium-reactstrap .valium-reactstrap-select-search .valium-reactstrap-select-search-list-item.list-group-item-action:hover,
+.valium-reactstrap .valium-reactstrap-select-search .valium-reactstrap-select-search-list-item.list-group-item-action:focus {
+  color: $list-group-action-hover-color;
+  background-color: $list-group-hover-bg;
+}

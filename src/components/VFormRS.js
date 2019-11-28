@@ -6,7 +6,7 @@ import { Button }       from 'reactstrap'
 
 
 const VFormRSButtons = ({onSave, onCancel, colors, icons, labels, disabled}) => 
-  <div className="sform-reactstrap-buttons">
+  <div className="valium-reactstrap-buttons">
     {onCancel!=undefined
       ? <Button color   = {colors ? colors[0] : 'secondary'}
                 onClick = {(ev) => onCancel(ev)}>
@@ -28,7 +28,7 @@ const VFormRSButtons = ({onSave, onCancel, colors, icons, labels, disabled}) =>
 
 
 const VFormRS = ({children, className, onSave, onCancel, colors, icons, labels}) => 
-   <VForm className    = {className || "sform-reactstrap"}
+   <VForm className    = {className || "valium-reactstrap"}
           renderButtons= {({valid, _elements}) => 
             <VFormRSButtons onSave  ={onSave}
                             onCancel={onCancel}

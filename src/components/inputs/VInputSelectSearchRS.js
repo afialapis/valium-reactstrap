@@ -128,7 +128,7 @@ class VInputSelectSearchRS extends React.Component {
                   disallowedValues= {disallowedValues}
                   bindSetValidity = {(f) => this.setState({setValidity: f})}
                   render          = {({valid, message}, inputRef) => 
-                  <div className="sform-reactstrap-select-search"
+                  <div className="valium-reactstrap-select-search"
                        ref = {this.wrapperRef}>
                     <div>
                       <VInputAddon name        = {name}
@@ -139,14 +139,14 @@ class VInputSelectSearchRS extends React.Component {
                                   isValid     = {valid}
                                   inline      = {inline}>
                         <Input    name        = {name}
-                                  className   = "sform-reactstrap-select-search-hidden"
+                                  className   = "valium-reactstrap-select-search-hidden"
                                   type        = "hidden"
                                   innerRef    = {inputRef}
                                   required    = {required}
                                   onChange    = {(_ev) => console.log('HEY HEY HEY HEY')}
                                   {...vprops}/>
                         <Input    name        = {`input_select_search_${name}_text`}
-                                  className   = "sform-reactstrap-select-search-text custom-select"
+                                  className   = "valium-reactstrap-select-search-text custom-select"
                                   type        = "text"
                                   innerRef    = {this.innerSearchRef}
                                   placeholder = {placeholder || ""}
@@ -162,12 +162,12 @@ class VInputSelectSearchRS extends React.Component {
                     </div>
                     <div>
                       {this.state.isOpen
-                      ? <div className="sform-reactstrap-select-search-list list-group">
+                      ? <div className="valium-reactstrap-select-search-list list-group">
                           {this.optionsMap.map((opt) => 
                             <div key     = {`${name}_option_${opt.value}`}
                                  value   = {opt.value}
                                  disabled= {opt.disabled}
-                                 className="sform-reactstrap-select-search-list-item list-group-item list-group-item-action" 
+                                 className="valium-reactstrap-select-search-list-item list-group-item list-group-item-action" 
                                  onClick = {(_ev) => this.onSelect(opt.value, inputRef)}
                                  >
                               {opt.label}

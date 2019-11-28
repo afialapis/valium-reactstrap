@@ -4,15 +4,16 @@ import {
   FormGroup,
   InputGroup,
   InputGroupAddon,
+  InputGroupText,
   Label
 } from 'reactstrap'
 
-const VInputFeedback = ({show, color, children}) => {
+const VInputFeedback = ({show, children}) => {
   if (! show)
     return null;
 
   return (
-    <div className="sform-reactstrap-feedback" style={{ ...(color!=undefined && {color: color}) }}>
+    <div className="valium-reactstrap-feedback">
       {children}
     </div>
   )
@@ -36,15 +37,18 @@ class VInputAddon extends React.Component {
     return (
       <FormGroup className={` ${this.hasChanged ? 'is-unsaved' : ''} ${inline ? 'inline' : ''} ${formClassName || ''}`}>
         {label!=undefined
-        ? <Label for={name}>
+        ? <Label for={name}
+                 className="valium-reactstrap-label">
             {label}
           </Label>
         : null
         }
         <div>
-          <InputGroup>
+          <InputGroup style={this.props.inputGroupStyle}>
             <InputGroupAddon addonType="prepend" className="input-group-addon">
-              <FontAwesomeIcon icon={icon || "align-justify"} className="fa-1_5x" />
+              <InputGroupText>
+                <FontAwesomeIcon icon={icon || "align-justify"} />
+              </InputGroupText>
             </InputGroupAddon>
             {children}
           </InputGroup>

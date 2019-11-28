@@ -1,0 +1,17 @@
+/**
+ * ensure :invalid red when :focus
+ * Better use is-valid and is-invalid than :valid / :invalid (compound components will thank you)
+ */
+.valium-reactstrap .form-control.is-invalid:focus {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+/**
+ * is-unsaved (but not invalid)
+ */
+.valium-reactstrap .form-group.is-unsaved .form-control.is-valid:not(:focus) {
+  border-color: #cad8e4;
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(130, 141, 146, 0.25);
+}

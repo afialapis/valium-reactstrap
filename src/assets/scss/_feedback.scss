@@ -1,0 +1,9 @@
+/**
+ * feedback
+ **/
+.valium-reactstrap .form-group .valium-reactstrap-feedback {
+  padding-top: $input-padding-y;
+  color: $red;
+  font-style: italic;
+  padding-left: $valium-label-padding;
+}
