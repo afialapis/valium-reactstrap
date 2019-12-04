@@ -19,7 +19,8 @@ module.exports = {
         loader: 'babel-loader',
         include: [
           __dirname,
-          path.join(__dirname, '../src')
+          path.join(__dirname, '../src'),
+          //path.join(__dirname, '../../valium/src')
         ],
         query: {
           cacheDirectory: false,

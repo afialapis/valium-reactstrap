@@ -3,20 +3,13 @@ import PropTypes   from 'prop-types'
 import VInputAddon from './VInputAddon'
 import {VInput}    from 'valium'
 import {Input}     from 'reactstrap'
+import VInputTypes from './common/VInputTypes'
+import valueOrDef   from './common/valueOrDef'
 
+const VInputNumberRS = ({id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, autocomplete,
+                      required, max, min, pattern, step, checkValue, allowedValues, disallowedValues, onChange, checkValidityOnKeyup, keepHeight, formGroupStyle, inputGroupStyle}) => {
 
-const VInputNumberRS = ({id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, 
-                      required, max, min, pattern, step, checkValue, allowedValues, disallowedValues, onChange, checkValidityOnKeyup}) => {
-
-  let vprops= {}
-  let nvalue= undefined
-  if (defaultValue!=undefined) {
-    vprops.defaultValue= defaultValue || undefined
-    nvalue= defaultValue
-  } else {
-    vprops.value= value
-    nvalue= value
-  }
+  const [vprops, nvalue]= valueOrDef(value, defaultValue)
   
   return (
     <VInput type            = {"number"}
@@ -30,9 +23,12 @@ const VInputNumberRS = ({id, name, value, defaultValue, label, feedback, icon, i
                           label       = {label}
                           feedback    = {feedback || message}
                           value       = {nvalue}
-                          icon        = {icon || 'dollar-sign'}
+                          icon        = {icon}
                           isValid     = {valid}
-                          inline      = {inline}>
+                          inline      = {inline}
+                          keepHeight  = {keepHeight}
+                          formGroupStyle = {formGroupStyle}
+                          inputGroupStyle= {inputGroupStyle}>
                 <Input  id          = {id}
                         name        = {name}
                         innerRef    = {inputRef}
@@ -47,6 +43,7 @@ const VInputNumberRS = ({id, name, value, defaultValue, label, feedback, icon, i
                         step        = {step || undefined}
                         valid       = {nvalue!=undefined && nvalue!='' && valid}
                         invalid     = {! valid}
+                        autoComplete= {autocomplete}
                         {...vprops}
                 />
               </VInputAddon>
@@ -57,33 +54,17 @@ const VInputNumberRS = ({id, name, value, defaultValue, label, feedback, icon, i
 
 
 VInputNumberRS.propTypes = {
-  id                  : PropTypes.string,
-  name                : PropTypes.string.isRequired,
-  value               : function(props, _propName, _componentName) {
-      if (props['defaultValue'] == undefined && props['value'] == undefined) {
-          return new Error('Please provide a {value} or a {defaultValue}');
-      }
-  },
-  defaultValue        : function(props, _propName, _componentName) {
-    if (props['defaultValue'] == undefined && props['value'] == undefined) {
-          return new Error('Please provide a {value} or a {defaultValue}');
-      }
-  },
-  label               : PropTypes.string,
-  feedback            : PropTypes.string,
-  icon                : PropTypes.string,
-  inline              : PropTypes.bool,
+  ...VInputTypes,
   placeholder         : PropTypes.string,
-  readOnly            : PropTypes.bool,
-  required            : PropTypes.bool,
   max                 : PropTypes.number,
   min                 : PropTypes.number,
+  step                : PropTypes.number,
   pattern             : PropTypes.string,
-  checkValue          : PropTypes.Promise || PropTypes.func,
-  allowedValues       : PropTypes.arrayOf(PropTypes.any),
-  disallowedValues    : PropTypes.arrayOf(PropTypes.any),
-  checkValidityOnKeyup: PropTypes.bool,
-  onChange            : PropTypes.func,
+  autocomplete        : PropTypes.oneOf(["on", "off"]),
+}
+
+VInputNumberRS.defaultProps = {
+  icon: 'dollar-sign'
 }
 
 export default VInputNumberRS

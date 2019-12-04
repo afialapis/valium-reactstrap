@@ -3,20 +3,14 @@ import PropTypes    from 'prop-types'
 import VInputAddon  from './VInputAddon'
 import {VInput}     from 'valium'
 import {Input}      from 'reactstrap'
+import VInputTypes  from './common/VInputTypes'
+import valueOrDef   from './common/valueOrDef'
 
 
-const VInputTextRS = ({id, name, value, defaultValue, label, feedback, icon, inline, inputType, placeholder, readOnly, 
-                      required, maxLength, minLength, pattern, checkValue, allowedValues, disallowedValues, onChange, checkValidityOnKeyup}) => {
+const VInputTextRS = ({id, name, value, defaultValue, label, feedback, icon, inline, inputType, placeholder, readOnly, autocomplete,
+                      required, maxLength, minLength, pattern, checkValue, allowedValues, disallowedValues, onChange, checkValidityOnKeyup, keepHeight, formGroupStyle, inputGroupStyle}) => {
 
-  let vprops= {}
-  let nvalue= undefined
-  if (defaultValue!=undefined) {
-    vprops.defaultValue= defaultValue || ''
-    nvalue= defaultValue
-  } else {
-    vprops.value= value
-    nvalue= value
-  }
+  const [vprops, nvalue]= valueOrDef(value, defaultValue)
   
   return (
     <VInput type            = "text"
@@ -30,9 +24,12 @@ const VInputTextRS = ({id, name, value, defaultValue, label, feedback, icon, inl
                           label       = {label}
                           feedback    = {feedback || message}
                           value       = {nvalue}
-                          icon        = {icon || 'align-justify'}
+                          icon        = {icon}
                           isValid     = {valid}
-                          inline      = {inline}>
+                          inline      = {inline}
+                          keepHeight  = {keepHeight}
+                          formGroupStyle = {formGroupStyle}
+                          inputGroupStyle= {inputGroupStyle}>
                 <Input  id          = {id}
                         name        = {name}
                         innerRef    = {inputRef}
@@ -46,6 +43,7 @@ const VInputTextRS = ({id, name, value, defaultValue, label, feedback, icon, inl
                         pattern     = {pattern}
                         valid       = {nvalue!=undefined && nvalue!='' && valid}
                         invalid     = {! valid}
+                        autoComplete= {autocomplete}
                         {...vprops}
                 />
               </VInputAddon>
@@ -57,30 +55,18 @@ const VInputTextRS = ({id, name, value, defaultValue, label, feedback, icon, inl
 
 
 VInputTextRS.propTypes = {
-  id                  : PropTypes.string,
-  name                : PropTypes.string.isRequired,
-  value               : function(props, _propName, _componentName) {
-      if (! ('value' in props) && ! ('defaultValue' in props)) {
-          return new Error('Please provide a {value} or a {defaultValue}');
-      }
-  },
-  defaultValue        : PropTypes.string,
-  label               : PropTypes.string,
-  feedback            : PropTypes.string,
-  icon                : PropTypes.string,
-  inline              : PropTypes.bool,
-  inputType           : PropTypes.string,
-  placeholder         : PropTypes.string,
-  readOnly            : PropTypes.bool,
-  required            : PropTypes.bool,
-  maxLength           : PropTypes.number,
-  minLength           : PropTypes.number,
-  pattern             : PropTypes.string,
-  checkValue          : PropTypes.Promise || PropTypes.func,
-  allowedValues       : PropTypes.arrayOf(PropTypes.any),
-  disallowedValues    : PropTypes.arrayOf(PropTypes.any),
-  checkValidityOnKeyup: PropTypes.bool,
-  onChange            : PropTypes.func,
+  ...VInputTypes,
+  
+  inputType    : PropTypes.string,
+  placeholder  : PropTypes.string,
+  maxLength    : PropTypes.number,
+  minLength    : PropTypes.number,
+  pattern      : PropTypes.string,
+  autocomplete : PropTypes.oneOf(["on", "off"]),
+}
+
+VInputTextRS.defaultProps = {
+  icon: 'align-justify'
 }
 
 export default VInputTextRS

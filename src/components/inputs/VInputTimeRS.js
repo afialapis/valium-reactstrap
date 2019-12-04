@@ -3,21 +3,15 @@ import PropTypes    from 'prop-types'
 import VInputAddon  from './VInputAddon'
 import {VInput}     from 'valium'
 import {Input}      from 'reactstrap'
+import VInputTypes  from './common/VInputTypes'
+import valueOrDef   from './common/valueOrDef'
 
 
-const VInputTimeRS = ({id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, 
-                      required, checkValue, allowedValues, disallowedValues, onChange, checkValidityOnKeyup}) => {
+const VInputTimeRS = ({id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, autocomplete,
+                      required, checkValue, allowedValues, disallowedValues, onChange, checkValidityOnKeyup, keepHeight, formGroupStyle, inputGroupStyle}) => {
 
-  let vprops= {}
-  let nvalue= undefined
-  if (defaultValue!=undefined) {
-    vprops.defaultValue= defaultValue || ''
-    nvalue= defaultValue
-  } else {
-    vprops.value= value
-    nvalue= value
-  }
-
+  const [vprops, nvalue]= valueOrDef(value, defaultValue)
+  
   return (
     <VInput type            = {"text"} 
             feedback        = {feedback} 
@@ -30,9 +24,12 @@ const VInputTimeRS = ({id, name, value, defaultValue, label, feedback, icon, inl
                           label       = {label}
                           feedback    = {feedback || message}
                           value       = {nvalue}
-                          icon        = {icon || 'clock'}
+                          icon        = {icon}
                           isValid     = {valid}
-                          inline      = {inline}>
+                          inline      = {inline}
+                          keepHeight  = {keepHeight}
+                          formGroupStyle = {formGroupStyle}
+                          inputGroupStyle= {inputGroupStyle}>
                 <Input  id          = {id}
                         name        = {name}
                         innerRef    = {inputRef}
@@ -43,6 +40,7 @@ const VInputTimeRS = ({id, name, value, defaultValue, label, feedback, icon, inl
                         required    = {required}
                         valid       = {nvalue!=undefined && nvalue!='' && valid}
                         invalid     = {! valid}
+                        autoComplete= {autocomplete}
                         {...vprops}
                 />
               </VInputAddon>
@@ -53,30 +51,14 @@ const VInputTimeRS = ({id, name, value, defaultValue, label, feedback, icon, inl
 
 
 VInputTimeRS.propTypes = {
-  id                  : PropTypes.string,
-  name                : PropTypes.string.isRequired,
-  value               : function(props, _propName, _componentName) {
-      if (props['defaultValue'] == undefined && props['value'] == undefined) {
-          return new Error('Please provide a {value} or a {defaultValue}');
-      }
-  },
-  defaultValue        : function(props, _propName, _componentName) {
-    if (props['defaultValue'] == undefined && props['value'] == undefined) {
-          return new Error('Please provide a {value} or a {defaultValue}');
-      }
-  },
-  label               : PropTypes.string,
-  feedback            : PropTypes.string,
-  icon                : PropTypes.string,
-  inline              : PropTypes.bool,
-  placeholder         : PropTypes.string,
-  readOnly            : PropTypes.bool,
-  required            : PropTypes.bool,
-  checkValue          : PropTypes.Promise || PropTypes.func,
-  allowedValues       : PropTypes.arrayOf(PropTypes.any),
-  disallowedValues    : PropTypes.arrayOf(PropTypes.any),
-  checkValidityOnKeyup: PropTypes.bool,
-  onChange            : PropTypes.func,
+  ...VInputTypes,
+  placeholder  : PropTypes.string,
+  autocomplete : PropTypes.oneOf(["on", "off"]),
 }
+
+VInputTimeRS.defaultProps = {
+  icon: 'clock'
+}
+
 
 export default VInputTimeRS

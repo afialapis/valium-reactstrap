@@ -8,13 +8,14 @@ import {
   Label
 } from 'reactstrap'
 
-const VInputFeedback = ({show, children}) => {
+const VInputFeedback = ({isValid, feedback, keepHeight}) => {
+  const show= keepHeight || (! isValid && feedback)
   if (! show)
     return null;
 
   return (
-    <div className="valium-reactstrap-feedback">
-      {children}
+    <div className={`valium-reactstrap-feedback ${isValid ? 'hidden' : ''}`}>
+      {feedback || "_"}
     </div>
   )
 }
@@ -32,7 +33,7 @@ class VInputAddon extends React.Component {
   }
 
   render() {
-    let {name, label, feedback, icon, isValid, children, inline, formClassName} = this.props
+    let {name, label, feedback, icon, isValid, children, inline, formClassName, keepHeight} = this.props
 
     return (
       <FormGroup className={` ${this.hasChanged ? 'is-unsaved' : ''} ${inline ? 'inline' : ''} ${formClassName || ''}`}>
@@ -43,21 +44,24 @@ class VInputAddon extends React.Component {
           </Label>
         : null
         }
-        <div>
-          <InputGroup style={this.props.inputGroupStyle}>
+        <InputGroup style={this.props.inputGroupStyle}>
+          {icon==undefined
+            ? null
+            : 
             <InputGroupAddon addonType="prepend" className="input-group-addon">
               <InputGroupText>
                 <FontAwesomeIcon icon={icon || "align-justify"} />
               </InputGroupText>
             </InputGroupAddon>
-            {children}
-          </InputGroup>
-          {feedback &&
-            <VInputFeedback show={! isValid}>
-              {feedback}
-            </VInputFeedback>
           }
-        </div>
+          {children}
+        </InputGroup>
+        {(keepHeight || feedback) &&
+          <VInputFeedback isValid={isValid}
+                          feedback={feedback}
+                          keepHeight={keepHeight}
+                          />
+        }
       </FormGroup>
     )
   }

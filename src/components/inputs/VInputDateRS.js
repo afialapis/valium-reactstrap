@@ -2,7 +2,9 @@ import React       from 'react'
 import PropTypes   from 'prop-types'
 import VInputAddon from './VInputAddon'
 import {VInput}    from 'valium'
-import  DatePicker from 'reactstrap-date-picker'
+import DatePicker  from 'reactstrap-date-picker'
+import VInputTypes from './common/VInputTypes'
+import valueOrDef  from './common/valueOrDef'
 
 class VInputDateRS extends React.Component {
   
@@ -15,17 +17,14 @@ class VInputDateRS extends React.Component {
 
   render() {
 
-    const {id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, 
-                      required, checkValue, allowedValues, disallowedValues} = this.props
+    const {id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, autocomplete,
+                      required, checkValue, allowedValues, disallowedValues, keepHeight, formGroupStyle, inputGroupStyle} = this.props
 
-    let vprops= {}
-    let nvalue= undefined
-    if (defaultValue!=undefined) {
-      vprops.defaultValue= defaultValue || ''
-      nvalue= defaultValue
-    } else {
-      vprops.value= value
-      nvalue= value
+    const [vprops, nvalue]= valueOrDef(value, defaultValue)
+
+    const nInputGroupStyle ={
+      ...inputGroupStyle,
+      flexWrap: "unset"
     }
 
     return (
@@ -40,10 +39,12 @@ class VInputDateRS extends React.Component {
                             label       = {label}
                             feedback    = {feedback || message}
                             value       = {nvalue}
-                            icon        = {icon || 'calendar'}
+                            icon        = {icon}
                             isValid     = {valid}
                             inline      = {inline}
-                            inputGroupStyle= {{flexWrap: "unset"}}
+                            keepHeight  = {keepHeight}
+                            inputGroupStyle= {nInputGroupStyle}
+                            formGroupStyle={formGroupStyle}
                             >
                   <DatePicker id          = {id}
                               onChange    = {(v) => this.props.onChange(v)} 
@@ -51,6 +52,9 @@ class VInputDateRS extends React.Component {
                               placeholder = {placeholder}
                               inputRef    = {inputRef}
                               dateFormat  = {"DD/MM/YYYY"}
+                              readOnly    = {readOnly}
+                              required    = {required}
+                              autocomplete= {autocomplete}
                               
                               {...vprops} />
                 </VInputAddon>
@@ -61,26 +65,14 @@ class VInputDateRS extends React.Component {
 
 
 VInputDateRS.propTypes = {
-  id                  : PropTypes.string,
-  name                : PropTypes.string.isRequired,
-  value               : function(props, _propName, _componentName) {
-      if (! ('value' in props) && ! ('defaultValue' in props)) {
-          return new Error('Please provide a {value} or a {defaultValue}');
-      }
-  },
-  defaultValue        : PropTypes.string,
-  label               : PropTypes.string,
-  feedback            : PropTypes.string,
-  icon                : PropTypes.string,
-  inline              : PropTypes.bool,
+  ...VInputTypes,
   placeholder         : PropTypes.string,
-  readOnly            : PropTypes.bool,
-  required            : PropTypes.bool,
-  checkValue          : PropTypes.Promise || PropTypes.func,
-  allowedValues       : PropTypes.arrayOf(PropTypes.any),
-  disallowedValues    : PropTypes.arrayOf(PropTypes.any),
-  checkValidityOnKeyup: PropTypes.bool,
-  onChange            : PropTypes.func,
+  autocomplete        : PropTypes.oneOf(["on", "off"]),
 }
+
+VInputDateRS.defaultProps = {
+  icon: 'calendar'
+}
+
 
 export default VInputDateRS

@@ -1,9 +1,10 @@
-import React            from 'react'
-import PropTypes        from 'prop-types'
-import VInputAddon      from './VInputAddon'
-import {VInput}         from 'valium'
-import {Input}          from 'reactstrap'
-
+import React         from 'react'
+import PropTypes     from 'prop-types'
+import VInputAddon   from './VInputAddon'
+import {VInput}      from 'valium'
+import {Input}       from 'reactstrap'
+import VInputTypes   from './common/VInputTypes'
+import valueOrDef   from './common/valueOrDef'
 
 class VInputSelectSearchRS extends React.Component {
   
@@ -105,20 +106,10 @@ class VInputSelectSearchRS extends React.Component {
   }
 
   render() {
-    const {id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, 
-          required, checkValue, allowedValues, disallowedValues}= this.props
+    const {id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, autocomplete,
+          required, checkValue, allowedValues, disallowedValues, keepHeight, formGroupStyle, inputGroupStyle}= this.props
 
-    let vprops= {}
-    let nvalue= undefined
-    if (defaultValue!=undefined) {
-      vprops.defaultValue= defaultValue || ''
-      nvalue= defaultValue
-    } else {
-      vprops.value= value
-      nvalue= value
-    }
-
-    
+    const [vprops, nvalue]= valueOrDef(value, defaultValue)
 
     return (
 
@@ -136,29 +127,32 @@ class VInputSelectSearchRS extends React.Component {
                               label       = {label}
                               feedback    = {this.state.isOpen ? undefined : (feedback || message)}
                               value       = {nvalue}
-                              icon        = {icon || 'search'}
+                              icon        = {icon}
                               isValid     = {valid}
-                              inline      = {inline}>
+                              inline      = {inline}
+                              keepHeight  = {keepHeight}
+                          formGroupStyle  = {formGroupStyle}
+                          inputGroupStyle = {inputGroupStyle}>
                     <Input    id          = {id}
                               name        = {name}
                               className   = "valium-reactstrap-select-search-hidden"
                               type        = "hidden"
                               innerRef    = {inputRef}
                               required    = {required}
-                              onChange    = {(_ev) => console.log('HEY HEY HEY HEY')}
+                              /*onChange    = {(_ev) => console.log('HEY HEY HEY HEY')}*/
                               {...vprops}/>
                     <Input    name        = {`input_select_search_${name}_text`}
                               className   = "valium-reactstrap-select-search-text custom-select"
                               type        = "text"
                               innerRef    = {this.innerSearchRef}
-                              placeholder = {placeholder || ""}
-                              readOnly    = {readOnly!=undefined ? readOnly  : false}
+                              placeholder = {placeholder}
+                              readOnly    = {readOnly}
                               required    = {required}
                               valid       = {nvalue!=undefined && nvalue!='' && valid}
                               invalid     = {! valid}
                               onClick     = {(_ev) => this.onSearchStart()}
                               onKeyUp     = {(ev) => {this.onSearchStart(); this.onSearchType(ev)}}
-                              autoComplete= "off"
+                              autoComplete= {autocomplete}
                               />
                   </VInputAddon>
                 </div>
@@ -187,30 +181,16 @@ class VInputSelectSearchRS extends React.Component {
 
 
 VInputSelectSearchRS.propTypes = {
-  id                  : PropTypes.string,
-  name                : PropTypes.string.isRequired,
-  value               : function(props, _propName, _componentName) {
-      if (props['defaultValue'] == undefined && props['value'] == undefined) {
-          return new Error('Please provide a {value} or a {defaultValue}');
-      }
-  },
-  defaultValue        : function(props, _propName, _componentName) {
-    if (props['defaultValue'] == undefined && props['value'] == undefined) {
-          return new Error('Please provide a {value} or a {defaultValue}');
-      }
-  },
-  label               : PropTypes.string,
-  feedback            : PropTypes.string,
-  icon                : PropTypes.string,
-  inline              : PropTypes.bool,
-  placeholder         : PropTypes.string,
-  readOnly            : PropTypes.bool,
-  required            : PropTypes.bool,
-  checkValue          : PropTypes.Promise || PropTypes.func,
-  allowedValues       : PropTypes.arrayOf(PropTypes.any),
-  disallowedValues    : PropTypes.arrayOf(PropTypes.any),
-  checkValidityOnKeyup: PropTypes.bool,
-  onChange            : PropTypes.func,
+  ...VInputTypes,
+
+  placeholder  : PropTypes.string,
+  options      : PropTypes.object,
+  autocomplete : PropTypes.oneOf(["on", "off"]),
+}
+
+
+VInputSelectSearchRS.defaultProps = {
+  icon: 'search'
 }
 
 export default VInputSelectSearchRS

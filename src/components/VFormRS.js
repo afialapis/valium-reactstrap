@@ -43,7 +43,7 @@ const VFormRS = ({children, className, onSave, onCancel, colors, icons, labels})
 
 VFormRS.propTypes = {
   className    : PropTypes.string,
-  children     : PropTypes.arrayOf(PropTypes.object),
+  children     : PropTypes.oneOfType([PropTypes.object, PropTypes.arrayOf(PropTypes.object)]),
   colors       : PropTypes.arrayOf(PropTypes.string),
   icons        : PropTypes.arrayOf(PropTypes.string),
   labels       : PropTypes.arrayOf(PropTypes.string),

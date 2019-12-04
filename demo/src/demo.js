@@ -6,14 +6,7 @@ import './demo.scss'
 
 const Demo = () => {
   return (
-    <div>
-      <h1>
-        VForm Reactstrap example
-      </h1>
-      <section>
-        <VFormReactstrap/>
-      </section>
-    </div>
+    <VFormReactstrap/>
   );
 }
 
