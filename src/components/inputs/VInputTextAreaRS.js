@@ -1,10 +1,11 @@
 import React       from 'react'
 import VInputTextRS from './VInputTextRS'
 
-const VInputTextAreaRS = ({name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly,
+const VInputTextAreaRS = ({id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly,
   required, maxLength, minLength, checkValue, allowedValues, disallowedValues, onChange, checkValidityOnKeyup}) =>
 
-  <VInputTextRS  name                   = {name}
+  <VInputTextRS id                     = {id}
+                name                   = {name}
                 value                  = {value}
                 defaultValue           = {defaultValue}
                 label                  = {label}

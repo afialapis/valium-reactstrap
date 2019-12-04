@@ -1,11 +1,11 @@
-import React            from 'react'
-import PropTypes        from 'prop-types'
-import VInputAddon      from './VInputAddon'
-import {VInputSelect}   from 'valium'
-import {Input}          from 'reactstrap'
+import React       from 'react'
+import PropTypes   from 'prop-types'
+import VInputAddon from './VInputAddon'
+import {VInput}    from 'valium'
+import {Input}     from 'reactstrap'
 
 
-const VInputSelectRS = ({name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, 
+const VInputSelectRS = ({id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, 
                       required, checkValue, allowedValues, disallowedValues, onChange, options}) => {
 
   let vprops= {}
@@ -31,47 +31,49 @@ const VInputSelectRS = ({name, value, defaultValue, label, feedback, icon, inlin
   }
 
   return (
-    <VInputSelect feedback        = {feedback} 
-                 checkValue      = {checkValue}
-                 allowedValues   = {allowedValues}
-                 disallowedValues= {disallowedValues}
-                 render          = {({valid, message}, inputRef) => 
-                 <VInputAddon name        = {name}
-                             label       = {label}
-                             feedback    = {feedback || message}
-                             value       = {nvalue}
-                             icon        = {icon || 'list-ul'}
-                             isValid     = {valid}
-                             inline      = {inline}>
-                   <Input    name        = {name}
-                             type        = "select"
-                             className   = "custom-select"
-                             innerRef    = {inputRef}
-                             placeholder = {placeholder || ""}
-                             onChange    = {(event) => {if (onChange!=undefined) { return onChange(event.target.value)}}}
-                             readOnly    = {readOnly!=undefined ? readOnly  : false}
-                             required    = {required}
-                             valid       = {nvalue!=undefined && nvalue!='' && valid}
-                             invalid     = {! valid}
-                             {...vprops}>
-                      {options_map.map((opt) => 
-                        <option key={`${name}_option_${opt.value}`}
-                                value={opt.value}
-                                disabled={opt.disabled}
-                                >
-                          {opt.label}
-                        </option>
-                      )}
-                   </Input>
-                 </VInputAddon>
-
-              }
+    <VInput type            = {"select"} 
+            feedback        = {feedback} 
+            checkValue      = {checkValue}
+            allowedValues   = {allowedValues}
+            disallowedValues= {disallowedValues}
+            render          = {({valid, message}, inputRef) => 
+            <VInputAddon name        = {name}
+                        label       = {label}
+                        feedback    = {feedback || message}
+                        value       = {nvalue}
+                        icon        = {icon || 'list-ul'}
+                        isValid     = {valid}
+                        inline      = {inline}>
+              <Input    id          = {id}
+                        name        = {name}
+                        type        = "select"
+                        className   = "custom-select"
+                        innerRef    = {inputRef}
+                        placeholder = {placeholder || ""}
+                        onChange    = {(event) => {if (onChange!=undefined) { return onChange(event.target.value)}}}
+                        readOnly    = {readOnly!=undefined ? readOnly  : false}
+                        required    = {required}
+                        valid       = {nvalue!=undefined && nvalue!='' && valid}
+                        invalid     = {! valid}
+                        {...vprops}>
+                {options_map.map((opt) => 
+                  <option key={`${name}_option_${opt.value}`}
+                          value={opt.value}
+                          disabled={opt.disabled}
+                          >
+                    {opt.label}
+                  </option>
+                )}
+              </Input>
+            </VInputAddon>
+            }
     />
   )
 }
 
 
 VInputSelectRS.propTypes = {
+  id                  : PropTypes.string,
   name                : PropTypes.string.isRequired,
   value               : function(props, _propName, _componentName) {
       if (props['defaultValue'] == undefined && props['value'] == undefined) {

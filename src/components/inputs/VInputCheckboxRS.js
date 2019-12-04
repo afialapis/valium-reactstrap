@@ -1,11 +1,11 @@
-import React            from 'react'
-import PropTypes        from 'prop-types'
-import VInputAddon      from './VInputAddon'
-import {VInputCheckbox} from 'valium'
-import {Input}          from 'reactstrap'
+import React       from 'react'
+import PropTypes   from 'prop-types'
+import VInputAddon from './VInputAddon'
+import {VInput}    from 'valium'
+import {CustomInput}     from 'reactstrap'
 
 
-const VInputCheckboxRS = ({name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, 
+const VInputCheckboxRS = ({id, name, value, defaultValue, label, description, feedback, icon, inline, placeholder, readOnly, 
                       required, checkValue, allowedValues, disallowedValues, onChange, checkValidityOnKeyup}) => {
 
   let vprops= {}
@@ -20,40 +20,43 @@ const VInputCheckboxRS = ({name, value, defaultValue, label, feedback, icon, inl
   //vprops.checked= nvalue ? true : false
   
   return (
-    <VInputCheckbox 
-               feedback        = {feedback} 
-               checkValue      = {checkValue}
-               allowedValues   = {allowedValues}
-               disallowedValues= {disallowedValues}
-               checkValidityOnKeyup= {checkValidityOnKeyup}
-               render  = {({valid, message}, inputRef) => 
-                 <VInputAddon name        = {name}
-                             label       = {label}
-                             feedback    = {feedback || message}
-                             value       = {nvalue}
-                             icon        = {icon || 'check'}
-                             isValid     = {valid}
-                             inline      = {inline}>
-                   <Input  name        = {name}
-                           innerRef    = {inputRef}
-                           type        = {"checkbox"}
-                           placeholder = {placeholder || ""}
-                           onClick     = {(event) => {if (onChange!=undefined) { return onChange(event.target.checked)}}}
-                           readOnly    = {readOnly!=undefined ? readOnly  : false}
-                           required    = {required}
-                           valid       = {nvalue!=undefined && nvalue!='' && valid}
-                           invalid     = {! valid}
-                           {...vprops}
-                   />
-                 </VInputAddon>
+    <VInput type = {"checkbox"}
+            feedback        = {feedback} 
+            checkValue      = {checkValue}
+            allowedValues   = {allowedValues}
+            disallowedValues= {disallowedValues}
+            checkValidityOnKeyup= {checkValidityOnKeyup}
+            render  = {({valid, message}, inputRef) => 
+              <VInputAddon name        = {name}
+                          label       = {label}
+                          feedback    = {feedback || message}
+                          value       = {nvalue}
+                          icon        = {icon || 'check'}
+                          isValid     = {valid}
+                          inline      = {inline}>
+                <CustomInput  
+                        id          = {id}
+                        name        = {name}
+                        innerRef    = {inputRef}
+                        type        = {"switch"}
+                        label       = {description}
+                        placeholder = {placeholder || ""}
+                        onClick     = {(event) => {if (onChange!=undefined) { return onChange(event.target.checked)}}}
+                        readOnly    = {readOnly!=undefined ? readOnly  : false}
+                        required    = {required}
+                        valid       = {nvalue!=undefined && nvalue!='' && valid}
+                        invalid     = {! valid}
+                        {...vprops}
+                />
+              </VInputAddon>
 
-              }
-    />
+              }/>
   )
 }
 
 
 VInputCheckboxRS.propTypes = {
+  id                  : PropTypes.string,
   name                : PropTypes.string.isRequired,
   value               : function(props, _propName, _componentName) {
       if (props['defaultValue'] == undefined && props['value'] == undefined) {
@@ -66,6 +69,7 @@ VInputCheckboxRS.propTypes = {
       }
   },
   label               : PropTypes.string,
+  description         : PropTypes.string,
   feedback            : PropTypes.string,
   icon                : PropTypes.string,
   inline              : PropTypes.bool,
@@ -78,5 +82,10 @@ VInputCheckboxRS.propTypes = {
   checkValidityOnKeyup: PropTypes.bool,
   onChange            : PropTypes.func,
 }
+
+VInputCheckboxRS.defaultProps = {
+  id : 'valium-reactstrap-custom-checkbox-input'
+}
+
 
 export default VInputCheckboxRS

@@ -1,11 +1,11 @@
-import React            from 'react'
-import PropTypes        from 'prop-types'
-import VInputAddon      from './VInputAddon'
-import {VInputColor}    from 'valium'
-import {Input}          from 'reactstrap'
+import React        from 'react'
+import PropTypes    from 'prop-types'
+import VInputAddon  from './VInputAddon'
+import {VInput}     from 'valium'
+import {Input}      from 'reactstrap'
 
 
-const VInputColorRS = ({name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, 
+const VInputColorRS = ({id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, 
                       required, checkValue, allowedValues, disallowedValues, onChange, checkValidityOnKeyup}) => {
 
   let vprops= {}
@@ -19,39 +19,40 @@ const VInputColorRS = ({name, value, defaultValue, label, feedback, icon, inline
   }
   
   return (
-    <VInputColor feedback        = {feedback} 
-               checkValue      = {checkValue}
-               allowedValues   = {allowedValues}
-               disallowedValues= {disallowedValues}
-               checkValidityOnKeyup= {checkValidityOnKeyup}
-               render  = {({valid, message}, inputRef) => 
-                 <VInputAddon name        = {name}
-                             label       = {label}
-                             feedback    = {feedback || message}
-                             value       = {nvalue}
-                             icon        = {icon || 'paint-brush'}
-                             isValid     = {valid}
-                             inline      = {inline}>
-                   <Input  name        = {name}
-                           innerRef    = {inputRef}
-                           type        = {"color"}
-                           placeholder = {placeholder || ""}
-                           onChange    = {(event) => {if (onChange!=undefined) { return onChange(event.target.value)}}}
-                           readOnly    = {readOnly!=undefined ? readOnly  : false}
-                           required    = {required}
-                           valid       = {nvalue!=undefined && nvalue!='' && valid}
-                           invalid     = {! valid}
-                           {...vprops}
-                   />
-                 </VInputAddon>
-
-              }
-    />
+    <VInput type            = {"color"} 
+            feedback        = {feedback} 
+            checkValue      = {checkValue}
+            allowedValues   = {allowedValues}
+            disallowedValues= {disallowedValues}
+            checkValidityOnKeyup= {checkValidityOnKeyup}
+            render  = {({valid, message}, inputRef) => 
+              <VInputAddon name        = {name}
+                          label       = {label}
+                          feedback    = {feedback || message}
+                          value       = {nvalue}
+                          icon        = {icon || 'paint-brush'}
+                          isValid     = {valid}
+                          inline      = {inline}>
+                <Input  id          = {id}
+                        name        = {name}
+                        innerRef    = {inputRef}
+                        type        = {"color"}
+                        placeholder = {placeholder || ""}
+                        onChange    = {(event) => {if (onChange!=undefined) { return onChange(event.target.value)}}}
+                        readOnly    = {readOnly!=undefined ? readOnly  : false}
+                        required    = {required}
+                        valid       = {nvalue!=undefined && nvalue!='' && valid}
+                        invalid     = {! valid}
+                        {...vprops}
+                />
+              </VInputAddon>
+              }/>
   )
 }
 
 
 VInputColorRS.propTypes = {
+  id                  : PropTypes.string,
   name                : PropTypes.string.isRequired,
   value               : function(props, _propName, _componentName) {
       if (props['defaultValue'] == undefined && props['value'] == undefined) {

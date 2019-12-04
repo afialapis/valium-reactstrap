@@ -1,8 +1,8 @@
-import React            from 'react'
-import PropTypes        from 'prop-types'
-import VInputAddon      from './VInputAddon'
-import {VInputFile}     from 'valium'
-import {Input}          from 'reactstrap'
+import React        from 'react'
+import PropTypes    from 'prop-types'
+import VInputAddon  from './VInputAddon'
+import {VInput}     from 'valium'
+import {CustomInput}      from 'reactstrap'
 
 import ProgressBar   from '../extra/ProgressBar'
 
@@ -114,11 +114,9 @@ class VInputFileRS extends React.Component {
       )
     return null
   }
-
-
-
+  
   render() {
-    const {name, value, defaultValue, label, icon, inline, readOnly, 
+    const {id, name, value, defaultValue, label, icon, inline, readOnly, 
            required, feedback, checkValue, allowedValues, disallowedValues, checkValidityOnKeyup}= this.props
 
     let vprops= {}
@@ -132,44 +130,45 @@ class VInputFileRS extends React.Component {
       nvalue= value
     }
     
-    
     return (
-      <VInputFile feedback       = {feedback} 
-                 checkValue      = {checkValue}
-                 allowedValues   = {allowedValues}
-                 disallowedValues= {disallowedValues}
-                 checkValidityOnKeyup= {checkValidityOnKeyup}
-                 render  = {({valid, message}, inputRef) => 
-                  <VInputAddon name        = {name}
-                              label       = {label}
-                              feedback    = {feedback || message}
-                              value       = {nvalue}
-                              icon        = {icon || 'file'}
-                              isValid     = {valid}
-                              inline      = {inline}>
-                    <Input  name        = {name}
-                            // Do not lose the form-control class
-                            // TODO maybe open PR on reactstrap?
-                            className   = "form-control"
-                            innerRef    = {inputRef}
-                            type        = {"file"}
-                            onChange    = {(e) => this.handleChange(e)}
-                            readOnly    = {readOnly!=undefined ? readOnly  : false}
-                            required    = {required}
-                            valid       = {nvalue!=undefined && nvalue!='' && valid}
-                            invalid     = {! valid}
-                            {...vprops}
-                    />
-                  </VInputAddon>
-
-                }
-      />
+      <VInput type            = {"file"} 
+              feedback        = {feedback} 
+              checkValue      = {checkValue}
+              allowedValues   = {allowedValues}
+              disallowedValues= {disallowedValues}
+              checkValidityOnKeyup= {checkValidityOnKeyup}
+              render  = {({valid, message}, inputRef) => 
+              <VInputAddon name        = {name}
+                          label       = {label}
+                          feedback    = {feedback || message}
+                          value       = {nvalue}
+                          icon        = {icon || 'file'}
+                          isValid     = {valid}
+                          inline      = {inline}>
+                <CustomInput  
+                        id          = {id}
+                        name        = {name}
+                        // Do not lose the form-control class
+                        // TODO maybe open PR on reactstrap?
+                        className   = "form-control"
+                        innerRef    = {inputRef}
+                        type        = {"file"}
+                        onChange    = {(e) => this.handleChange(e)}
+                        readOnly    = {readOnly!=undefined ? readOnly  : false}
+                        required    = {required}
+                        valid       = {nvalue!=undefined && nvalue!='' && valid}
+                        invalid     = {! valid}
+                        {...vprops}
+                />
+              </VInputAddon>
+              }/>
     )
   }
 }
 
 
 VInputFileRS.propTypes = {
+  id                  : PropTypes.string,
   name                : PropTypes.string.isRequired,
   /*
   value               : function(props, _propName, _componentName) {
@@ -193,6 +192,10 @@ VInputFileRS.propTypes = {
   allowedValues       : PropTypes.arrayOf(PropTypes.any),
   disallowedValues    : PropTypes.arrayOf(PropTypes.any),
   onChange            : PropTypes.func,
+}
+
+VInputFileRS.defaultProps = {
+  id : 'valium-reactstrap-custom-file-input'
 }
 
 export default VInputFileRS

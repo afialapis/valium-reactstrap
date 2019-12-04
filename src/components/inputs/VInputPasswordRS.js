@@ -1,10 +1,11 @@
 import React       from 'react'
 import VInputTextRS from './VInputTextRS'
 
-const VInputPasswordRS = ({name, value, defaultValue, label, feedback, inline, placeholder, readOnly,
+const VInputPasswordRS = ({id, name, value, defaultValue, label, feedback, inline, placeholder, readOnly,
   required, maxLength, minLength, checkValue, allowedValues, disallowedValues, onChange, checkValidityOnKeyup}) =>
 
-  <VInputTextRS  name                   = {name}
+  <VInputTextRS id                     = {id}
+                name                   = {name}
                 value                  = {value}
                 defaultValue           = {defaultValue}
                 label                  = {label || 'Password'}

@@ -1,7 +1,7 @@
 import React            from 'react'
 import PropTypes        from 'prop-types'
 import VInputAddon      from './VInputAddon'
-import {VInputSelect}   from 'valium'
+import {VInput}         from 'valium'
 import {Input}          from 'reactstrap'
 
 
@@ -105,7 +105,7 @@ class VInputSelectSearchRS extends React.Component {
   }
 
   render() {
-    const {name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, 
+    const {id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, 
           required, checkValue, allowedValues, disallowedValues}= this.props
 
     let vprops= {}
@@ -122,69 +122,72 @@ class VInputSelectSearchRS extends React.Component {
 
     return (
 
-      <VInputSelect feedback        = {feedback} 
-                  checkValue      = {checkValue}
-                  allowedValues   = {allowedValues}
-                  disallowedValues= {disallowedValues}
-                  bindSetValidity = {(f) => this.setState({setValidity: f})}
-                  render          = {({valid, message}, inputRef) => 
-                  <div className="valium-reactstrap-select-search"
-                       ref = {this.wrapperRef}>
-                    <div>
-                      <VInputAddon name        = {name}
-                                  label       = {label}
-                                  feedback    = {this.state.isOpen ? undefined : (feedback || message)}
-                                  value       = {nvalue}
-                                  icon        = {icon || 'search'}
-                                  isValid     = {valid}
-                                  inline      = {inline}>
-                        <Input    name        = {name}
-                                  className   = "valium-reactstrap-select-search-hidden"
-                                  type        = "hidden"
-                                  innerRef    = {inputRef}
-                                  required    = {required}
-                                  onChange    = {(_ev) => console.log('HEY HEY HEY HEY')}
-                                  {...vprops}/>
-                        <Input    name        = {`input_select_search_${name}_text`}
-                                  className   = "valium-reactstrap-select-search-text custom-select"
-                                  type        = "text"
-                                  innerRef    = {this.innerSearchRef}
-                                  placeholder = {placeholder || ""}
-                                  readOnly    = {readOnly!=undefined ? readOnly  : false}
-                                  required    = {required}
-                                  valid       = {nvalue!=undefined && nvalue!='' && valid}
-                                  invalid     = {! valid}
-                                  onClick     = {(_ev) => this.onSearchStart()}
-                                  onKeyUp     = {(ev) => {this.onSearchStart(); this.onSearchType(ev)}}
-                                  autoComplete= "off"
-                                  />
-                      </VInputAddon>
-                    </div>
-                    <div>
-                      {this.state.isOpen
-                      ? <div className="valium-reactstrap-select-search-list list-group">
-                          {this.optionsMap.map((opt) => 
-                            <div key     = {`${name}_option_${opt.value}`}
-                                 value   = {opt.value}
-                                 disabled= {opt.disabled}
-                                 className="valium-reactstrap-select-search-list-item list-group-item list-group-item-action" 
-                                 onClick = {(_ev) => this.onSelect(opt.value, inputRef)}
-                                 >
-                              {opt.label}
-                            </div>
-                          )}
+      <VInput type            = {"select"}
+              feedback        = {feedback} 
+              checkValue      = {checkValue}
+              allowedValues   = {allowedValues}
+              disallowedValues= {disallowedValues}
+              bindSetValidity = {(f) => this.setState({setValidity: f})}
+              render          = {({valid, message}, inputRef) => 
+              <div className="valium-reactstrap-select-search"
+                    ref = {this.wrapperRef}>
+                <div>
+                  <VInputAddon name        = {name}
+                              label       = {label}
+                              feedback    = {this.state.isOpen ? undefined : (feedback || message)}
+                              value       = {nvalue}
+                              icon        = {icon || 'search'}
+                              isValid     = {valid}
+                              inline      = {inline}>
+                    <Input    id          = {id}
+                              name        = {name}
+                              className   = "valium-reactstrap-select-search-hidden"
+                              type        = "hidden"
+                              innerRef    = {inputRef}
+                              required    = {required}
+                              onChange    = {(_ev) => console.log('HEY HEY HEY HEY')}
+                              {...vprops}/>
+                    <Input    name        = {`input_select_search_${name}_text`}
+                              className   = "valium-reactstrap-select-search-text custom-select"
+                              type        = "text"
+                              innerRef    = {this.innerSearchRef}
+                              placeholder = {placeholder || ""}
+                              readOnly    = {readOnly!=undefined ? readOnly  : false}
+                              required    = {required}
+                              valid       = {nvalue!=undefined && nvalue!='' && valid}
+                              invalid     = {! valid}
+                              onClick     = {(_ev) => this.onSearchStart()}
+                              onKeyUp     = {(ev) => {this.onSearchStart(); this.onSearchType(ev)}}
+                              autoComplete= "off"
+                              />
+                  </VInputAddon>
+                </div>
+                <div>
+                  {this.state.isOpen
+                  ? <div className="valium-reactstrap-select-search-list list-group">
+                      {this.optionsMap.map((opt) => 
+                        <div key     = {`${name}_option_${opt.value}`}
+                              value   = {opt.value}
+                              disabled= {opt.disabled}
+                              className="valium-reactstrap-select-search-list-item list-group-item list-group-item-action" 
+                              onClick = {(_ev) => this.onSelect(opt.value, inputRef)}
+                              >
+                          {opt.label}
                         </div>
-                      : null
-                      }
+                      )}
                     </div>
-                  </div>
-            }/>
+                  : null
+                  }
+                </div>
+              </div>
+              }/>
     )
   }
 }
 
 
 VInputSelectSearchRS.propTypes = {
+  id                  : PropTypes.string,
   name                : PropTypes.string.isRequired,
   value               : function(props, _propName, _componentName) {
       if (props['defaultValue'] == undefined && props['value'] == undefined) {

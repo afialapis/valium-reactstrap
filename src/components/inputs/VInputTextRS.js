@@ -1,11 +1,11 @@
-import React            from 'react'
-import PropTypes        from 'prop-types'
-import VInputAddon      from './VInputAddon'
-import {VInputText}     from 'valium'
-import {Input}          from 'reactstrap'
+import React        from 'react'
+import PropTypes    from 'prop-types'
+import VInputAddon  from './VInputAddon'
+import {VInput}     from 'valium'
+import {Input}      from 'reactstrap'
 
 
-const VInputTextRS = ({name, value, defaultValue, label, feedback, icon, inline, inputType, placeholder, readOnly, 
+const VInputTextRS = ({id, name, value, defaultValue, label, feedback, icon, inline, inputType, placeholder, readOnly, 
                       required, maxLength, minLength, pattern, checkValue, allowedValues, disallowedValues, onChange, checkValidityOnKeyup}) => {
 
   let vprops= {}
@@ -19,34 +19,36 @@ const VInputTextRS = ({name, value, defaultValue, label, feedback, icon, inline,
   }
   
   return (
-    <VInputText feedback        = {feedback} 
-               checkValue      = {checkValue}
-               allowedValues   = {allowedValues}
-               disallowedValues= {disallowedValues}
-               checkValidityOnKeyup= {checkValidityOnKeyup}
-               render  = {({valid, message}, inputRef) => 
-                 <VInputAddon name        = {name}
-                             label       = {label}
-                             feedback    = {feedback || message}
-                             value       = {nvalue}
-                             icon        = {icon || 'align-justify'}
-                             isValid     = {valid}
-                             inline      = {inline}>
-                   <Input  name        = {name}
-                           innerRef    = {inputRef}
-                           type        = {inputType || "text"}
-                           placeholder = {placeholder || ""}
-                           onChange    = {(event) => {if (onChange!=undefined) { return onChange(event.target.value)}}}
-                           readOnly    = {readOnly!=undefined ? readOnly  : false}
-                           required    = {required}
-                           maxLength   = {maxLength}
-                           minLength   = {minLength}
-                           pattern     = {pattern}
-                           valid       = {nvalue!=undefined && nvalue!='' && valid}
-                           invalid     = {! valid}
-                           {...vprops}
-                   />
-                 </VInputAddon>
+    <VInput type            = "text"
+            feedback        = {feedback} 
+            checkValue      = {checkValue}
+            allowedValues   = {allowedValues}
+            disallowedValues= {disallowedValues}
+            checkValidityOnKeyup= {checkValidityOnKeyup}
+            render  = {({valid, message}, inputRef) => 
+              <VInputAddon name        = {name}
+                          label       = {label}
+                          feedback    = {feedback || message}
+                          value       = {nvalue}
+                          icon        = {icon || 'align-justify'}
+                          isValid     = {valid}
+                          inline      = {inline}>
+                <Input  id          = {id}
+                        name        = {name}
+                        innerRef    = {inputRef}
+                        type        = {inputType || "text"}
+                        placeholder = {placeholder || ""}
+                        onChange    = {(event) => {if (onChange!=undefined) { return onChange(event.target.value)}}}
+                        readOnly    = {readOnly!=undefined ? readOnly  : false}
+                        required    = {required}
+                        maxLength   = {maxLength}
+                        minLength   = {minLength}
+                        pattern     = {pattern}
+                        valid       = {nvalue!=undefined && nvalue!='' && valid}
+                        invalid     = {! valid}
+                        {...vprops}
+                />
+              </VInputAddon>
 
               }
     />
@@ -55,6 +57,7 @@ const VInputTextRS = ({name, value, defaultValue, label, feedback, icon, inline,
 
 
 VInputTextRS.propTypes = {
+  id                  : PropTypes.string,
   name                : PropTypes.string.isRequired,
   value               : function(props, _propName, _componentName) {
       if (! ('value' in props) && ! ('defaultValue' in props)) {

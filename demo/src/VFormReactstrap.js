@@ -39,12 +39,12 @@ const VFormReactstrap = () => {
         <VFormRS onSave  = {onSubmit} 
                  onCancel= {onCancel}>
                   <VInputTextRS
-                      name             = 'atext'
-                      disallowedValues = {["NO"]}
-                      defaultValue     = {atext}
-                      required         = {true}
+                      name                = 'atext'
+                      disallowedValues    = {["NO"]}
+                      defaultValue        = {atext}
+                      required            = {true}
                       checkValidityOnKeyup= {true}
-                      label            = 'Uncontrolled'
+                      label               = 'Uncontrolled'
                   />
                   <VInputTextRS
                       name             = 'btext'
@@ -84,6 +84,7 @@ const VFormReactstrap = () => {
                       checkValidityOnKeyup= {true}
                       onChange         = {(v) => setAarea(v)}
                       disallowedValues = {["NO"]}
+                      label            = 'Area'
                   />                  
                   <VInputNumberRS
                       name             = 'anumber'
@@ -124,6 +125,7 @@ const VFormReactstrap = () => {
                       checkValidityOnKeyup= {true}
                       onChange         = {(v) => {setAcheck(v); console.log('Set check to ' + v)}}
                       label            = "A check"
+                      description      = "Some description here"
                   /> 
                   <VInputSelectRS
                       name             = 'aselect'

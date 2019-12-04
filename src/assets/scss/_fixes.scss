@@ -9,7 +9,14 @@
 /**
  * fix for checkbox
  **/
- .form-check-input {
+.valium-reactstrap .form-check-input,
+.valium-reactstrap .custom-switch {
   position: relative;
-  left: 2em;
+  left: 1em;
+}
+
+.valium-reactstrap .custom-switch,
+.valium-reactstrap .custom-switch input,
+.valium-reactstrap .custom-switch label {
+  cursor: pointer;
 }

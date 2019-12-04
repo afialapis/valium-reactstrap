@@ -5,10 +5,11 @@ import VInputTextRS from './VInputTextRS'
 https://justmarkup.com/articles/2012-12-28-input-url/
 */
 
-const VInputUrlRS = ({name, value, defaultValue, label, feedback, inline, placeholder, readOnly,
+const VInputUrlRS = ({id, name, value, defaultValue, label, feedback, inline, placeholder, readOnly,
   required, maxLength, minLength, pattern, checkValue, allowedValues, disallowedValues, onChange, checkValidityOnKeyup}) =>
 
-  <VInputTextRS  name                   = {name}
+  <VInputTextRS id                     = {id}
+                name                   = {name}
                 value                  = {value}
                 defaultValue           = {defaultValue}
                 label                  = {label || 'URL'}
