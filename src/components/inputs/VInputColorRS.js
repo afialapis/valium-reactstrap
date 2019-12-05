@@ -12,21 +12,21 @@ const VInputColorRS = ({id, name, value, defaultValue, label, feedback, icon, in
   const [vprops, nvalue]= valueOrDef(value, defaultValue)
   
   return (
-    <VInput type            = {"color"} 
-            feedback        = {feedback} 
-            checkValue      = {checkValue}
-            allowedValues   = {allowedValues}
-            disallowedValues= {disallowedValues}
-            checkValidityOnKeyup= {checkValidityOnKeyup}
+    <VInput type                 = {"color"} 
+            feedback             = {feedback} 
+            checkValue           = {checkValue}
+            allowedValues        = {allowedValues}
+            disallowedValues     = {disallowedValues}
+            checkValidityOnKeyup = {checkValidityOnKeyup}
             render  = {({valid, message}, inputRef) => 
-              <VInputAddon name        = {name}
-                          label       = {label}
-                          feedback    = {feedback || message}
-                          value       = {nvalue}
-                          icon        = {icon}
-                          isValid     = {valid}
-                          inline      = {inline}
-                          keepHeight  = {keepHeight}
+              <VInputAddon name          = {name}
+                          label          = {label}
+                          feedback       = {feedback || message}
+                          value          = {nvalue}
+                          icon           = {icon}
+                          isValid        = {valid}
+                          inline         = {inline}
+                          keepHeight     = {keepHeight}
                           formGroupStyle = {formGroupStyle}
                           inputGroupStyle= {inputGroupStyle}>
                 <Input  id          = {id}
@@ -54,7 +54,7 @@ VInputColorRS.propTypes = {
 }
 
 VInputColorRS.defaultProps = {
-  icon: 'paint-brush'
+  icon: 'color'
 }
 
 

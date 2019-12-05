@@ -11,7 +11,7 @@ const VInputTypes = {
   defaultValue        : PropTypes.string,
   label               : PropTypes.string,
   feedback            : PropTypes.string,
-  icon                : PropTypes.string,
+  icon                : PropTypes.oneOfType([PropTypes.string, PropTypes.element, PropTypes.func]),
   inline              : PropTypes.bool,
   readOnly            : PropTypes.bool,
   required            : PropTypes.bool,

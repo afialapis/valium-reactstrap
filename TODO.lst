@@ -1,5 +1,5 @@
 - Feedback visibility:
   Broken for VInputSelectSearch
 
-- Custom icons
-  https://medium.com/@david.gilbertson/icons-as-react-components-de3e33cb8792
+- Inputs need onChange() in order to the is-unsave class to work.
+  Makes sense?

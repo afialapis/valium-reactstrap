@@ -11,7 +11,7 @@ VInputTextAreaRS.propTypes = VInputTextRS.propTypes
 delete VInputTextAreaRS.propTypes['inputType']
 
 VInputTextAreaRS.defaultProps = {
-  icon: 'align-justify'
+  icon: 'text'
 }
 
 

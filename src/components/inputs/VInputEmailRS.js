@@ -11,7 +11,7 @@ VInputEmailRS.propTypes = VInputTextRS.propTypes
 delete VInputEmailRS.propTypes['inputType']
 
 VInputEmailRS.defaultProps = {
-  icon: 'envelope',
+  icon: 'email',
   label: 'E-Mail'
 }
 

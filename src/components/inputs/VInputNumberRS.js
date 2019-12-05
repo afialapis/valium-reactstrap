@@ -64,7 +64,7 @@ VInputNumberRS.propTypes = {
 }
 
 VInputNumberRS.defaultProps = {
-  icon: 'dollar-sign'
+  icon: 'dollar'
 }
 
 export default VInputNumberRS

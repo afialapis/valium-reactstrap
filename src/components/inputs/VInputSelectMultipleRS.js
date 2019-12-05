@@ -80,7 +80,7 @@ VInputSelectMultipleRS.propTypes = {
 }
 
 VInputSelectMultipleRS.defaultProps = {
-  icon: 'list-ul'
+  icon: 'list'
 }
 
 

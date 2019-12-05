@@ -66,7 +66,7 @@ VInputTextRS.propTypes = {
 }
 
 VInputTextRS.defaultProps = {
-  icon: 'align-justify'
+  icon: 'text'
 }
 
 export default VInputTextRS

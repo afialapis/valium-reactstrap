@@ -57,7 +57,7 @@ VInputTimeRS.propTypes = {
 }
 
 VInputTimeRS.defaultProps = {
-  icon: 'clock'
+  icon: 'time'
 }
 
 

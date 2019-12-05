@@ -12,7 +12,7 @@ delete VInputPasswordRS.propTypes['inputType']
 
 
 VInputPasswordRS.defaultProps = {
-  icon: 'lock',
+  icon: 'password',
   label: 'Password'
 }
 

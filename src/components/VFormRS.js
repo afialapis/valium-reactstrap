@@ -1,7 +1,7 @@
 import React            from 'react'
 import PropTypes        from 'prop-types'
 import {VForm}          from 'valium'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import VIcon            from './icons'
 import { Button }       from 'reactstrap'
 
 
@@ -10,7 +10,7 @@ const VFormRSButtons = ({onSave, onCancel, colors, icons, labels, disabled}) =>
     {onCancel!=undefined
       ? <Button color   = {colors ? colors[0] : 'secondary'}
                 onClick = {(ev) => onCancel(ev)}>
-          <FontAwesomeIcon icon  = {icons ? icons[0] : 'ban'}/>
+          <VIcon icon  = {icons[0]}/>
           {labels ? labels[0] : 'Cancelar'}
         </Button>
       : null
@@ -19,7 +19,7 @@ const VFormRSButtons = ({onSave, onCancel, colors, icons, labels, disabled}) =>
       ? <Button color   = {colors ? colors[1] : 'primary'}
               onClick = {(ev) => onSave(ev)}
               disabled= {disabled != undefined ? disabled : false}>
-          <FontAwesomeIcon icon  = {icons ? icons[1] : 'save'}/>
+          <VIcon icon  = {icons[1]}/>
           {labels ? labels[1] : 'Guardar'}
         </Button>
       : null
@@ -49,6 +49,10 @@ VFormRS.propTypes = {
   labels       : PropTypes.arrayOf(PropTypes.string),
   onSave       : PropTypes.func,
   onCancel     : PropTypes.func,
+}
+
+VFormRS.defaultProps = {
+  icons : ['ban', 'save']
 }
 
 

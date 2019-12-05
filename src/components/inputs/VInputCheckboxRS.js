@@ -14,14 +14,14 @@ const VInputCheckboxRS = ({id, name, value, defaultValue, label, description, fe
   const [vprops, nvalue]= valueOrDef(value, defaultValue)
 
   return (
-    <VInput type            = {"checkbox"}
-            feedback        = {feedback} 
-            checkValue      = {checkValue}
-            allowedValues   = {allowedValues}
-            disallowedValues= {disallowedValues}
-            checkValidityOnKeyup= {checkValidityOnKeyup}
+    <VInput type                 = {"checkbox"}
+            feedback             = {feedback} 
+            checkValue           = {checkValue}
+            allowedValues        = {allowedValues}
+            disallowedValues     = {disallowedValues}
+            checkValidityOnKeyup = {checkValidityOnKeyup}
             render  = {({valid, message}, inputRef) => 
-              <VInputAddon name        = {name}
+              <VInputAddon name       = {name}
                           label       = {label}
                           feedback    = {feedback || message}
                           value       = {nvalue}

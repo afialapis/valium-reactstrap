@@ -7,7 +7,7 @@ import './demo.scss'
 const Demo = () => {
   return (
     <VFormReactstrap/>
-  );
+  )
 }
 
 ReactDOM.render(<Demo/>, document.getElementById('content'));

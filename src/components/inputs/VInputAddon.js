@@ -1,5 +1,4 @@
 import React from 'react'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {
   FormGroup,
   InputGroup,
@@ -7,6 +6,7 @@ import {
   InputGroupText,
   Label
 } from 'reactstrap'
+import VIcon from '../icons'
 
 const VInputFeedback = ({isValid, feedback, keepHeight}) => {
   const show= keepHeight || (! isValid && feedback)
@@ -25,7 +25,7 @@ class VInputAddon extends React.Component {
 
   constructor(props) {
     super(props)
-    this.originalValue = props.value
+    this.originalValue= props.value
   }
 
   get hasChanged() {
@@ -33,10 +33,11 @@ class VInputAddon extends React.Component {
   }
 
   render() {
-    let {name, label, feedback, icon, isValid, children, inline, formClassName, keepHeight} = this.props
+    let {name, label, feedback, icon, isValid, children, inline, formClassName, keepHeight, formGroupStyle, inputGroupStyle} = this.props
 
     return (
-      <FormGroup className={` ${this.hasChanged ? 'is-unsaved' : ''} ${inline ? 'inline' : ''} ${formClassName || ''}`}>
+      <FormGroup className={` ${this.hasChanged ? 'is-unsaved' : ''} ${inline ? 'inline' : ''} ${formClassName || ''}`}
+                 style={formGroupStyle}>
         {label!=undefined
         ? <Label for={name}
                  className="valium-reactstrap-label">
@@ -44,13 +45,13 @@ class VInputAddon extends React.Component {
           </Label>
         : null
         }
-        <InputGroup style={this.props.inputGroupStyle}>
+        <InputGroup style={inputGroupStyle}>
           {icon==undefined
             ? null
             : 
             <InputGroupAddon addonType="prepend" className="input-group-addon">
               <InputGroupText>
-                <FontAwesomeIcon icon={icon || "align-justify"} />
+                <VIcon icon={icon}/>
               </InputGroupText>
             </InputGroupAddon>
           }

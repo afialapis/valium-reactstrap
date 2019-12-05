@@ -6,6 +6,26 @@ import DatePicker  from 'reactstrap-date-picker'
 import VInputTypes from './common/VInputTypes'
 import valueOrDef  from './common/valueOrDef'
 
+
+const _toISOString = (value) => {
+  if (typeof value == 'string' && value.length>0) {
+
+    if (value=='today') {
+      const today= new Date()
+      const date= new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate()))
+      return date.toISOString()
+    }
+
+    const parts= value.split('/')
+    const year= parseInt(parts[2])
+    const month= parseInt(parts[1])-1
+    const day= parseInt(parts[0])
+    const date= new Date(Date.UTC(year, month, day))
+    return date.toISOString()
+  }
+  return undefined
+}
+
 class VInputDateRS extends React.Component {
   
   constructor(props) {
@@ -15,12 +35,25 @@ class VInputDateRS extends React.Component {
     }    
   }
 
+  componentDidUpdate(prevProps, _prevState, _snapshot) {
+    if (this.props.value != prevProps.value) {
+      this.state.setValidity()
+    } else if (this.props.defaultValue != prevProps.defaultValue ) {
+      this.state.setValidity()
+    }    
+  }
+
+  handleChange(value, formattedValue) {
+    this.state.setValidity()
+    this.props.onChange(formattedValue)
+  }
+
   render() {
 
     const {id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, autocomplete,
                       required, checkValue, allowedValues, disallowedValues, keepHeight, formGroupStyle, inputGroupStyle} = this.props
 
-    const [vprops, nvalue]= valueOrDef(value, defaultValue)
+    const [vprops, nvalue]= valueOrDef(this.props.toISOString(value), this.props.toISOString(defaultValue))
 
     const nInputGroupStyle ={
       ...inputGroupStyle,
@@ -36,18 +69,18 @@ class VInputDateRS extends React.Component {
               bindSetValidity = {(f) => this.setState({setValidity: f})}
               render  = {({valid, message}, inputRef) => 
                 <VInputAddon name        = {name}
-                            label       = {label}
-                            feedback    = {feedback || message}
-                            value       = {nvalue}
-                            icon        = {icon}
-                            isValid     = {valid}
-                            inline      = {inline}
-                            keepHeight  = {keepHeight}
+                            label         = {label}
+                            feedback      = {feedback || message}
+                            value         = {nvalue}
+                            icon          = {icon}
+                            isValid       = {valid}
+                            inline        = {inline}
+                            keepHeight    = {keepHeight}
                             inputGroupStyle= {nInputGroupStyle}
-                            formGroupStyle={formGroupStyle}
+                            formGroupStyle = {formGroupStyle}
                             >
                   <DatePicker id          = {id}
-                              onChange    = {(v) => this.props.onChange(v)} 
+                              onChange    = {(v,f) => this.handleChange(v, f)} 
                               weekStartsOn= {1} 
                               placeholder = {placeholder}
                               inputRef    = {inputRef}
@@ -68,10 +101,12 @@ VInputDateRS.propTypes = {
   ...VInputTypes,
   placeholder         : PropTypes.string,
   autocomplete        : PropTypes.oneOf(["on", "off"]),
+  toISOString         : PropTypes.func
 }
 
 VInputDateRS.defaultProps = {
-  icon: 'calendar'
+  icon       : 'calendar',
+  toISOString: _toISOString
 }
 
 

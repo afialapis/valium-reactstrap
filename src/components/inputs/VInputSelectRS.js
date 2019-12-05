@@ -79,7 +79,7 @@ VInputSelectRS.propTypes = {
 }
 
 VInputSelectRS.defaultProps = {
-  icon: 'list-ul'
+  icon: 'list'
 }
 
 export default VInputSelectRS

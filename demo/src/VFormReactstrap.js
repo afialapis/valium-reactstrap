@@ -6,18 +6,17 @@ import {VFormRS, VInputTextRS, VInputEmailRS, VInputUrlRS, VInputPasswordRS, VIn
 
 const VFormReactstrap = () => {
 
+  const [keepHeight, setKeepHeight]=  useState(true)
+  const [showAddon, setShowAddon]=  useState(true)
+  const [keyUp, setKeyUp]=  useState(false)
 
-  const [props, setProps]= useState({
-      keepHeight: true
-  })
-
-  const [atext, _setAtext] = useState("I won't accept a NOT for an answer")
+  const [atext, setAtext] = useState("I won't take NOT for an answer")
   const [aemail, setAemail] = useState('info@afialapis.com')
   const [aurl, setAurl] = useState('www.afialapis.com')
   const [apwd, setApwd] = useState('123456')
   const [aarea, setAarea] = useState('Long text\nLong Text\nYes')
   const [anumber, setAnumber] = useState(123)
-  const [adate, setAdate] = useState("2019-06-01T00:22:33.547Z")
+  const [adate, setAdate] = useState("today")
   const [atime, setAtime] = useState('11:45')
   const [acolor, setAcolor] = useState('#F5F5F5')
   const [acheck, setAcheck] = useState(false)
@@ -42,18 +41,47 @@ const VFormReactstrap = () => {
   return (
     <Container>
       <h1>
-        VForm Reactstrap example
+        Valium Reactstrap demo
       </h1>
 
       <Row style={{margin: "1em 0"}}>
         <span style={{marginRight: "2em"}}>Some options: </span>
         <VInputCheckboxRS
+                id               = 'props_keep'
                 name             = 'props_keep'
-                value            = {props.keepHeight}
-                onChange         = {(v) => setProps({keepHeight: v})}
+                value            = {keepHeight}
+                onChange         = {(v) => setKeepHeight(v)}
                 label            = {undefined}
                 description      = "Keep Height"
-            />          
+                inline           = {true}
+                formGroupStyle   = {{marginRight: "2em"}}
+            /> 
+        <VInputCheckboxRS
+                id               = 'show_addon'
+                name             = 'show_addon'
+                value            = {showAddon}
+                onChange         = {(v) => setShowAddon(v)}
+                label            = {undefined}
+                description      = "Show Addons"
+                inline           = {true}
+                formGroupStyle   = {{marginRight: "2em"}}
+            />   
+        <VInputCheckboxRS
+                id               = 'key_up'
+                name             = 'key_up'
+                value            = {keyUp}
+                onChange         = {(v) => setKeyUp(v)}
+                label            = {undefined}
+                description      = "Validate on KeyUp"
+                inline           = {true}
+                formGroupStyle   = {{marginRight: "1em"}}
+            /> 
+        {keyUp ?
+         <span style={{fontStyle: "italic", fontSize: "0.8em", marginRight: "2em"}}>
+           * It only applies to some inputs
+         </span>                           
+         : null
+        }
       </Row>
       <Row>
         <VFormRS onSave  = {onSubmit} 
@@ -64,91 +92,105 @@ const VFormReactstrap = () => {
                         name                = 'atext'
                         disallowedValues    = {["NOT"]}
                         defaultValue        = {atext}
+                        onChange            = {(v) => setAtext(v)}
                         required            = {true}
-                        checkValidityOnKeyup= {true}
+                        checkValidityOnKeyup= {keyUp}
                         label               = 'Text'
-                        {...props}
+                        keepHeight          = {keepHeight}
+                        {... !showAddon && {icon: null}}
+                        
                 />
                 <VInputEmailRS
-                        name             = 'aemail'
-                        value            = {aemail}
-                        required         = {false}
-                        checkValidityOnKeyup= {false}
-                        onChange         = {(v) => setAemail(v)}
-                        {...props}
+                        name                = 'aemail'
+                        value               = {aemail}
+                        required            = {false}
+                        checkValidityOnKeyup= {keyUp}
+                        onChange            = {(v) => setAemail(v)}
+                        keepHeight          = {keepHeight}
+                        {... !showAddon && {icon: null}}
                 /> 
                 <VInputUrlRS
-                        name             = 'aurl'
-                        value            = {aurl}
-                        required         = {false}
-                        checkValidityOnKeyup= {true}
-                        onChange         = {(v) => setAurl(v)}
-                        {...props}                  
+                        name                = 'aurl'
+                        value               = {aurl}
+                        required            = {false}
+                        checkValidityOnKeyup= {keyUp}
+                        onChange            = {(v) => setAurl(v)}
+                        keepHeight          = {keepHeight}
+                        {... !showAddon && {icon: null}}                  
                 /> 
                 <VInputPasswordRS
-                        name             = 'apwd'
-                        value            = {apwd}
-                        required         = {true}
-                        checkValidityOnKeyup= {true}
-                        onChange         = {(v) => setApwd(v)}
-                        disallowedValues = {["1234"]}
-                        {...props}
+                        name                = 'apwd'
+                        value               = {apwd}
+                        required            = {true}
+                        checkValidityOnKeyup= {keyUp}
+                        onChange            = {(v) => setApwd(v)}
+                        disallowedValues    = {["1234"]}
+                        keepHeight          = {keepHeight}
+                        {... !showAddon && {icon: null}}
                 />
                 <VInputTextAreaRS
-                        name             = 'aarea'
-                        value            = {aarea}
-                        required         = {false}
-                        checkValidityOnKeyup= {true}
-                        onChange         = {(v) => setAarea(v)}
-                        disallowedValues = {["NO"]}
-                        label            = 'Area'
-                        {...props}
+                        name                = 'aarea'
+                        value               = {aarea}
+                        required            = {false}
+                        checkValidityOnKeyup= {keyUp}
+                        onChange            = {(v) => setAarea(v)}
+                        disallowedValues    = {["NO"]}
+                        label               = 'Area'
+                        keepHeight          = {keepHeight}
+                        {... !showAddon && {icon: null}}
                 />                   
             </Col>
             <Col sm="12" md="6" lg="4">                
                 <VInputNumberRS
-                        name             = 'anumber'
-                        value            = {anumber}
-                        required         = {false}
-                        checkValidityOnKeyup= {true}
-                        onChange         = {(v) => setAnumber(v)}
-                        label            = "A Number"
-                        {...props}
+                        name                = 'anumber'
+                        value               = {anumber}
+                        required            = {false}
+                        checkValidityOnKeyup= {keyUp}
+                        onChange            = {(v) => setAnumber(v)}
+                        label               = "A Number"
+                        keepHeight          = {keepHeight}
+                        {... !showAddon && {icon: null}}
                 /> 
                 <VInputDateRS
-                        name             = 'adate'
-                        value            = {adate}
-                        required         = {false}
-                        checkValidityOnKeyup= {true}
-                        onChange         = {(v) => {console.log(v); console.log(new Date(v)); setAdate(v)}}
-                        label            = "A date"
-                        {...props}
+                        name                = 'adate'
+                        value               = {adate}
+                        required            = {false}
+                        checkValidityOnKeyup= {keyUp}
+                        onChange            = {(v) => setAdate(v)}
+                        label               = "A date"
+                        keepHeight          = {keepHeight}
+                        disallowedValues    = {["31/12/2019"]}
+                        {... !showAddon && {icon: null}}
                 /> 
                 <VInputTimeRS
-                        name             = 'atime'
-                        value            = {atime}
-                        required         = {false}
-                        checkValidityOnKeyup= {true}
-                        onChange         = {(v) => setAtime(v)}
-                        label            = "A time"
-                        {...props}
+                        name                = 'atime'
+                        value               = {atime}
+                        required            = {false}
+                        checkValidityOnKeyup= {keyUp}
+                        onChange            = {(v) => setAtime(v)}
+                        label               = "A time"
+                        keepHeight          = {keepHeight}
+                        {... !showAddon && {icon: null}}
                 />
                 <VInputColorRS
-                        name             = 'acolor'
-                        value            = {acolor}
-                        required         = {false}
-                        checkValidityOnKeyup= {true}
-                        onChange         = {(v) => setAcolor(v)}
-                        label            = "A color"
-                        {...props}
+                        name                = 'acolor'
+                        value               = {acolor}
+                        required            = {false}
+                        checkValidityOnKeyup= {keyUp}
+                        disallowedValues    = {["#000000", "#ffffff"]}
+                        onChange            = {(v) => setAcolor(v)}
+                        label               = "A color"
+                        keepHeight          = {keepHeight}
+                        {... !showAddon && {icon: null}}
                 />
                 <VInputFileRS
-                        name             = 'afile'
-                        value            = {afile}
-                        required         = {false}
-                        onChange         = {(v) => {console.log(v); setAfile(v)}}
-                        label            = 'A file'
-                        {...props}
+                        name                = 'afile'
+                        value               = {afile}
+                        required            = {false}
+                        onChange            = {(v) => {console.log(v); setAfile(v)}}
+                        label               = 'A file'
+                        keepHeight          = {keepHeight}
+                        {... !showAddon && {icon: null}}
                 />
             </Col>
             <Col sm="12" md="6" lg="4">
@@ -166,8 +208,9 @@ const VFormReactstrap = () => {
                             5: 'Five'
                         }}
                         disallowedValues = {[2]}
-                        allowedValues = {[1, 2, 5]}
-                        {...props}
+                        allowedValues    = {[1, 2, 5]}
+                        keepHeight       = {keepHeight}
+                        {... !showAddon && {icon: null}}
                 /> 
                 <VInputSelectSearchRS
                         name             = 'asearch'
@@ -183,15 +226,15 @@ const VFormReactstrap = () => {
                             '5': 'Five'
                         }}
                         disallowedValues = {['2']}
-                        allowedValues = {['1', '2', '5']}
-                        {...props}
+                        allowedValues    = {['1', '2', '5']}
+                        keepHeight       = {keepHeight}
+                        {... !showAddon && {icon: null}}
                 />                 
                 <VInputSelectMultipleRS
                         name             = 'aselectmu'
                         value            = {aselectmu}
                         required         = {false}
                         onChange         = {(v) => {
-                            
                             const vi= parseInt(v)
                             if (! isNaN(vi)) {
                             const dx= aselectmu.indexOf(vi)
@@ -214,18 +257,20 @@ const VFormReactstrap = () => {
                         }}
                         disallowedValues = {[[2]]}
                         allowedValues = {[[],[1, 2, 5]]}
-                        {...props}
+                        keepHeight          = {keepHeight}
+                        {... !showAddon && {icon: null}}
                 />
                 <VInputCheckboxRS
-                        name             = 'acheck'
-                        value            = {acheck}
-                        required         = {false}
-                        checkValidityOnKeyup= {true}
-                        onChange         = {(v) => {setAcheck(v); console.log('Set check to ' + v + ' --- ' + typeof v)}}
-                        label            = "A check"
-                        description      = "Some description here"
-                        disallowedValues = {['false', false]}
-                        {...props}
+                        name                = 'acheck'
+                        value               = {acheck}
+                        required            = {false}
+                        checkValidityOnKeyup= {keyUp}
+                        onChange            = {(v) => setAcheck(v)}
+                        label               = "A check"
+                        description         = "I will not accept it unchecked"
+                        disallowedValues    = {['false', false]}
+                        keepHeight          = {keepHeight}
+                        {... !showAddon && {icon: null}}
                 />
             </Col>
             </Row>            
