@@ -11,7 +11,8 @@ VInputTextAreaRS.propTypes = VInputTextRS.propTypes
 delete VInputTextAreaRS.propTypes['inputType']
 
 VInputTextAreaRS.defaultProps = {
-  icon: 'text'
+  icon: 'text',
+  checkValidityOnKeyUp: true
 }
 
 

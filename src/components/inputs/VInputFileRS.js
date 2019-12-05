@@ -129,7 +129,7 @@ class VInputFileRS extends React.Component {
   
   render() {
     const {id, name, value, defaultValue, label, icon, inline, readOnly, 
-           required, feedback, checkValue, allowedValues, disallowedValues, checkValidityOnKeyup, keepHeight, formGroupStyle, inputGroupStyle}= this.props
+           required, feedback, checkValue, allowedValues, disallowedValues, checkValidityOnKeyUp, keepHeight, formGroupStyle, inputGroupStyle}= this.props
 
     
     const [_vprops, nvalue]= valueOrDef(value, defaultValue)
@@ -141,7 +141,7 @@ class VInputFileRS extends React.Component {
               checkValue      = {checkValue}
               allowedValues   = {allowedValues}
               disallowedValues= {disallowedValues}
-              checkValidityOnKeyup= {checkValidityOnKeyup}
+              checkValidityOnKeyUp= {checkValidityOnKeyUp}
               render  = {({valid, message}, inputRef) => 
                 <>
                   <VInputAddon name        = {name}
@@ -189,7 +189,8 @@ VInputFileRS.propTypes = {
 
 VInputFileRS.defaultProps = {
   id: `valium-reactstrap-input-file-${instanceCount++}`,
-  icon : 'file'
+  icon : 'file',
+  checkValidityOnKeyUp: true
 }
 
 export default VInputFileRS

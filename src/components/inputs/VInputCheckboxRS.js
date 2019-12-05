@@ -9,7 +9,7 @@ import valueOrDef   from './common/valueOrDef'
 let instanceCount= 1
 
 const VInputCheckboxRS = ({id, name, value, defaultValue, label, description, feedback, icon, inline, readOnly, 
-                      required, checkValue, allowedValues, disallowedValues, onChange, checkValidityOnKeyup, keepHeight, formGroupStyle, inputGroupStyle}) => {
+                      required, checkValue, allowedValues, disallowedValues, onChange, checkValidityOnKeyUp, keepHeight, formGroupStyle, inputGroupStyle}) => {
 
   const [vprops, nvalue]= valueOrDef(value, defaultValue)
 
@@ -19,7 +19,7 @@ const VInputCheckboxRS = ({id, name, value, defaultValue, label, description, fe
             checkValue           = {checkValue}
             allowedValues        = {allowedValues}
             disallowedValues     = {disallowedValues}
-            checkValidityOnKeyup = {checkValidityOnKeyup}
+            checkValidityOnKeyUp = {checkValidityOnKeyUp}
             render  = {({valid, message}, inputRef) => 
               <VInputAddon name       = {name}
                           label       = {label}
@@ -60,7 +60,7 @@ VInputCheckboxRS.propTypes = {
 
 VInputCheckboxRS.defaultProps = {
   id: `valium-reactstrap-input-checkbox-${instanceCount++}`,
-  checkValidityOnKeyup: true,
+  checkValidityOnKeyUp: true,
   icon: undefined
 }
 

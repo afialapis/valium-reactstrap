@@ -190,7 +190,8 @@ VInputSelectSearchRS.propTypes = {
 
 
 VInputSelectSearchRS.defaultProps = {
-  icon: 'search'
+  icon: 'search',
+  checkValidityOnKeyUp: true
 }
 
 export default VInputSelectSearchRS

@@ -79,7 +79,8 @@ VInputSelectRS.propTypes = {
 }
 
 VInputSelectRS.defaultProps = {
-  icon: 'list'
+  icon: 'list',
+  checkValidityOnKeyUp: true
 }
 
 export default VInputSelectRS

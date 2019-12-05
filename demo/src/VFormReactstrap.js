@@ -94,7 +94,7 @@ const VFormReactstrap = () => {
                         defaultValue        = {atext}
                         onChange            = {(v) => setAtext(v)}
                         required            = {true}
-                        checkValidityOnKeyup= {keyUp}
+                        checkValidityOnKeyUp= {keyUp}
                         label               = 'Text'
                         keepHeight          = {keepHeight}
                         {... !showAddon && {icon: null}}
@@ -104,7 +104,7 @@ const VFormReactstrap = () => {
                         name                = 'aemail'
                         value               = {aemail}
                         required            = {false}
-                        checkValidityOnKeyup= {keyUp}
+                        checkValidityOnKeyUp= {keyUp}
                         onChange            = {(v) => setAemail(v)}
                         keepHeight          = {keepHeight}
                         {... !showAddon && {icon: null}}
@@ -113,7 +113,7 @@ const VFormReactstrap = () => {
                         name                = 'aurl'
                         value               = {aurl}
                         required            = {false}
-                        checkValidityOnKeyup= {keyUp}
+                        checkValidityOnKeyUp= {keyUp}
                         onChange            = {(v) => setAurl(v)}
                         keepHeight          = {keepHeight}
                         {... !showAddon && {icon: null}}                  
@@ -122,7 +122,7 @@ const VFormReactstrap = () => {
                         name                = 'apwd'
                         value               = {apwd}
                         required            = {true}
-                        checkValidityOnKeyup= {keyUp}
+                        checkValidityOnKeyUp= {keyUp}
                         onChange            = {(v) => setApwd(v)}
                         disallowedValues    = {["1234"]}
                         keepHeight          = {keepHeight}
@@ -132,7 +132,7 @@ const VFormReactstrap = () => {
                         name                = 'aarea'
                         value               = {aarea}
                         required            = {false}
-                        checkValidityOnKeyup= {keyUp}
+                        checkValidityOnKeyUp= {keyUp}
                         onChange            = {(v) => setAarea(v)}
                         disallowedValues    = {["NO"]}
                         label               = 'Area'
@@ -145,7 +145,7 @@ const VFormReactstrap = () => {
                         name                = 'anumber'
                         value               = {anumber}
                         required            = {false}
-                        checkValidityOnKeyup= {keyUp}
+                        checkValidityOnKeyUp= {keyUp}
                         onChange            = {(v) => setAnumber(v)}
                         label               = "A Number"
                         keepHeight          = {keepHeight}
@@ -155,7 +155,7 @@ const VFormReactstrap = () => {
                         name                = 'adate'
                         value               = {adate}
                         required            = {false}
-                        checkValidityOnKeyup= {keyUp}
+                        checkValidityOnKeyUp= {keyUp}
                         onChange            = {(v) => setAdate(v)}
                         label               = "A date"
                         keepHeight          = {keepHeight}
@@ -166,7 +166,7 @@ const VFormReactstrap = () => {
                         name                = 'atime'
                         value               = {atime}
                         required            = {false}
-                        checkValidityOnKeyup= {keyUp}
+                        checkValidityOnKeyUp= {keyUp}
                         onChange            = {(v) => setAtime(v)}
                         label               = "A time"
                         keepHeight          = {keepHeight}
@@ -176,7 +176,7 @@ const VFormReactstrap = () => {
                         name                = 'acolor'
                         value               = {acolor}
                         required            = {false}
-                        checkValidityOnKeyup= {keyUp}
+                        checkValidityOnKeyUp= {keyUp}
                         disallowedValues    = {["#000000", "#ffffff"]}
                         onChange            = {(v) => setAcolor(v)}
                         label               = "A color"
@@ -264,7 +264,7 @@ const VFormReactstrap = () => {
                         name                = 'acheck'
                         value               = {acheck}
                         required            = {false}
-                        checkValidityOnKeyup= {keyUp}
+                        checkValidityOnKeyUp= {keyUp}
                         onChange            = {(v) => setAcheck(v)}
                         label               = "A check"
                         description         = "I will not accept it unchecked"

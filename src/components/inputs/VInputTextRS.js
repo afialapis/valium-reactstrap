@@ -8,7 +8,7 @@ import valueOrDef   from './common/valueOrDef'
 
 
 const VInputTextRS = ({id, name, value, defaultValue, label, feedback, icon, inline, inputType, placeholder, readOnly, autocomplete,
-                      required, maxLength, minLength, pattern, checkValue, allowedValues, disallowedValues, onChange, checkValidityOnKeyup, keepHeight, formGroupStyle, inputGroupStyle}) => {
+                      required, maxLength, minLength, pattern, checkValue, allowedValues, disallowedValues, onChange, checkValidityOnKeyUp, keepHeight, formGroupStyle, inputGroupStyle}) => {
 
   const [vprops, nvalue]= valueOrDef(value, defaultValue)
   
@@ -18,7 +18,7 @@ const VInputTextRS = ({id, name, value, defaultValue, label, feedback, icon, inl
             checkValue      = {checkValue}
             allowedValues   = {allowedValues}
             disallowedValues= {disallowedValues}
-            checkValidityOnKeyup= {checkValidityOnKeyup}
+            checkValidityOnKeyUp= {checkValidityOnKeyUp}
             render  = {({valid, message}, inputRef) => 
               <VInputAddon name        = {name}
                           label       = {label}
@@ -66,7 +66,8 @@ VInputTextRS.propTypes = {
 }
 
 VInputTextRS.defaultProps = {
-  icon: 'text'
+  icon: 'text',
+  checkValidityOnKeyUp: true
 }
 
 export default VInputTextRS

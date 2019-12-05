@@ -12,7 +12,8 @@ delete VInputEmailRS.propTypes['inputType']
 
 VInputEmailRS.defaultProps = {
   icon: 'email',
-  label: 'E-Mail'
+  label: 'E-Mail',
+  checkValidityOnKeyUp: true
 }
 
 

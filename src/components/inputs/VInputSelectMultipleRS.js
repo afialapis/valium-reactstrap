@@ -80,7 +80,8 @@ VInputSelectMultipleRS.propTypes = {
 }
 
 VInputSelectMultipleRS.defaultProps = {
-  icon: 'list'
+  icon: 'list',
+  checkValidityOnKeyUp: true
 }
 
 

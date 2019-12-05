@@ -7,7 +7,7 @@ import VInputTypes  from './common/VInputTypes'
 import valueOrDef   from './common/valueOrDef'
 
 const VInputColorRS = ({id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, autocomplete,
-                      required, checkValue, allowedValues, disallowedValues, onChange, checkValidityOnKeyup, keepHeight, formGroupStyle, inputGroupStyle}) => {
+                      required, checkValue, allowedValues, disallowedValues, onChange, checkValidityOnKeyUp, keepHeight, formGroupStyle, inputGroupStyle}) => {
 
   const [vprops, nvalue]= valueOrDef(value, defaultValue)
   
@@ -17,7 +17,7 @@ const VInputColorRS = ({id, name, value, defaultValue, label, feedback, icon, in
             checkValue           = {checkValue}
             allowedValues        = {allowedValues}
             disallowedValues     = {disallowedValues}
-            checkValidityOnKeyup = {checkValidityOnKeyup}
+            checkValidityOnKeyUp = {checkValidityOnKeyUp}
             render  = {({valid, message}, inputRef) => 
               <VInputAddon name          = {name}
                           label          = {label}
@@ -54,7 +54,8 @@ VInputColorRS.propTypes = {
 }
 
 VInputColorRS.defaultProps = {
-  icon: 'color'
+  icon: 'color',
+  checkValidityOnKeyUp: true
 }
 
 

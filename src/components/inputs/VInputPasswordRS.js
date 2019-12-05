@@ -13,7 +13,8 @@ delete VInputPasswordRS.propTypes['inputType']
 
 VInputPasswordRS.defaultProps = {
   icon: 'password',
-  label: 'Password'
+  label: 'Password',
+  checkValidityOnKeyUp: true
 }
 
 export default VInputPasswordRS

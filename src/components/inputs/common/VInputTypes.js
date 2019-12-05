@@ -18,7 +18,7 @@ const VInputTypes = {
   checkValue          : PropTypes.Promise || PropTypes.func,
   allowedValues       : PropTypes.arrayOf(PropTypes.any),
   disallowedValues    : PropTypes.arrayOf(PropTypes.any),
-  checkValidityOnKeyup: PropTypes.bool,
+  checkValidityOnKeyUp: PropTypes.bool,
   onChange            : PropTypes.func,
   keepHeight          : PropTypes.bool,
   formGroupStyle      : PropTypes.object,

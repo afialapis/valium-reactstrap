@@ -106,7 +106,8 @@ VInputDateRS.propTypes = {
 
 VInputDateRS.defaultProps = {
   icon       : 'calendar',
-  toISOString: _toISOString
+  toISOString: _toISOString,
+  checkValidityOnKeyUp: true
 }
 
 
