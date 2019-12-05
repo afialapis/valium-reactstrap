@@ -1,6 +1,6 @@
 {
   "name": "valium-reactstrap",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "A Valium implementation for Reactstrap",
   "author": "Donato Lorenzo <donato@afialapis.com>",
   "contributors": [
@@ -23,12 +23,18 @@
     "lint": "eslint src",
     "test": "karma start test/karma.conf.js",
     "test-run": "karma start test/karma.conf.js --no-single-run",
-    "build": "babel src -d lib",
+    "clean-lib": "rimraf lib && mkdir lib",
+    "build-lib-css": "node_modules/node-sass/bin/node-sass src/assets/style.scss lib/style.css",
+    "build-lib-js": "babel src -d lib",
+    "lib": "npm run clean-lib && npm run build-lib-js && npm run build-lib-css",
     "clean-dist": "rimraf dist && mkdir dist",
-    "build-dist": "webpack",
-    "build-dist-min": "NODE_ENV=production webpack",
-    "dist": "npm run clean-dist && npm run build-dist && npm run build-dist-min",
-    "prepublish": "npm run test && npm run build && npm run dist",
+    "build-dist-css": "node_modules/node-sass/bin/node-sass src/assets/style.scss dist/style.css",
+    "build-dist-css-min": "node_modules/node-sass/bin/node-sass src/assets/style.scss dist/style.min.css --output-style compressed",
+    "build-dist-js": "webpack",
+    "build-dist-js-min": "NODE_ENV=production webpack",
+    "dist": "npm run clean-dist && npm run build-dist-js && npm run build-dist-js-min && npm run build-dist-css && npm run build-dist-css-min",
+    "clean": "npm run clean-lib && npm run clean-dist",
+    "prepublish": "npm run test && npm run lib && npm run dist",
     "demo": "NODE_ENV=development node demo/server"
   },
   "keywords": [

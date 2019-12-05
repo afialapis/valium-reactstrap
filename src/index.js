@@ -14,8 +14,6 @@ import VInputSelectRS   from './components/inputs/VInputSelectRS'
 import VInputSelectMultipleRS from './components/inputs/VInputSelectMultipleRS'
 import VInputSelectSearchRS   from './components/inputs/VInputSelectSearchRS'
 import VInputFileRS           from './components/inputs/VInputFileRS'
-
-import './assets/scss/style.scss'
  
 export {VFormRS, VInputTextRS, VInputEmailRS, VInputUrlRS, VInputPasswordRS, VInputTextAreaRS, 
         VInputNumberRS, VInputDateRS, VInputTimeRS, VInputColorRS, VInputCheckboxRS, VInputSelectRS, VInputSelectMultipleRS, VInputSelectSearchRS, VInputFileRS}
