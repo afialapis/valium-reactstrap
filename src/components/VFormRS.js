@@ -5,54 +5,74 @@ import VIcon            from './icons'
 import { Button }       from 'reactstrap'
 
 
-const VFormRSButtons = ({onSave, onCancel, colors, icons, labels, disabled}) => 
-  <div className="valium-reactstrap-buttons">
-    {onCancel!=undefined
-      ? <Button color   = {colors ? colors[0] : 'secondary'}
-                onClick = {(ev) => onCancel(ev)}>
-          <VIcon icon  = {icons[0]}/>
-          {labels ? labels[0] : 'Cancelar'}
-        </Button>
-      : null
-    }
-    {onSave!=undefined
-      ? <Button color   = {colors ? colors[1] : 'primary'}
-              onClick = {(ev) => onSave(ev)}
-              disabled= {disabled != undefined ? disabled : false}>
-          <VIcon icon  = {icons[1]}/>
-          {labels ? labels[1] : 'Guardar'}
-        </Button>
-      : null
-    }
-  </div>  
+const VFormRSButtons = ({onSave, onCancel, colors, icons, labels, autoDisable, disabled, valid, elements}) => {
+  const isDisabled= autoDisable
+    ? !valid
+    : (
+      typeof disabled=="function"
+        ? disabled(valid, elements)
+        : disabled
+    )
+
+  return (
+    <div className="valium-reactstrap-buttons">
+      {onCancel!=undefined
+        ? <Button color   = {colors ? colors[0] : 'secondary'}
+                  onClick = {(ev) => onCancel(ev)}>
+            <VIcon icon  = {icons[0]}/>
+            {labels ? labels[0] : 'Cancelar'}
+          </Button>
+        : null
+      }
+      {onSave!=undefined
+        ? <Button color  = {colors ? colors[1] : 'primary'}
+                onClick  = {(ev) => onSave(ev)}
+                disabled = {isDisabled}>
+            <VIcon icon  = {icons[1]}/>
+            {labels ? labels[1] : 'Guardar'}
+          </Button>
+        : null
+      }
+    </div> 
+  )
+}
 
 
-const VFormRS = ({children, className, onSave, onCancel, colors, icons, labels}) => 
+const VFormRS = ({renderInputs, className, onSave, onCancel, colors, icons, labels, autoDisable, disabled}) => 
    <VForm className    = {className || "valium-reactstrap"}
-          renderButtons= {({valid, _elements}) => 
-            <VFormRSButtons onSave  ={onSave}
-                            onCancel={onCancel}
-                            colors  ={colors}
-                            icons   ={icons}
-                            labels  ={labels}
-                            disabled={! valid}/>
-          }>
-      {children}
-   </VForm>
+          renderInputs = {renderInputs}
+          renderButtons= {(valid, elements) => 
+            <VFormRSButtons onSave     = {(ev) => onSave(ev, valid, elements)}
+                            onCancel   = {(ev) => onCancel(ev, valid, elements)}
+                            colors     = {colors}
+                            icons      = {icons}
+                            labels     = {labels}
+                            autoDisable= {autoDisable}
+                            disabled   = {disabled}
+                            valid      = {valid}
+                            elements   = {elements}/>}
+    />
 
+/*renderInputs={(formUpdate) => {
+      return children.map((ch) => React.cloneElement(ch, {formUpdate: formUpdate, key: ch.name}))
+    }}*/
 
 VFormRS.propTypes = {
   className    : PropTypes.string,
-  children     : PropTypes.oneOfType([PropTypes.object, PropTypes.arrayOf(PropTypes.object)]),
+  //children     : PropTypes.oneOfType([PropTypes.object, PropTypes.arrayOf(PropTypes.object)]),
+  renderInputs : PropTypes.func,
   colors       : PropTypes.arrayOf(PropTypes.string),
-  icons        : PropTypes.arrayOf(PropTypes.string),
+  icons        : PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.element, PropTypes.func])),
   labels       : PropTypes.arrayOf(PropTypes.string),
   onSave       : PropTypes.func,
   onCancel     : PropTypes.func,
+  autoDisable  : PropTypes.bool,
+  disabled     : PropTypes.oneOfType([PropTypes.bool, PropTypes.func])
 }
 
 VFormRS.defaultProps = {
-  icons : ['ban', 'save']
+  icons      : ['ban', 'save'],
+  autoDisable: true
 }
 
 

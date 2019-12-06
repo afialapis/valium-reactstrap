@@ -50,7 +50,7 @@ class VInputDateRS extends React.Component {
 
   render() {
 
-    const {id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, autocomplete,
+    const {formUpdate, id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, autocomplete,
                       required, checkValue, allowedValues, disallowedValues, keepHeight, formGroupStyle, inputGroupStyle} = this.props
 
     const [vprops, nvalue]= valueOrDef(this.props.toISOString(value), this.props.toISOString(defaultValue))
@@ -67,6 +67,7 @@ class VInputDateRS extends React.Component {
               allowedValues   = {allowedValues}
               disallowedValues= {disallowedValues}
               bindSetValidity = {(f) => this.setState({setValidity: f})}
+              formUpdate      = {formUpdate}
               render  = {({valid, message}, inputRef) => 
                 <VInputAddon name        = {name}
                             label         = {label}

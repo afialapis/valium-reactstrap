@@ -128,7 +128,7 @@ class VInputFileRS extends React.Component {
   }
   
   render() {
-    const {id, name, value, defaultValue, label, icon, inline, readOnly, 
+    const {formUpdate, id, name, value, defaultValue, label, icon, inline, readOnly, 
            required, feedback, checkValue, allowedValues, disallowedValues, checkValidityOnKeyUp, keepHeight, formGroupStyle, inputGroupStyle}= this.props
 
     
@@ -142,6 +142,7 @@ class VInputFileRS extends React.Component {
               allowedValues   = {allowedValues}
               disallowedValues= {disallowedValues}
               checkValidityOnKeyUp= {checkValidityOnKeyUp}
+              formUpdate      = {formUpdate}
               render  = {({valid, message}, inputRef) => 
                 <>
                   <VInputAddon name        = {name}

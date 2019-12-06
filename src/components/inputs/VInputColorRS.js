@@ -6,7 +6,7 @@ import {Input}      from 'reactstrap'
 import VInputTypes  from './common/VInputTypes'
 import valueOrDef   from './common/valueOrDef'
 
-const VInputColorRS = ({id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, autocomplete,
+const VInputColorRS = ({formUpdate, id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, autocomplete,
                       required, checkValue, allowedValues, disallowedValues, onChange, checkValidityOnKeyUp, keepHeight, formGroupStyle, inputGroupStyle}) => {
 
   const [vprops, nvalue]= valueOrDef(value, defaultValue)
@@ -18,6 +18,7 @@ const VInputColorRS = ({id, name, value, defaultValue, label, feedback, icon, in
             allowedValues        = {allowedValues}
             disallowedValues     = {disallowedValues}
             checkValidityOnKeyUp = {checkValidityOnKeyUp}
+            formUpdate           = {formUpdate}
             render  = {({valid, message}, inputRef) => 
               <VInputAddon name          = {name}
                           label          = {label}

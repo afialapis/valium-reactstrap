@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import {Container, Row, Col} from 'reactstrap'
-import {VFormRS, VInputTextRS, VInputEmailRS, VInputUrlRS, VInputPasswordRS, VInputTextAreaRS,
-        VInputNumberRS, VInputDateRS, VInputTimeRS, VInputColorRS, 
-        VInputCheckboxRS, VInputSelectRS, VInputSelectMultipleRS, VInputSelectSearchRS, VInputFileRS} from '../../src'
+import {VForm, VInputText, VInputEmail, VInputUrl, VInputPassword, VInputTextArea,
+        VInputNumber, VInputDate, VInputTime, VInputColor, 
+        VInputCheckbox, VInputSelect, VInputSelectMultiple, VInputSelectSearch, VInputFile} from '../../src'
 
 const VFormReactstrap = () => {
 
@@ -26,15 +26,19 @@ const VFormReactstrap = () => {
   const [afile, setAfile] = useState([])
   
 
-  const onCancel = ev => {
+  const onCancel = (ev, valid, elements) => {
     console.log('Cancelling...')
     console.log(ev)
+    console.log(valid)
+    console.log(elements)
   }
   
 
-  const onSubmit = ev => {
+  const onSubmit = (ev, valid, elements) => {
     console.log('Submitting...')
     console.log(ev)
+    console.log(valid)
+    console.log(elements)
   }
   
 
@@ -46,7 +50,7 @@ const VFormReactstrap = () => {
 
       <Row style={{margin: "1em 0"}}>
         <span style={{marginRight: "2em"}}>Some options: </span>
-        <VInputCheckboxRS
+        <VInputCheckbox
                 id               = 'props_keep'
                 name             = 'props_keep'
                 value            = {keepHeight}
@@ -56,7 +60,7 @@ const VFormReactstrap = () => {
                 inline           = {true}
                 formGroupStyle   = {{marginRight: "2em"}}
             /> 
-        <VInputCheckboxRS
+        <VInputCheckbox
                 id               = 'show_addon'
                 name             = 'show_addon'
                 value            = {showAddon}
@@ -66,7 +70,7 @@ const VFormReactstrap = () => {
                 inline           = {true}
                 formGroupStyle   = {{marginRight: "2em"}}
             />   
-        <VInputCheckboxRS
+        <VInputCheckbox
                 id               = 'key_up'
                 name             = 'key_up'
                 value            = {keyUp}
@@ -84,11 +88,19 @@ const VFormReactstrap = () => {
         }
       </Row>
       <Row>
-        <VFormRS onSave  = {onSubmit} 
-                onCancel= {onCancel}>
+        <VForm  onSave  = {onSubmit} 
+                onCancel= {onCancel}
+                autoDisable= {false}
+                disabled = {(v,e) => {
+                        console.log('CHECK DISABLED')
+                        console.log(v)
+                        console.log(e)
+                }}
+                renderInputs= {(formUpdate) => 
             <Row>
             <Col sm="12" md="6" lg="4">
-                <VInputTextRS
+                <VInputText
+                        formUpdate          = {formUpdate}
                         name                = 'atext'
                         disallowedValues    = {["NOT"]}
                         defaultValue        = {atext}
@@ -100,7 +112,8 @@ const VFormReactstrap = () => {
                         {... !showAddon && {icon: null}}
                         
                 />
-                <VInputEmailRS
+                <VInputEmail
+                        formUpdate          = {formUpdate}
                         name                = 'aemail'
                         value               = {aemail}
                         required            = {false}
@@ -109,7 +122,8 @@ const VFormReactstrap = () => {
                         keepHeight          = {keepHeight}
                         {... !showAddon && {icon: null}}
                 /> 
-                <VInputUrlRS
+                <VInputUrl
+                        formUpdate          = {formUpdate}
                         name                = 'aurl'
                         value               = {aurl}
                         required            = {false}
@@ -118,7 +132,8 @@ const VFormReactstrap = () => {
                         keepHeight          = {keepHeight}
                         {... !showAddon && {icon: null}}                  
                 /> 
-                <VInputPasswordRS
+                <VInputPassword
+                        formUpdate          = {formUpdate}
                         name                = 'apwd'
                         value               = {apwd}
                         required            = {true}
@@ -128,7 +143,8 @@ const VFormReactstrap = () => {
                         keepHeight          = {keepHeight}
                         {... !showAddon && {icon: null}}
                 />
-                <VInputTextAreaRS
+                <VInputTextArea
+                        formUpdate          = {formUpdate}
                         name                = 'aarea'
                         value               = {aarea}
                         required            = {false}
@@ -140,8 +156,9 @@ const VFormReactstrap = () => {
                         {... !showAddon && {icon: null}}
                 />                   
             </Col>
-            <Col sm="12" md="6" lg="4">                
-                <VInputNumberRS
+            <Col sm="12" md="6" lg="4"> 
+                <VInputNumber
+                        formUpdate          = {formUpdate}
                         name                = 'anumber'
                         value               = {anumber}
                         required            = {false}
@@ -151,7 +168,8 @@ const VFormReactstrap = () => {
                         keepHeight          = {keepHeight}
                         {... !showAddon && {icon: null}}
                 /> 
-                <VInputDateRS
+                <VInputDate
+                        formUpdate          = {formUpdate}
                         name                = 'adate'
                         value               = {adate}
                         required            = {false}
@@ -162,7 +180,8 @@ const VFormReactstrap = () => {
                         disallowedValues    = {["31/12/2019"]}
                         {... !showAddon && {icon: null}}
                 /> 
-                <VInputTimeRS
+                <VInputTime
+                        formUpdate          = {formUpdate}
                         name                = 'atime'
                         value               = {atime}
                         required            = {false}
@@ -172,7 +191,8 @@ const VFormReactstrap = () => {
                         keepHeight          = {keepHeight}
                         {... !showAddon && {icon: null}}
                 />
-                <VInputColorRS
+                <VInputColor
+                        formUpdate          = {formUpdate}
                         name                = 'acolor'
                         value               = {acolor}
                         required            = {false}
@@ -183,7 +203,8 @@ const VFormReactstrap = () => {
                         keepHeight          = {keepHeight}
                         {... !showAddon && {icon: null}}
                 />
-                <VInputFileRS
+                <VInputFile
+                        formUpdate          = {formUpdate}
                         name                = 'afile'
                         value               = {afile}
                         required            = {false}
@@ -194,7 +215,8 @@ const VFormReactstrap = () => {
                 />
             </Col>
             <Col sm="12" md="6" lg="4">
-                <VInputSelectRS
+                <VInputSelect
+                        formUpdate          = {formUpdate}
                         name             = 'aselect'
                         value            = {aselect}
                         required         = {false}
@@ -212,7 +234,8 @@ const VFormReactstrap = () => {
                         keepHeight       = {keepHeight}
                         {... !showAddon && {icon: null}}
                 /> 
-                <VInputSelectSearchRS
+                <VInputSelectSearch
+                        formUpdate          = {formUpdate}
                         name             = 'asearch'
                         value            = {asearch}
                         required         = {false}
@@ -230,7 +253,8 @@ const VFormReactstrap = () => {
                         keepHeight       = {keepHeight}
                         {... !showAddon && {icon: null}}
                 />                 
-                <VInputSelectMultipleRS
+                <VInputSelectMultiple
+                        formUpdate          = {formUpdate}
                         name             = 'aselectmu'
                         value            = {aselectmu}
                         required         = {false}
@@ -260,7 +284,8 @@ const VFormReactstrap = () => {
                         keepHeight          = {keepHeight}
                         {... !showAddon && {icon: null}}
                 />
-                <VInputCheckboxRS
+                <VInputCheckbox
+                        formUpdate          = {formUpdate}
                         name                = 'acheck'
                         value               = {acheck}
                         required            = {false}
@@ -273,8 +298,9 @@ const VFormReactstrap = () => {
                         {... !showAddon && {icon: null}}
                 />
             </Col>
-            </Row>            
-        </VFormRS>
+            </Row>
+          }>
+        </VForm>
       </Row>
     </Container>
   );

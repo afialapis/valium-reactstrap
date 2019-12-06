@@ -7,7 +7,7 @@ import VInputTypes  from './common/VInputTypes'
 import valueOrDef   from './common/valueOrDef'
 
 
-const VInputTimeRS = ({id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, autocomplete,
+const VInputTimeRS = ({formUpdate, id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, autocomplete,
                       required, checkValue, allowedValues, disallowedValues, onChange, checkValidityOnKeyUp, keepHeight, formGroupStyle, inputGroupStyle}) => {
 
   const [vprops, nvalue]= valueOrDef(value, defaultValue)
@@ -19,6 +19,7 @@ const VInputTimeRS = ({id, name, value, defaultValue, label, feedback, icon, inl
             allowedValues   = {allowedValues}
             disallowedValues= {disallowedValues}
             checkValidityOnKeyUp= {checkValidityOnKeyUp}
+            formUpdate      = {formUpdate}
             render  = {({valid, message}, inputRef) => 
               <VInputAddon name        = {name}
                           label       = {label}

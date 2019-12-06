@@ -1,6 +1,7 @@
 import PropTypes    from 'prop-types'
 
 const VInputTypes = {
+  formUpdate          : PropTypes.func.isRequired,
   id                  : PropTypes.string,
   name                : PropTypes.string.isRequired,
   value               : function(props, _propName, _componentName) {

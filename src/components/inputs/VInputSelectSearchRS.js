@@ -106,7 +106,7 @@ class VInputSelectSearchRS extends React.Component {
   }
 
   render() {
-    const {id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, autocomplete,
+    const {formUpdate, id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, autocomplete,
           required, checkValue, allowedValues, disallowedValues, keepHeight, formGroupStyle, inputGroupStyle}= this.props
 
     const [vprops, nvalue]= valueOrDef(value, defaultValue)
@@ -119,6 +119,7 @@ class VInputSelectSearchRS extends React.Component {
               allowedValues   = {allowedValues}
               disallowedValues= {disallowedValues}
               bindSetValidity = {(f) => this.setState({setValidity: f})}
+              formUpdate      = {formUpdate}
               render          = {({valid, message}, inputRef) => 
               <div className="valium-reactstrap-select-search"
                     ref = {this.wrapperRef}>
