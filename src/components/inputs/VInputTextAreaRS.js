@@ -12,7 +12,7 @@ delete VInputTextAreaRS.propTypes['inputType']
 
 VInputTextAreaRS.defaultProps = {
   icon: 'text',
-  checkValidityOnKeyUp: true
+  prematureValidation: true
 }
 
 

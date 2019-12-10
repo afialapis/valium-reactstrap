@@ -53,13 +53,8 @@ const VFormRS = ({renderInputs, className, onSave, onCancel, colors, icons, labe
                             elements   = {elements}/>}
     />
 
-/*renderInputs={(formUpdate) => {
-      return children.map((ch) => React.cloneElement(ch, {formUpdate: formUpdate, key: ch.name}))
-    }}*/
-
 VFormRS.propTypes = {
   className    : PropTypes.string,
-  //children     : PropTypes.oneOfType([PropTypes.object, PropTypes.arrayOf(PropTypes.object)]),
   renderInputs : PropTypes.func,
   colors       : PropTypes.arrayOf(PropTypes.string),
   icons        : PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.element, PropTypes.func])),

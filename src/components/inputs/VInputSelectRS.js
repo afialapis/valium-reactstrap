@@ -1,16 +1,17 @@
-import React       from 'react'
+import React, {useRef}       from 'react'
 import PropTypes   from 'prop-types'
 import VInputAddon from './VInputAddon'
 import {VInput}    from 'valium'
-import {Input}     from 'reactstrap'
+import {Input, InputGroupAddon, InputGroupText}     from 'reactstrap'
 import VInputTypes from './common/VInputTypes'
 import valueOrDef   from './common/valueOrDef'
 
 
 
-const VInputSelectRS = ({formUpdate, id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, autocomplete,
-                      required, checkValue, allowedValues, disallowedValues, onChange, options, keepHeight, formGroupStyle, inputGroupStyle}) => {
+const VInputSelectRS = ({formActions, id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, autocomplete,
+                      required, checkValue, allowedValues, disallowedValues, onChange, options, keepHeight, formGroupStyle, inputGroupStyle, clearable}) => {
 
+  const setValidity= useRef(undefined)
   const [vprops, nvalue]= valueOrDef(value, defaultValue)
   
   const sdisallowedValues= disallowedValues!=undefined ? disallowedValues.map((v) => v.toString()) : []
@@ -24,13 +25,22 @@ const VInputSelectRS = ({formUpdate, id, name, value, defaultValue, label, feedb
     })
   }
 
+  const clear = (inputRef) => {
+    inputRef.current.value= ''
+    setValidity.current()
+    if (onChange!=undefined) {
+      onChange('')
+    }
+  }
+
   return (
     <VInput type            = {"select"} 
             feedback        = {feedback} 
             checkValue      = {checkValue}
             allowedValues   = {allowedValues}
             disallowedValues= {disallowedValues}
-            formUpdate      = {formUpdate}
+            formActions     = {formActions}
+            bindSetValidity = {(f) => {setValidity.current= f}}
             render          = {({valid, message}, inputRef) => 
             <VInputAddon name        = {name}
                         label       = {label}
@@ -42,6 +52,7 @@ const VInputSelectRS = ({formUpdate, id, name, value, defaultValue, label, feedb
                         keepHeight  = {keepHeight}
                         formGroupStyle = {formGroupStyle}
                         inputGroupStyle= {inputGroupStyle}>
+
               <Input    id          = {id}
                         name        = {name}
                         type        = "select"
@@ -63,7 +74,21 @@ const VInputSelectRS = ({formUpdate, id, name, value, defaultValue, label, feedb
                     {opt.label}
                   </option>
                 )}
+                {clearable
+                 ? <option style={{display: "none"}} value=""></option>
+                 : null}
               </Input>
+              {clearable
+               ?  <InputGroupAddon onClick  = {() => {readOnly ? null : clear(inputRef)}}
+                                  style    = {{cursor:(nvalue && !readOnly) ? 'pointer' : 'not-allowed'}}
+                                  addonType= "append">
+                    <InputGroupText
+                                style={{opacity: (nvalue && !readOnly) ? 1 : 0.5}}>
+                      {"x"}
+                    </InputGroupText>
+                  </InputGroupAddon>  
+                : null
+              }            
             </VInputAddon>
             }
     />
@@ -77,11 +102,12 @@ VInputSelectRS.propTypes = {
   placeholder : PropTypes.string,
   options     : PropTypes.object,
   autocomplete: PropTypes.oneOf(["on", "off"]),
+  clearable   : PropTypes.bool
 }
 
 VInputSelectRS.defaultProps = {
   icon: 'list',
-  checkValidityOnKeyUp: true
+  prematureValidation: true
 }
 
 export default VInputSelectRS

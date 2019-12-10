@@ -7,8 +7,8 @@ import VInputTypes  from './common/VInputTypes'
 import valueOrDef   from './common/valueOrDef'
 
 
-const VInputTimeRS = ({formUpdate, id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, autocomplete,
-                      required, checkValue, allowedValues, disallowedValues, onChange, checkValidityOnKeyUp, keepHeight, formGroupStyle, inputGroupStyle}) => {
+const VInputTimeRS = ({formActions, id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, autocomplete,
+                      required, checkValue, allowedValues, disallowedValues, onChange, prematureValidation, keepHeight, formGroupStyle, inputGroupStyle}) => {
 
   const [vprops, nvalue]= valueOrDef(value, defaultValue)
   
@@ -18,8 +18,8 @@ const VInputTimeRS = ({formUpdate, id, name, value, defaultValue, label, feedbac
             checkValue      = {checkValue}
             allowedValues   = {allowedValues}
             disallowedValues= {disallowedValues}
-            checkValidityOnKeyUp= {checkValidityOnKeyUp}
-            formUpdate      = {formUpdate}
+            prematureValidation= {prematureValidation}
+            formActions     = {formActions}
             render  = {({valid, message}, inputRef) => 
               <VInputAddon name        = {name}
                           label       = {label}
@@ -59,7 +59,7 @@ VInputTimeRS.propTypes = {
 
 VInputTimeRS.defaultProps = {
   icon: 'time',
-  checkValidityOnKeyUp: true
+  prematureValidation: true
 }
 
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import {Container, Row, Col} from 'reactstrap'
+import {Container, Row, Col, CustomInput} from 'reactstrap'
 import {VForm, VInputText, VInputEmail, VInputUrl, VInputPassword, VInputTextArea,
         VInputNumber, VInputDate, VInputTime, VInputColor, 
         VInputCheckbox, VInputSelect, VInputSelectMultiple, VInputSelectSearch, VInputFile} from '../../src'
@@ -8,7 +8,7 @@ const VFormReactstrap = () => {
 
   const [keepHeight, setKeepHeight]=  useState(true)
   const [showAddon, setShowAddon]=  useState(true)
-  const [keyUp, setKeyUp]=  useState(false)
+  const [premature, setPremature]=  useState(false)
 
   const [atext, setAtext] = useState("I won't take NOT for an answer")
   const [aemail, setAemail] = useState('info@afialapis.com')
@@ -20,7 +20,7 @@ const VFormReactstrap = () => {
   const [atime, setAtime] = useState('11:45')
   const [acolor, setAcolor] = useState('#F5F5F5')
   const [acheck, setAcheck] = useState(false)
-  const [aselect, setAselect] = useState(1)
+  const [aselect, setAselect] = useState('1')
   const [aselectmu, _setAselectmu] = useState([])
   const [asearch, setAsearch] = useState('3')
   const [afile, setAfile] = useState([])
@@ -50,37 +50,37 @@ const VFormReactstrap = () => {
 
       <Row style={{margin: "1em 0"}}>
         <span style={{marginRight: "2em"}}>Some options: </span>
-        <VInputCheckbox
+        <CustomInput
                 id               = 'props_keep'
                 name             = 'props_keep'
-                value            = {keepHeight}
-                onChange         = {(v) => setKeepHeight(v)}
-                label            = {undefined}
-                description      = "Keep Height"
+                type             = "switch"
+                checked          = {keepHeight}
+                onChange         = {(ev) => setKeepHeight(ev.target.checked)}
+                label            = "Keep Height"
                 inline           = {true}
-                formGroupStyle   = {{marginRight: "2em"}}
+                style            = {{marginRight: "2em"}}
             /> 
-        <VInputCheckbox
+        <CustomInput
                 id               = 'show_addon'
                 name             = 'show_addon'
-                value            = {showAddon}
-                onChange         = {(v) => setShowAddon(v)}
-                label            = {undefined}
-                description      = "Show Addons"
+                type             = "switch"
+                checked          = {showAddon}
+                onChange         = {(ev) => setShowAddon(ev.target.checked)}
+                label            = "Show Addons"
                 inline           = {true}
-                formGroupStyle   = {{marginRight: "2em"}}
+                style            = {{marginRight: "2em"}}
             />   
-        <VInputCheckbox
+        <CustomInput
                 id               = 'key_up'
                 name             = 'key_up'
-                value            = {keyUp}
-                onChange         = {(v) => setKeyUp(v)}
-                label            = {undefined}
-                description      = "Validate on KeyUp"
+                type             = "switch"
+                checked          = {premature}
+                onChange         = {(ev) => setPremature(ev.target.checked)}
+                label            = "Premature Validation"
                 inline           = {true}
-                formGroupStyle   = {{marginRight: "1em"}}
+                style            = {{marginRight: "1em"}}
             /> 
-        {keyUp ?
+        {premature ?
          <span style={{fontStyle: "italic", fontSize: "0.8em", marginRight: "2em"}}>
            * It only applies to some inputs
          </span>                           
@@ -90,65 +90,67 @@ const VFormReactstrap = () => {
       <Row>
         <VForm  onSave  = {onSubmit} 
                 onCancel= {onCancel}
-                autoDisable= {false}
+                autoDisable= {true}
+                /*
                 disabled = {(v,e) => {
                         console.log('CHECK DISABLED')
                         console.log(v)
                         console.log(e)
                 }}
-                renderInputs= {(formUpdate) => 
+                */
+                renderInputs= {(formActions) => 
             <Row>
             <Col sm="12" md="6" lg="4">
                 <VInputText
-                        formUpdate          = {formUpdate}
+                        formActions         = {formActions}
                         name                = 'atext'
                         disallowedValues    = {["NOT"]}
                         defaultValue        = {atext}
                         onChange            = {(v) => setAtext(v)}
                         required            = {true}
-                        checkValidityOnKeyUp= {keyUp}
+                        prematureValidation = {premature}
                         label               = 'Text'
                         keepHeight          = {keepHeight}
                         {... !showAddon && {icon: null}}
                         
                 />
                 <VInputEmail
-                        formUpdate          = {formUpdate}
+                        formActions         = {formActions}
                         name                = 'aemail'
                         value               = {aemail}
                         required            = {false}
-                        checkValidityOnKeyUp= {keyUp}
+                        prematureValidation = {premature}
                         onChange            = {(v) => setAemail(v)}
                         keepHeight          = {keepHeight}
                         {... !showAddon && {icon: null}}
                 /> 
                 <VInputUrl
-                        formUpdate          = {formUpdate}
+                        formActions         = {formActions}
                         name                = 'aurl'
                         value               = {aurl}
                         required            = {false}
-                        checkValidityOnKeyUp= {keyUp}
+                        prematureValidation = {premature}
                         onChange            = {(v) => setAurl(v)}
                         keepHeight          = {keepHeight}
                         {... !showAddon && {icon: null}}                  
                 /> 
                 <VInputPassword
-                        formUpdate          = {formUpdate}
+                        formActions         = {formActions}
                         name                = 'apwd'
                         value               = {apwd}
                         required            = {true}
-                        checkValidityOnKeyUp= {keyUp}
+                        prematureValidation = {premature}
                         onChange            = {(v) => setApwd(v)}
                         disallowedValues    = {["1234"]}
                         keepHeight          = {keepHeight}
                         {... !showAddon && {icon: null}}
                 />
                 <VInputTextArea
-                        formUpdate          = {formUpdate}
+                        formActions         = {formActions}
                         name                = 'aarea'
                         value               = {aarea}
                         required            = {false}
-                        checkValidityOnKeyUp= {keyUp}
+                        prematureValidation = {premature}
                         onChange            = {(v) => setAarea(v)}
                         disallowedValues    = {["NO"]}
                         label               = 'Area'
@@ -158,22 +160,22 @@ const VFormReactstrap = () => {
             </Col>
             <Col sm="12" md="6" lg="4"> 
                 <VInputNumber
-                        formUpdate          = {formUpdate}
+                        formActions         = {formActions}
                         name                = 'anumber'
                         value               = {anumber}
                         required            = {false}
-                        checkValidityOnKeyUp= {keyUp}
+                        prematureValidation = {premature}
                         onChange            = {(v) => setAnumber(v)}
                         label               = "A Number"
                         keepHeight          = {keepHeight}
                         {... !showAddon && {icon: null}}
                 /> 
                 <VInputDate
-                        formUpdate          = {formUpdate}
+                        formActions         = {formActions}
                         name                = 'adate'
                         value               = {adate}
                         required            = {false}
-                        checkValidityOnKeyUp= {keyUp}
+                        prematureValidation = {premature}
                         onChange            = {(v) => setAdate(v)}
                         label               = "A date"
                         keepHeight          = {keepHeight}
@@ -181,22 +183,22 @@ const VFormReactstrap = () => {
                         {... !showAddon && {icon: null}}
                 /> 
                 <VInputTime
-                        formUpdate          = {formUpdate}
+                        formActions         = {formActions}
                         name                = 'atime'
                         value               = {atime}
                         required            = {false}
-                        checkValidityOnKeyUp= {keyUp}
+                        prematureValidation = {premature}
                         onChange            = {(v) => setAtime(v)}
                         label               = "A time"
                         keepHeight          = {keepHeight}
                         {... !showAddon && {icon: null}}
                 />
                 <VInputColor
-                        formUpdate          = {formUpdate}
+                        formActions         = {formActions}
                         name                = 'acolor'
                         value               = {acolor}
                         required            = {false}
-                        checkValidityOnKeyUp= {keyUp}
+                        prematureValidation = {premature}
                         disallowedValues    = {["#000000", "#ffffff"]}
                         onChange            = {(v) => setAcolor(v)}
                         label               = "A color"
@@ -204,11 +206,11 @@ const VFormReactstrap = () => {
                         {... !showAddon && {icon: null}}
                 />
                 <VInputFile
-                        formUpdate          = {formUpdate}
+                        formActions         = {formActions}
                         name                = 'afile'
                         value               = {afile}
                         required            = {false}
-                        onChange            = {(v) => {console.log(v); setAfile(v)}}
+                        onChange            = {(v) => setAfile(v)}
                         label               = 'A file'
                         keepHeight          = {keepHeight}
                         {... !showAddon && {icon: null}}
@@ -216,11 +218,11 @@ const VFormReactstrap = () => {
             </Col>
             <Col sm="12" md="6" lg="4">
                 <VInputSelect
-                        formUpdate          = {formUpdate}
+                        formActions      = {formActions}
                         name             = 'aselect'
                         value            = {aselect}
                         required         = {false}
-                        onChange         = {(v) => {setAselect(parseInt(v)); console.log('Set select to ' + v)}}
+                        onChange         = {(v) => setAselect(v)}
                         label            = "A select"
                         options          = {{
                             1: 'One',
@@ -232,14 +234,15 @@ const VFormReactstrap = () => {
                         disallowedValues = {[2]}
                         allowedValues    = {[1, 2, 5]}
                         keepHeight       = {keepHeight}
+                        clearable        = {true}
                         {... !showAddon && {icon: null}}
-                /> 
+                />
                 <VInputSelectSearch
-                        formUpdate          = {formUpdate}
+                        formActions      = {formActions}
                         name             = 'asearch'
                         value            = {asearch}
                         required         = {false}
-                        onChange         = {(v) => {setAsearch(parseInt(v)); console.log('Set select to ' + v)}}
+                        onChange         = {(v) => setAsearch(v)}
                         label            = "A searchable select"
                         options          = {{
                             '1': 'One',
@@ -251,10 +254,11 @@ const VFormReactstrap = () => {
                         disallowedValues = {['2']}
                         allowedValues    = {['1', '2', '5']}
                         keepHeight       = {keepHeight}
+                        clearable        = {true}
                         {... !showAddon && {icon: null}}
-                />                 
+                />  
                 <VInputSelectMultiple
-                        formUpdate          = {formUpdate}
+                        formActions      = {formActions}
                         name             = 'aselectmu'
                         value            = {aselectmu}
                         required         = {false}
@@ -285,11 +289,11 @@ const VFormReactstrap = () => {
                         {... !showAddon && {icon: null}}
                 />
                 <VInputCheckbox
-                        formUpdate          = {formUpdate}
+                        formActions         = {formActions}
                         name                = 'acheck'
                         value               = {acheck}
                         required            = {false}
-                        checkValidityOnKeyUp= {keyUp}
+                        prematureValidation= {premature}
                         onChange            = {(v) => setAcheck(v)}
                         label               = "A check"
                         description         = "I will not accept it unchecked"

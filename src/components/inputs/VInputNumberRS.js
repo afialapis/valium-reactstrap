@@ -6,8 +6,8 @@ import {Input}     from 'reactstrap'
 import VInputTypes from './common/VInputTypes'
 import valueOrDef   from './common/valueOrDef'
 
-const VInputNumberRS = ({formUpdate, id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, autocomplete,
-                      required, max, min, pattern, step, checkValue, allowedValues, disallowedValues, onChange, checkValidityOnKeyUp, keepHeight, formGroupStyle, inputGroupStyle}) => {
+const VInputNumberRS = ({formActions, id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, autocomplete,
+                      required, max, min, pattern, step, checkValue, allowedValues, disallowedValues, onChange, prematureValidation, keepHeight, formGroupStyle, inputGroupStyle}) => {
 
   const [vprops, nvalue]= valueOrDef(value, defaultValue)
   
@@ -17,8 +17,8 @@ const VInputNumberRS = ({formUpdate, id, name, value, defaultValue, label, feedb
             checkValue      = {checkValue}
             allowedValues   = {allowedValues}
             disallowedValues= {disallowedValues}
-            checkValidityOnKeyUp= {checkValidityOnKeyUp}
-            formUpdate      = {formUpdate}
+            prematureValidation= {prematureValidation}
+            formActions     = {formActions}
             render  = {({valid, message}, inputRef) => 
               <VInputAddon name        = {name}
                           label       = {label}
@@ -66,7 +66,7 @@ VInputNumberRS.propTypes = {
 
 VInputNumberRS.defaultProps = {
   icon: 'dollar',
-  checkValidityOnKeyUp: true
+  prematureValidation: true
 }
 
 export default VInputNumberRS

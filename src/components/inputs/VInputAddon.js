@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useRef} from 'react'
 import {
   FormGroup,
   InputGroup,
@@ -21,51 +21,46 @@ const VInputFeedback = ({isValid, feedback, keepHeight}) => {
 }
 
 
-class VInputAddon extends React.Component {
+const VInputAddon = ({name, value, label, feedback, icon, isValid, children, inline, formClassName, keepHeight, formGroupStyle, inputGroupStyle, middleElement}) => {
 
-  constructor(props) {
-    super(props)
-    this.originalValue= props.value
-  }
+  const originalValue= useRef(value)
 
-  get hasChanged() {
-    return this.props.value != this.originalValue
-  }
-
-  render() {
-    let {name, label, feedback, icon, isValid, children, inline, formClassName, keepHeight, formGroupStyle, inputGroupStyle} = this.props
-
-    return (
-      <FormGroup className={` ${this.hasChanged ? 'is-unsaved' : ''} ${inline ? 'inline' : ''} ${formClassName || ''}`}
-                 style={formGroupStyle}>
-        {label!=undefined
-        ? <Label for={name}
-                 className="valium-reactstrap-label">
-            {label}
-          </Label>
-        : null
+  const hasChanged= (value != originalValue.current)
+  
+  return (
+    <FormGroup className={` ${hasChanged ? 'is-unsaved' : ''} ${inline ? 'inline' : ''} ${formClassName || ''}`}
+               style={formGroupStyle}>
+      {label!=undefined
+      ? <Label for={name}
+                className="valium-reactstrap-label">
+          {label}
+        </Label>
+      : null
+      }
+      <InputGroup style={inputGroupStyle}>
+        {icon==undefined
+          ? null
+          : 
+          <InputGroupAddon addonType="prepend" className="input-group-addon">
+            <InputGroupText>
+              <VIcon icon={icon}/>
+            </InputGroupText>
+          </InputGroupAddon>
         }
-        <InputGroup style={inputGroupStyle}>
-          {icon==undefined
-            ? null
-            : 
-            <InputGroupAddon addonType="prepend" className="input-group-addon">
-              <InputGroupText>
-                <VIcon icon={icon}/>
-              </InputGroupText>
-            </InputGroupAddon>
-          }
-          {children}
-        </InputGroup>
-        {(keepHeight || feedback) &&
-          <VInputFeedback isValid={isValid}
-                          feedback={feedback}
-                          keepHeight={keepHeight}
-                          />
-        }
-      </FormGroup>
-    )
-  }
+        {children}
+      </InputGroup>
+      {middleElement!=undefined
+       ? middleElement
+       : null
+      }
+      {(keepHeight || feedback) &&
+        <VInputFeedback isValid={isValid}
+                        feedback={feedback}
+                        keepHeight={keepHeight}
+                        />
+      }
+    </FormGroup>
+  )
 }
 
 

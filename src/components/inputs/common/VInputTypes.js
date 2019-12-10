@@ -1,7 +1,7 @@
 import PropTypes    from 'prop-types'
 
 const VInputTypes = {
-  formUpdate          : PropTypes.func.isRequired,
+  formActions         : PropTypes.object.isRequired,
   id                  : PropTypes.string,
   name                : PropTypes.string.isRequired,
   value               : function(props, _propName, _componentName) {
@@ -19,7 +19,7 @@ const VInputTypes = {
   checkValue          : PropTypes.Promise || PropTypes.func,
   allowedValues       : PropTypes.arrayOf(PropTypes.any),
   disallowedValues    : PropTypes.arrayOf(PropTypes.any),
-  checkValidityOnKeyUp: PropTypes.bool,
+  prematureValidation : PropTypes.bool,
   onChange            : PropTypes.func,
   keepHeight          : PropTypes.bool,
   formGroupStyle      : PropTypes.object,

@@ -5,8 +5,13 @@ const valueOrDefaultValue= (value, defaultValue) => {
     vprops.defaultValue= defaultValue
     nvalue= defaultValue
   } else {
-    vprops.value= value
-    nvalue= value
+    if (value!=undefined) {
+      vprops.value= value
+      nvalue= value
+    } else {
+      vprops.value= ''
+      nvalue= ''
+    }
   }
   return [vprops, nvalue]
 }

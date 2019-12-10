@@ -7,8 +7,8 @@ import VInputTypes  from './common/VInputTypes'
 import valueOrDef   from './common/valueOrDef'
 
 
-const VInputTextRS = ({formUpdate, id, name, value, defaultValue, label, feedback, icon, inline, inputType, placeholder, readOnly, autocomplete,
-                      required, maxLength, minLength, pattern, checkValue, allowedValues, disallowedValues, onChange, checkValidityOnKeyUp, keepHeight, formGroupStyle, inputGroupStyle}) => {
+const VInputTextRS = ({formActions, id, name, value, defaultValue, label, feedback, icon, inline, inputType, placeholder, readOnly, autocomplete,
+                      required, maxLength, minLength, pattern, checkValue, allowedValues, disallowedValues, onChange, prematureValidation, keepHeight, formGroupStyle, inputGroupStyle}) => {
 
   const [vprops, nvalue]= valueOrDef(value, defaultValue)
   
@@ -18,8 +18,8 @@ const VInputTextRS = ({formUpdate, id, name, value, defaultValue, label, feedbac
             checkValue      = {checkValue}
             allowedValues   = {allowedValues}
             disallowedValues= {disallowedValues}
-            checkValidityOnKeyUp= {checkValidityOnKeyUp}
-            formUpdate      = {formUpdate}
+            prematureValidation= {prematureValidation}
+            formActions     = {formActions}
             render  = {({valid, message}, inputRef) => 
               <VInputAddon name        = {name}
                           label       = {label}
@@ -68,7 +68,7 @@ VInputTextRS.propTypes = {
 
 VInputTextRS.defaultProps = {
   icon: 'text',
-  checkValidityOnKeyUp: true
+  prematureValidation: true
 }
 
 export default VInputTextRS
