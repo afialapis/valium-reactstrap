@@ -21,9 +21,11 @@ const VInputSelectSearchRS = ({formActions, id, name, value, defaultValue, optio
   // make options Map
   const optionsMap= []
   const sdisallowedValues= disallowedValues!=undefined ? disallowedValues.map((v) => v.toString()) : []
+  const sfilter= filter.toLowerCase() || ''
   for (const key in options) {
     const label= options[key]
-    if (label.includes(filter || '')) {
+    const match= sfilter.length>0 ? label.toLowerCase().includes(sfilter) : true
+    if (match) {
       optionsMap.push({
         value: key,
         label: label,
