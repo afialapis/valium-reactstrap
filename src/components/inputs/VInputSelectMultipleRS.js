@@ -25,6 +25,16 @@ const VInputSelectMultipleRS = ({formActions, id, name, value, defaultValue, lab
     })
   }
 
+  const handleChange= (ev) => {
+    if (onChange!=undefined) { 
+      const value= Array.prototype.slice.call(ev.target.options)
+        .filter((opt) => opt.selected)
+        .map((opt) => opt.value)
+      onChange(value)
+    }
+  }
+
+
   return (
     <VInput type = {"select-multiple"} 
             feedback        = {feedback} 
@@ -50,7 +60,7 @@ const VInputSelectMultipleRS = ({formActions, id, name, value, defaultValue, lab
                         multiple
                         innerRef    = {inputRef}
                         placeholder = {placeholder || ""}
-                        onChange    = {(event) => {if (onChange!=undefined) { return onChange(event.target.value)}}}
+                        onChange    = {(event) => handleChange(event)}
                         readOnly    = {readOnly!=undefined ? readOnly  : false}
                         required    = {required}
                         valid       = {nvalue!=undefined && nvalue!='' && valid}
@@ -81,8 +91,7 @@ VInputSelectMultipleRS.propTypes = {
 }
 
 VInputSelectMultipleRS.defaultProps = {
-  icon: 'list',
-  prematureValidation: true
+  icon: 'list'
 }
 
 

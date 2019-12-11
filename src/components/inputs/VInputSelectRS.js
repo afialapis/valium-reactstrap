@@ -106,8 +106,7 @@ VInputSelectRS.propTypes = {
 }
 
 VInputSelectRS.defaultProps = {
-  icon: 'list',
-  prematureValidation: true
+  icon: 'list'
 }
 
 export default VInputSelectRS

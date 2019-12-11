@@ -28,7 +28,7 @@ const ProgressBar = ({progress}) => {
 }
 
 const VInputFileRS = ({formActions, id, name, value, defaultValue, label, icon, inline, readOnly, 
-                       required, feedback, checkValue, allowedValues, disallowedValues, prematureValidation, 
+                       required, feedback, checkValue, allowedValues, disallowedValues, 
                        keepHeight, formGroupStyle, inputGroupStyle, onLoad, onChange}) => {
 
                        
@@ -120,7 +120,6 @@ const VInputFileRS = ({formActions, id, name, value, defaultValue, label, icon, 
             checkValue         = {checkValue}
             allowedValues      = {allowedValues}
             disallowedValues   = {disallowedValues}
-            prematureValidation= {prematureValidation}
             formActions        = {formActions}
             render  = {({valid, message}, inputRef) => 
                 <VInputAddon name        = {name}
@@ -165,8 +164,7 @@ VInputFileRS.propTypes = {
 
 VInputFileRS.defaultProps = {
   id: `valium-reactstrap-input-file-${instanceCount++}`,
-  icon : 'file',
-  prematureValidation: true
+  icon : 'file'
 }
 
 export default VInputFileRS

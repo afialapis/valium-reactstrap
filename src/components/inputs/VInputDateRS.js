@@ -27,7 +27,7 @@ const _toISOString = (value) => {
 }
 
 const VInputDateRS = ({formActions, id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, autocomplete,
-                      required, checkValue, allowedValues, disallowedValues, keepHeight, formGroupStyle, inputGroupStyle, toISOString, onChange}) => {
+                      required, checkValue, allowedValues, disallowedValues, keepHeight, formGroupStyle, inputGroupStyle, toISOString, onChange, prematureValidation}) => {
   
   const setValidity= useRef(undefined)
   
@@ -54,6 +54,7 @@ const VInputDateRS = ({formActions, id, name, value, defaultValue, label, feedba
             checkValue      = {checkValue}
             allowedValues   = {allowedValues}
             disallowedValues= {disallowedValues}
+            prematureValidation= {prematureValidation}
             bindSetValidity = {(f) => {setValidity.current= f}}
             formActions     = {formActions}
             render  = {({valid, message}, inputRef) => 
@@ -87,6 +88,7 @@ const VInputDateRS = ({formActions, id, name, value, defaultValue, label, feedba
 
 VInputDateRS.propTypes = {
   ...VInputTypes,
+  prematureValidation : PropTypes.bool,
   placeholder         : PropTypes.string,
   autocomplete        : PropTypes.oneOf(["on", "off"]),
   toISOString         : PropTypes.func

@@ -51,6 +51,7 @@ const VInputColorRS = ({formActions, id, name, value, defaultValue, label, feedb
 
 VInputColorRS.propTypes = {
   ...VInputTypes,
+  prematureValidation : PropTypes.bool,
   autocomplete : PropTypes.oneOf(["on", "off"]),
 }
 

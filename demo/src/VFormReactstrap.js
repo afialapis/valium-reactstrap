@@ -8,7 +8,7 @@ const VFormReactstrap = () => {
 
   const [keepHeight, setKeepHeight]=  useState(true)
   const [showAddon, setShowAddon]=  useState(true)
-  const [premature, setPremature]=  useState(false)
+  const [premature, setPremature]=  useState(true)
 
   const [atext, setAtext] = useState("I won't take NOT for an answer")
   const [aemail, setAemail] = useState('info@afialapis.com')
@@ -21,7 +21,7 @@ const VFormReactstrap = () => {
   const [acolor, setAcolor] = useState('#F5F5F5')
   const [acheck, setAcheck] = useState(false)
   const [aselect, setAselect] = useState('1')
-  const [aselectmu, _setAselectmu] = useState([])
+  const [aselectmu, setAselectmu] = useState([]) // useState(['1', '4'])
   const [asearch, setAsearch] = useState('3')
   const [afile, setAfile] = useState([])
   
@@ -262,19 +262,7 @@ const VFormReactstrap = () => {
                         name             = 'aselectmu'
                         value            = {aselectmu}
                         required         = {false}
-                        onChange         = {(v) => {
-                            const vi= parseInt(v)
-                            if (! isNaN(vi)) {
-                            const dx= aselectmu.indexOf(vi)
-                            if (dx>=0) {
-                                aselectmu.splice(dx, 1)
-                            } else {
-                                aselectmu.push(vi)
-                            }
-                            }
-
-                            console.log('MULTI CHANGE ' + v + ' ---- ' + aselectmu)
-                        }}
+                        onChange         = {(value) => setAselectmu(value)}
                         label            = "A multiple select"
                         options          = {{
                             1: 'One',
@@ -284,8 +272,8 @@ const VFormReactstrap = () => {
                             5: 'Five'
                         }}
                         disallowedValues = {[[2]]}
-                        allowedValues = {[[],[1, 2, 5]]}
-                        keepHeight          = {keepHeight}
+                        allowedValues    = {[[],[1, 3]]}
+                        keepHeight       = {keepHeight}
                         {... !showAddon && {icon: null}}
                 />
                 <VInputCheckbox

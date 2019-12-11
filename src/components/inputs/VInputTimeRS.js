@@ -53,6 +53,7 @@ const VInputTimeRS = ({formActions, id, name, value, defaultValue, label, feedba
 
 VInputTimeRS.propTypes = {
   ...VInputTypes,
+  prematureValidation : PropTypes.bool,
   placeholder  : PropTypes.string,
   autocomplete : PropTypes.oneOf(["on", "off"]),
 }

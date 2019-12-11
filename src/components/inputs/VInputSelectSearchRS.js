@@ -163,6 +163,7 @@ const VInputSelectSearchRS = ({formActions, id, name, value, defaultValue, optio
 VInputSelectSearchRS.propTypes = {
   ...VInputTypes,
 
+  prematureValidation : PropTypes.bool,
   placeholder  : PropTypes.string,
   options      : PropTypes.object,
   autocomplete : PropTypes.oneOf(["on", "off"]),

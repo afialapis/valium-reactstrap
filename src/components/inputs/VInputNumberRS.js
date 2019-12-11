@@ -56,6 +56,7 @@ const VInputNumberRS = ({formActions, id, name, value, defaultValue, label, feed
 
 VInputNumberRS.propTypes = {
   ...VInputTypes,
+  prematureValidation : PropTypes.bool,
   placeholder         : PropTypes.string,
   max                 : PropTypes.number,
   min                 : PropTypes.number,
