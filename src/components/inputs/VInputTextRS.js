@@ -57,7 +57,7 @@ const VInputTextRS = ({formActions, id, name, value, defaultValue, label, feedba
 
 VInputTextRS.propTypes = {
   ...VInputTypes,
-  
+
   prematureValidation : PropTypes.bool,  
   inputType    : PropTypes.string,
   placeholder  : PropTypes.string,

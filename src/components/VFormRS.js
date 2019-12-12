@@ -55,7 +55,7 @@ const VFormRS = ({renderInputs, className, onSave, onCancel, colors, icons, labe
 
 VFormRS.propTypes = {
   className    : PropTypes.string,
-  renderInputs : PropTypes.func,
+  renderInputs : PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
   colors       : PropTypes.arrayOf(PropTypes.string),
   icons        : PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.element, PropTypes.func])),
   labels       : PropTypes.arrayOf(PropTypes.string),
