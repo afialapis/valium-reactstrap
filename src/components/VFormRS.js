@@ -43,7 +43,7 @@ const VFormRS = ({renderInputs, className, onSave, onCancel, colors, icons, labe
           renderInputs = {renderInputs}
           renderButtons= {(valid, elements) => 
             <VFormRSButtons onSave     = {(ev) => onSave(ev, valid, elements)}
-                            onCancel   = {(ev) => onCancel(ev, valid, elements)}
+                            onCancel   = {onCancel!=undefined ? (ev) => onCancel(ev, valid, elements) : undefined}
                             colors     = {colors}
                             icons      = {icons}
                             labels     = {labels}
