@@ -9,7 +9,7 @@ import valueOrDef   from './common/valueOrDef'
 let instanceCount= 1
 
 const VInputCheckboxRS = ({formActions, id, name, value, defaultValue, label, description, feedback, icon, inline, readOnly, 
-                      required, checkValue, allowedValues, disallowedValues, onChange, keepHeight, formGroupStyle, inputGroupStyle}) => {
+                      required, checkValue, allowedValues, disallowedValues, doRepeat, doNotRepeat, onChange, keepHeight, formGroupStyle, inputGroupStyle}) => {
 
   const [vprops, nvalue]= valueOrDef(value, defaultValue)
 
@@ -19,6 +19,8 @@ const VInputCheckboxRS = ({formActions, id, name, value, defaultValue, label, de
             checkValue           = {checkValue}
             allowedValues        = {allowedValues}
             disallowedValues     = {disallowedValues}
+            doRepeat             = {doRepeat}
+            doNotRepeat          = {doNotRepeat}
             formActions          = {formActions}
             render  = {({valid, message}, inputRef) => 
               <VInputAddon name       = {name}

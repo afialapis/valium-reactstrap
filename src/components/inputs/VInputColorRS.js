@@ -7,7 +7,7 @@ import VInputTypes  from './common/VInputTypes'
 import valueOrDef   from './common/valueOrDef'
 
 const VInputColorRS = ({formActions, id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, autocomplete,
-                      required, checkValue, allowedValues, disallowedValues, onChange, prematureValidation, keepHeight, formGroupStyle, inputGroupStyle}) => {
+                      required, checkValue, allowedValues, disallowedValues, doRepeat, doNotRepeat, onChange, prematureValidation, keepHeight, formGroupStyle, inputGroupStyle}) => {
 
   const [vprops, nvalue]= valueOrDef(value, defaultValue)
   
@@ -17,6 +17,8 @@ const VInputColorRS = ({formActions, id, name, value, defaultValue, label, feedb
             checkValue           = {checkValue}
             allowedValues        = {allowedValues}
             disallowedValues     = {disallowedValues}
+            doRepeat             = {doRepeat}
+            doNotRepeat          = {doNotRepeat}
             prematureValidation  = {prematureValidation}
             formActions          = {formActions}
             render  = {({valid, message}, inputRef) => 

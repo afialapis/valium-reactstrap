@@ -7,7 +7,7 @@ import VInputTypes   from './common/VInputTypes'
 import valueOrDef   from './common/valueOrDef'
 
 const VInputSelectSearchRS = ({formActions, id, name, value, defaultValue, options, label, feedback, icon, inline, placeholder, readOnly, autocomplete,
-                               required, checkValue, allowedValues, disallowedValues, keepHeight, formGroupStyle, inputGroupStyle, onChange, clearable}) => {
+                               required, checkValue, allowedValues, disallowedValues, doRepeat, doNotRepeat, keepHeight, formGroupStyle, inputGroupStyle, onChange, clearable}) => {
   
   const setValidity   = useRef(undefined)
   const wrapperRef    = useRef(undefined)
@@ -89,6 +89,8 @@ const VInputSelectSearchRS = ({formActions, id, name, value, defaultValue, optio
             checkValue      = {checkValue}
             allowedValues   = {allowedValues}
             disallowedValues= {disallowedValues}
+            doRepeat        = {doRepeat}
+            doNotRepeat     = {doNotRepeat}
             bindSetValidity = {(f) => {setValidity.current= f}}
             formActions     = {formActions}
             render          = {({valid, message}, inputRef) => 

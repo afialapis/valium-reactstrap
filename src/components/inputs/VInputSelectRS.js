@@ -9,7 +9,7 @@ import valueOrDef   from './common/valueOrDef'
 
 
 const VInputSelectRS = ({formActions, id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, autocomplete,
-                      required, checkValue, allowedValues, disallowedValues, onChange, options, keepHeight, formGroupStyle, inputGroupStyle, clearable}) => {
+                      required, checkValue, allowedValues, disallowedValues, doRepeat, doNotRepeat, onChange, options, keepHeight, formGroupStyle, inputGroupStyle, clearable}) => {
 
   const setValidity= useRef(undefined)
   const [vprops, nvalue]= valueOrDef(value, defaultValue)
@@ -39,6 +39,8 @@ const VInputSelectRS = ({formActions, id, name, value, defaultValue, label, feed
             checkValue      = {checkValue}
             allowedValues   = {allowedValues}
             disallowedValues= {disallowedValues}
+            doRepeat             = {doRepeat}
+            doNotRepeat          = {doNotRepeat}
             formActions     = {formActions}
             bindSetValidity = {(f) => {setValidity.current= f}}
             render          = {({valid, message}, inputRef) => 

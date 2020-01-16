@@ -8,7 +8,7 @@ import valueOrDef   from './common/valueOrDef'
 
 
 const VInputTimeRS = ({formActions, id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, autocomplete,
-                      required, checkValue, allowedValues, disallowedValues, onChange, prematureValidation, keepHeight, formGroupStyle, inputGroupStyle}) => {
+                      required, checkValue, allowedValues, disallowedValues, doRepeat, doNotRepeat, onChange, prematureValidation, keepHeight, formGroupStyle, inputGroupStyle}) => {
 
   const [vprops, nvalue]= valueOrDef(value, defaultValue)
   
@@ -18,6 +18,8 @@ const VInputTimeRS = ({formActions, id, name, value, defaultValue, label, feedba
             checkValue      = {checkValue}
             allowedValues   = {allowedValues}
             disallowedValues= {disallowedValues}
+            doRepeat             = {doRepeat}
+            doNotRepeat          = {doNotRepeat}
             prematureValidation= {prematureValidation}
             formActions     = {formActions}
             render  = {({valid, message}, inputRef) => 

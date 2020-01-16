@@ -9,7 +9,7 @@ import valueOrDef   from './common/valueOrDef'
 
 
 const VInputSelectMultipleRS = ({formActions, id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, autocomplete,
-                      required, checkValue, allowedValues, disallowedValues, onChange, options, keepHeight, formGroupStyle, inputGroupStyle}) => {
+                      required, checkValue, allowedValues, disallowedValues, doRepeat, doNotRepeat, onChange, options, keepHeight, formGroupStyle, inputGroupStyle}) => {
 
   const [vprops, nvalue]= valueOrDef(value, defaultValue)
 
@@ -41,6 +41,8 @@ const VInputSelectMultipleRS = ({formActions, id, name, value, defaultValue, lab
             checkValue      = {checkValue}
             allowedValues   = {allowedValues}
             disallowedValues= {disallowedValues}
+            doRepeat             = {doRepeat}
+            doNotRepeat          = {doNotRepeat}
             formActions     = {formActions}
             render          = {({valid, message}, inputRef) => 
             <VInputAddon name        = {name}

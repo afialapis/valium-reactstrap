@@ -29,6 +29,7 @@ const ProgressBar = ({progress}) => {
 
 const VInputFileRS = ({formActions, id, name, value, defaultValue, label, icon, inline, readOnly, 
                        required, feedback, checkValue, allowedValues, disallowedValues, 
+                       doRepeat, doNotRepeat, 
                        keepHeight, formGroupStyle, inputGroupStyle, onLoad, onChange}) => {
 
                        
@@ -120,6 +121,8 @@ const VInputFileRS = ({formActions, id, name, value, defaultValue, label, icon, 
             checkValue         = {checkValue}
             allowedValues      = {allowedValues}
             disallowedValues   = {disallowedValues}
+            doRepeat             = {doRepeat}
+            doNotRepeat          = {doNotRepeat}
             formActions        = {formActions}
             render  = {({valid, message}, inputRef) => 
                 <VInputAddon name        = {name}

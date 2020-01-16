@@ -27,7 +27,7 @@ const _toISOString = (value) => {
 }
 
 const VInputDateRS = ({formActions, id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, autocomplete,
-                      required, checkValue, allowedValues, disallowedValues, keepHeight, formGroupStyle, inputGroupStyle, toISOString, onChange, prematureValidation}) => {
+                      required, checkValue, allowedValues, disallowedValues, doRepeat, doNotRepeat, keepHeight, formGroupStyle, inputGroupStyle, toISOString, onChange, prematureValidation}) => {
   
   const setValidity= useRef(undefined)
   
@@ -54,6 +54,8 @@ const VInputDateRS = ({formActions, id, name, value, defaultValue, label, feedba
             checkValue      = {checkValue}
             allowedValues   = {allowedValues}
             disallowedValues= {disallowedValues}
+            doRepeat             = {doRepeat}
+            doNotRepeat          = {doNotRepeat}
             prematureValidation= {prematureValidation}
             bindSetValidity = {(f) => {setValidity.current= f}}
             formActions     = {formActions}

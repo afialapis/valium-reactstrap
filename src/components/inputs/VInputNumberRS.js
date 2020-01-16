@@ -7,7 +7,7 @@ import VInputTypes from './common/VInputTypes'
 import valueOrDef   from './common/valueOrDef'
 
 const VInputNumberRS = ({formActions, id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, autocomplete,
-                      required, max, min, pattern, step, checkValue, allowedValues, disallowedValues, onChange, prematureValidation, keepHeight, formGroupStyle, inputGroupStyle}) => {
+                      required, max, min, pattern, step, checkValue, allowedValues, disallowedValues, doRepeat, doNotRepeat, onChange, prematureValidation, keepHeight, formGroupStyle, inputGroupStyle}) => {
 
   const [vprops, nvalue]= valueOrDef(value, defaultValue)
   
@@ -17,6 +17,8 @@ const VInputNumberRS = ({formActions, id, name, value, defaultValue, label, feed
             checkValue      = {checkValue}
             allowedValues   = {allowedValues}
             disallowedValues= {disallowedValues}
+            doRepeat             = {doRepeat}
+            doNotRepeat          = {doNotRepeat}
             prematureValidation= {prematureValidation}
             formActions     = {formActions}
             render  = {({valid, message}, inputRef) => 
