@@ -21,6 +21,7 @@ const VInputTypes = {
   disallowedValues    : PropTypes.arrayOf(PropTypes.any),
   doRepeat            : PropTypes.string,
   doNotRepeat         : PropTypes.string,
+  stepRange           : PropTypes.number,
   onChange            : PropTypes.func,
   keepHeight          : PropTypes.bool,
   formGroupStyle      : PropTypes.object,

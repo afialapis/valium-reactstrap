@@ -8,21 +8,22 @@ import valueOrDef   from './common/valueOrDef'
 
 
 const VInputTimeRS = ({formActions, id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, autocomplete,
-                      required, checkValue, allowedValues, disallowedValues, doRepeat, doNotRepeat, onChange, prematureValidation, keepHeight, formGroupStyle, inputGroupStyle}) => {
+                      required, checkValue, allowedValues, disallowedValues, doRepeat, doNotRepeat, stepRange, onChange, prematureValidation, keepHeight, formGroupStyle, inputGroupStyle}) => {
 
   const [vprops, nvalue]= valueOrDef(value, defaultValue)
   
   return (
-    <VInput type            = {"text"} 
-            feedback        = {feedback} 
-            checkValue      = {checkValue}
-            allowedValues   = {allowedValues}
-            disallowedValues= {disallowedValues}
-            doRepeat             = {doRepeat}
-            doNotRepeat          = {doNotRepeat}
+    <VInput type               = {"text"} 
+            feedback           = {feedback} 
+            checkValue         = {checkValue}
+            allowedValues      = {allowedValues}
+            disallowedValues   = {disallowedValues}
+            doRepeat           = {doRepeat}
+            doNotRepeat        = {doNotRepeat}
+            stepRange          = {stepRange}
             prematureValidation= {prematureValidation}
-            formActions     = {formActions}
-            render  = {({valid, message}, inputRef) => 
+            formActions        = {formActions}
+            render             = {({valid, message}, inputRef) => 
               <VInputAddon name        = {name}
                           label       = {label}
                           feedback    = {feedback || message}
