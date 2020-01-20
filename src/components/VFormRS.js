@@ -42,7 +42,7 @@ const VFormRS = ({renderInputs, className, onSave, onCancel, colors, icons, labe
    <VForm className    = {className || "valium-reactstrap"}
           renderInputs = {renderInputs}
           renderButtons= {(valid, elements) => 
-            <VFormRSButtons onSave     = {(ev) => onSave(ev, valid, elements)}
+            <VFormRSButtons onSave     = {onCancel!=undefined ? (ev) => onSave(ev, valid, elements) : undefined}
                             onCancel   = {onCancel!=undefined ? (ev) => onCancel(ev, valid, elements) : undefined}
                             colors     = {colors}
                             icons      = {icons}
