@@ -38,19 +38,22 @@ const VFormRSButtons = ({onSave, onCancel, colors, icons, labels, autoDisable, d
 }
 
 
-const VFormRS = ({renderInputs, className, onSave, onCancel, colors, icons, labels, autoDisable, disabled}) => 
+const VFormRS = ({renderInputs, className, onSave, onCancel, colors, icons, labels, autoDisable, disabled, renderButtons}) => 
    <VForm className    = {className || "valium-reactstrap"}
           renderInputs = {renderInputs}
           renderButtons= {(valid, elements) => 
-            <VFormRSButtons onSave     = {onSave!=undefined ? (ev) => onSave(ev, valid, elements) : undefined}
-                            onCancel   = {onCancel!=undefined ? (ev) => onCancel(ev, valid, elements) : undefined}
-                            colors     = {colors}
-                            icons      = {icons}
-                            labels     = {labels}
-                            autoDisable= {autoDisable}
-                            disabled   = {disabled}
-                            valid      = {valid}
-                            elements   = {elements}/>}
+                          renderButtons!= undefined 
+                          ? renderButtons(valid, elements)
+                          : <VFormRSButtons onSave     = {onSave!=undefined ? (ev) => onSave(ev, valid, elements) : undefined}
+                                            onCancel   = {onCancel!=undefined ? (ev) => onCancel(ev, valid, elements) : undefined}
+                                            colors     = {colors}
+                                            icons      = {icons}
+                                            labels     = {labels}
+                                            autoDisable= {autoDisable}
+                                            disabled   = {disabled}
+                                            valid      = {valid}
+                                            elements   = {elements}/>
+                          }
     />
 
 VFormRS.propTypes = {
@@ -62,7 +65,8 @@ VFormRS.propTypes = {
   onSave       : PropTypes.func,
   onCancel     : PropTypes.func,
   autoDisable  : PropTypes.bool,
-  disabled     : PropTypes.oneOfType([PropTypes.bool, PropTypes.func])
+  disabled     : PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
+  renderButtons: PropTypes.func,
 }
 
 VFormRS.defaultProps = {
