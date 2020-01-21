@@ -71,7 +71,7 @@ const VInputSelectSearchRS = ({formActions, id, name, value, defaultValue, optio
 
   useEffect(() => {
     document.addEventListener('mousedown', onClickOutside)
-    innerSearchRef.current.value= options[currentValue] || ''
+    innerSearchRef.current.value= options[value] || ''
     setValidity.current()
 
     return () => {
