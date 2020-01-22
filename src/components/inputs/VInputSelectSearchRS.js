@@ -35,6 +35,18 @@ const VInputSelectSearchRS = ({formActions, id, name, value, defaultValue, optio
     }
   }
 
+  useEffect(() => {
+    document.addEventListener('mousedown', onClickOutside)
+    innerSearchRef.current.value= options[value] || ''
+    setCurrentValue(defaultValue!=undefined ? defaultValue: value)
+    setFilter('')
+    setValidity.current()
+
+    return () => {
+      document.removeEventListener('mousedown', onClickOutside)
+    }
+  }, [value, defaultValue])
+
   const onSearchStart = () => {
     if (! isOpen) {
       setIsOpen(true)
@@ -70,17 +82,7 @@ const VInputSelectSearchRS = ({formActions, id, name, value, defaultValue, optio
     }    
   }
 
-  useEffect(() => {
-    document.addEventListener('mousedown', onClickOutside)
-    innerSearchRef.current.value= options[value] || ''
-    setCurrentValue(defaultValue!=undefined ? defaultValue: value)
-    setFilter('')
-    setValidity.current()
 
-    return () => {
-      document.removeEventListener('mousedown', onClickOutside)
-    }
-  }, [value, defaultValue])
 
 
   const [vprops, nvalue]= valueOrDef(value, defaultValue)
