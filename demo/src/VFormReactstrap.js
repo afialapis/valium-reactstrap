@@ -222,7 +222,7 @@ const VFormReactstrap = () => {
                         formActions      = {formActions}
                         name             = 'aselect'
                         value            = {aselect}
-                        required         = {false}
+                        required         = {true}
                         onChange         = {(v) => setAselect(v)}
                         label            = "A select"
                         options          = {{
@@ -232,8 +232,8 @@ const VFormReactstrap = () => {
                             4: 'Four',
                             5: 'Five'
                         }}
-                        disallowedValues = {[2]}
-                        allowedValues    = {[1, 2, 5]}
+                        /*disallowedValues = {[2]}
+                        allowedValues    = {[1, 2, 5]}*/
                         keepHeight       = {keepHeight}
                         clearable        = {true}
                         {... !showAddon && {icon: null}}
@@ -242,7 +242,7 @@ const VFormReactstrap = () => {
                         formActions      = {formActions}
                         name             = 'asearch'
                         value            = {asearch}
-                        required         = {false}
+                        required         = {true}
                         onChange         = {(v) => setAsearch(v)}
                         label            = "A searchable select"
                         options          = {{
@@ -252,8 +252,8 @@ const VFormReactstrap = () => {
                             '4': 'Four',
                             '5': 'Five'
                         }}
-                        disallowedValues = {['2']}
-                        allowedValues    = {['1', '2', '5']}
+                        /*disallowedValues = {['2']}
+                        allowedValues    = {['1', '2', '5']}*/
                         keepHeight       = {keepHeight}
                         clearable        = {true}
                         {... !showAddon && {icon: null}}
