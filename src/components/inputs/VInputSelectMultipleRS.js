@@ -5,14 +5,15 @@ import {VInput}     from 'valium'
 import {Input}      from 'reactstrap'
 import VInputTypes  from './common/VInputTypes'
 import valueOrDef   from './common/valueOrDef'
-
+import parseNumeric from './common/numeric'
 
 
 const VInputSelectMultipleRS = ({formActions, id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, autocomplete,
-                      required, checkValue, allowedValues, disallowedValues, doRepeat, doNotRepeat, onChange, options, keepHeight, formGroupStyle, inputGroupStyle}) => {
+                      required, checkValue, allowedValues, disallowedValues, doRepeat, doNotRepeat, onChange, options, keepHeight, formGroupStyle, inputGroupStyle, numeric}) => {
 
-  const [vprops, nvalue]= valueOrDef(value, defaultValue)
-
+  
+  
+  const [vprops, nvalue]= valueOrDef(value, defaultValue, numeric)
   
   const sdisallowedValues= disallowedValues!=undefined ? disallowedValues.map((v) => v.toString()) : []
   let options_map= []
@@ -30,7 +31,7 @@ const VInputSelectMultipleRS = ({formActions, id, name, value, defaultValue, lab
       const value= Array.prototype.slice.call(ev.target.options)
         .filter((opt) => opt.selected)
         .map((opt) => opt.value)
-      onChange(value)
+      onChange(value.map((v) => parseNumeric(numeric, v)))
     }
   }
 
@@ -90,6 +91,7 @@ VInputSelectMultipleRS.propTypes = {
   placeholder : PropTypes.string,
   options     : PropTypes.object,
   autocomplete: PropTypes.oneOf(["on", "off"]),
+  numeric     : PropTypes.bool
 }
 
 VInputSelectMultipleRS.defaultProps = {

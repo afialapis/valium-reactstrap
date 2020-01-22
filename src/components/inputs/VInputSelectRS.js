@@ -5,14 +5,15 @@ import {VInput}    from 'valium'
 import {Input, InputGroupAddon, InputGroupText}     from 'reactstrap'
 import VInputTypes from './common/VInputTypes'
 import valueOrDef   from './common/valueOrDef'
+import parseNumeric from './common/numeric'
 
 
 
 const VInputSelectRS = ({formActions, id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, autocomplete,
-                      required, checkValue, allowedValues, disallowedValues, doRepeat, doNotRepeat, onChange, options, keepHeight, formGroupStyle, inputGroupStyle, clearable}) => {
+                      required, checkValue, allowedValues, disallowedValues, doRepeat, doNotRepeat, onChange, options, keepHeight, formGroupStyle, inputGroupStyle, clearable, numeric}) => {
 
   const setValidity= useRef(undefined)
-  const [vprops, nvalue]= valueOrDef(value, defaultValue)
+  const [vprops, nvalue]= valueOrDef(value, defaultValue, numeric)
   
   const sdisallowedValues= disallowedValues!=undefined ? disallowedValues.map((v) => v.toString()) : []
   let options_map= []
@@ -29,7 +30,13 @@ const VInputSelectRS = ({formActions, id, name, value, defaultValue, label, feed
     inputRef.current.value= ''
     setValidity.current()
     if (onChange!=undefined) {
-      onChange('')
+      onChange(parseNumeric(''))
+    }
+  }
+
+  const handleChange = (event) => {
+    if (onChange!=undefined) { 
+      return onChange(parseNumeric(numeric,event.target.value))
     }
   }
 
@@ -61,7 +68,7 @@ const VInputSelectRS = ({formActions, id, name, value, defaultValue, label, feed
                         className   = "custom-select"
                         innerRef    = {inputRef}
                         placeholder = {placeholder || ""}
-                        onChange    = {(event) => {if (onChange!=undefined) { return onChange(event.target.value)}}}
+                        onChange    = {(event) => handleChange(event)}
                         readOnly    = {readOnly!=undefined ? readOnly  : false}
                         required    = {required}
                         valid       = {nvalue!=undefined && nvalue!='' && valid}
@@ -104,7 +111,8 @@ VInputSelectRS.propTypes = {
   placeholder : PropTypes.string,
   options     : PropTypes.object,
   autocomplete: PropTypes.oneOf(["on", "off"]),
-  clearable   : PropTypes.bool
+  clearable   : PropTypes.bool,
+  numeric     : PropTypes.bool
 }
 
 VInputSelectRS.defaultProps = {

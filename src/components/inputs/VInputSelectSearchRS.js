@@ -5,9 +5,10 @@ import {VInput}      from 'valium'
 import {Input, InputGroupAddon, InputGroupText}       from 'reactstrap'
 import VInputTypes   from './common/VInputTypes'
 import valueOrDef   from './common/valueOrDef'
+import parseNumeric from './common/numeric'
 
 const VInputSelectSearchRS = ({formActions, id, name, value, defaultValue, options, label, feedback, icon, inline, placeholder, readOnly, autocomplete,
-                               required, checkValue, allowedValues, disallowedValues, doRepeat, doNotRepeat, keepHeight, formGroupStyle, inputGroupStyle, onChange, clearable}) => {
+                               required, checkValue, allowedValues, disallowedValues, doRepeat, doNotRepeat, keepHeight, formGroupStyle, inputGroupStyle, onChange, clearable, numeric}) => {
   
   const setValidity   = useRef(undefined)
   const wrapperRef    = useRef(undefined)
@@ -59,7 +60,7 @@ const VInputSelectSearchRS = ({formActions, id, name, value, defaultValue, optio
     setCurrentValue(newValue)
     
     if (onChange!=undefined) { 
-      onChange(newValue)
+      onChange(parseNumeric(numeric,newValue))
     }
   }
 
@@ -171,7 +172,8 @@ VInputSelectSearchRS.propTypes = {
   placeholder  : PropTypes.string,
   options      : PropTypes.object,
   autocomplete : PropTypes.oneOf(["on", "off"]),
-  clearable    : PropTypes.bool
+  clearable    : PropTypes.bool,
+  numeric      : PropTypes.bool
 }
 
 

@@ -232,10 +232,11 @@ const VFormReactstrap = () => {
                             4: 'Four',
                             5: 'Five'
                         }}
-                        /*disallowedValues = {[2]}
-                        allowedValues    = {[1, 2, 5]}*/
+                        disallowedValues = {[2]}
+                        /*allowedValues    = {[1, 2, 5]}*/
                         keepHeight       = {keepHeight}
                         clearable        = {true}
+                        numeric          = {true}
                         {... !showAddon && {icon: null}}
                 />
                 <VInputSelectSearch
@@ -246,16 +247,17 @@ const VFormReactstrap = () => {
                         onChange         = {(v) => setAsearch(v)}
                         label            = "A searchable select"
                         options          = {{
-                            '1': 'One',
-                            '2': 'Two',
-                            '3': 'Three',
-                            '4': 'Four',
-                            '5': 'Five'
+                            1: 'One',
+                            2: 'Two',
+                            3: 'Three',
+                            4: 'Four',
+                            5: 'Five'
                         }}
-                        /*disallowedValues = {['2']}
-                        allowedValues    = {['1', '2', '5']}*/
+                        disallowedValues = {[2]}
+                        /*allowedValues    = {['1', '2', '5']}*/
                         keepHeight       = {keepHeight}
                         clearable        = {true}
+                        numeric          = {true}
                         {... !showAddon && {icon: null}}
                 />  
                 <VInputSelectMultiple
@@ -275,6 +277,7 @@ const VFormReactstrap = () => {
                         disallowedValues = {[[2]]}
                         allowedValues    = {[[],[1, 3]]}
                         keepHeight       = {keepHeight}
+                        numeric          = {true}
                         {... !showAddon && {icon: null}}
                 />
                 <VInputCheckbox
