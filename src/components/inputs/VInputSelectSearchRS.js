@@ -10,71 +10,15 @@ import parseNumeric from './common/numeric'
 const VInputSelectSearchRS = ({formActions, id, name, value, defaultValue, options, label, feedback, icon, inline, placeholder, readOnly, autocomplete,
                                required, checkValue, allowedValues, disallowedValues, doRepeat, doNotRepeat, keepHeight, formGroupStyle, inputGroupStyle, onChange, clearable, numeric}) => {
   
+  
+  const [vprops, nvalue]= valueOrDef(value, defaultValue, numeric)
+
   const setValidity   = useRef(undefined)
   const wrapperRef    = useRef(undefined)
-  const innerSearchRef= useRef(undefined)
 
   const [isOpen, setIsOpen]= useState(false)
-  const [filter, setFilter]= useState('')
-  const [currentValue, setCurrentValue]= useState(defaultValue!=undefined ? defaultValue: value)
-
-
-  // make options Map
-  const optionsMap= []
-  const sdisallowedValues= disallowedValues!=undefined ? disallowedValues.map((v) => v.toString()) : []
-  const sfilter= filter.toLowerCase() || ''
-  for (const key in options) {
-    const label= options[key]
-    const match= sfilter.length>0 ? label.toLowerCase().includes(sfilter) : true
-    if (match) {
-      optionsMap.push({
-        value: key,
-        label: label,
-        disabled: sdisallowedValues.indexOf(key)>=0
-      })
-    }
-  }
-
-  useEffect(() => {
-    document.addEventListener('mousedown', onClickOutside)
-    innerSearchRef.current.value= options[value] || ''
-    setCurrentValue(defaultValue!=undefined ? defaultValue: value)
-    setFilter('')
-    setValidity.current()
-
-    return () => {
-      document.removeEventListener('mousedown', onClickOutside)
-    }
-  }, [value, defaultValue])
-
-  const onSearchStart = () => {
-    if (! isOpen) {
-      setIsOpen(true)
-      setFilter('')
-    }
-  }
-
-  const onSearchType = (ev) => {
-    setFilter(ev.target.value)
-  }
-
-  const onSearchAbort = () => {
-    innerSearchRef.current.value= options[currentValue] || ''
-    setIsOpen(false)
-  }
-
-  const onSelect = (newValue, hiddenRef) => {
-    innerSearchRef.current.value= options[newValue] || ''
-    hiddenRef.current.value= newValue
-    setValidity.current()
-
-    setIsOpen(false)
-    setCurrentValue(newValue)
-    
-    if (onChange!=undefined) { 
-      onChange(parseNumeric(numeric,newValue))
-    }
-  }
+  const [shownText, setShownText]= useState('')
+  const [optionsMap, setOptionsMap]= useState([])
 
   const onClickOutside = (event) => {
     if (wrapperRef && wrapperRef.current && !wrapperRef.current.contains(event.target)) {
@@ -82,13 +26,69 @@ const VInputSelectSearchRS = ({formActions, id, name, value, defaultValue, optio
     }    
   }
 
+  const onSearchStart = () => {
+    if (! isOpen) {
+      setIsOpen(true)
+      setShownText('')
+    }
+  }
+
+  const onSearchType = (ev) => {
+    setShownText(ev.target.value)
+  }
+
+  const onSearchAbort = () => {
+    setIsOpen(false)
+  }
+
+  const onSelect = (newValue, hiddenRef) => {
+    hiddenRef.current.value= newValue
+    setValidity.current()
+
+    setIsOpen(false)
+    setShownText(options[newValue] || '')
+    
+    if (onChange!=undefined) { 
+      onChange(parseNumeric(numeric,newValue))
+    }
+  }
 
 
+  useEffect(() => {
+    document.addEventListener('mousedown', onClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', onClickOutside)
+    }
+  }, [])
 
-  const [vprops, nvalue]= valueOrDef(value, defaultValue)
+  useEffect(() => {
+    setShownText(options[nvalue] || '')
+    
+    // necessary?
+    // setValidity.current()
+  }, [nvalue])
+  
+  useEffect(() => {
+    // make options Map
+    const nOptionsMap= []
+    const sdisallowedValues= disallowedValues!=undefined ? disallowedValues.map((v) => v.toString()) : []
+    const sfilter= shownText.toLowerCase() || ''
+    for (const key in options) {
+      const label= options[key]
+      const match= sfilter.length>0 ? label.toLowerCase().includes(sfilter) : true
+      if (match) {
+        nOptionsMap.push({
+          value: key,
+          label: label,
+          disabled: sdisallowedValues.indexOf(key)>=0
+        })
+      }
+    }
+    setOptionsMap(nOptionsMap)
+  }, [disallowedValues, shownText])
+
 
   return (
-
     <VInput type            = {"select"}
             feedback        = {feedback} 
             checkValue      = {checkValue}
@@ -122,14 +122,14 @@ const VInputSelectSearchRS = ({formActions, id, name, value, defaultValue, optio
                   <Input    name        = {`input_select_search_${name}_text`}
                             className   = "valium-reactstrap-select-search-text custom-select"
                             type        = "text"
-                            innerRef    = {innerSearchRef}
+                            value       = {shownText}
                             placeholder = {placeholder}
                             readOnly    = {readOnly}
                             required    = {required}
                             valid       = {nvalue!=undefined && nvalue!='' && valid}
                             invalid     = {! valid}
                             onClick     = {(_ev) => onSearchStart()}
-                            onKeyUp     = {(ev) => {onSearchStart(); onSearchType(ev)}}
+                            onChange    = {(ev) => onSearchType(ev)}
                             autoComplete= {autocomplete}
                             />
 

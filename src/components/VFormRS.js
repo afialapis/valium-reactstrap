@@ -39,7 +39,7 @@ const VFormRSButtons = ({onSave, onCancel, colors, icons, labels, autoDisable, d
 
 
 const VFormRS = ({renderInputs, className, onSave, onCancel, colors, icons, labels, autoDisable, disabled, renderButtons}) => 
-   <VForm className    = {className || "valium-reactstrap"}
+   <VForm className    = {`valium-reactstrap ${className!=undefined ? className : ''}`}
           renderInputs = {renderInputs}
           renderButtons= {(valid, elements) => 
                           renderButtons!= undefined 

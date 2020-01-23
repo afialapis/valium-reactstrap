@@ -2,12 +2,12 @@ import React, {useRef}       from 'react'
 import PropTypes   from 'prop-types'
 import VInputAddon from './VInputAddon'
 import {VInput}    from 'valium'
-import {Input, InputGroupAddon, InputGroupText}     from 'reactstrap'
+import {CustomInput, InputGroupAddon, InputGroupText}     from 'reactstrap'
 import VInputTypes from './common/VInputTypes'
 import valueOrDef   from './common/valueOrDef'
 import parseNumeric from './common/numeric'
 
-
+let instanceCount= 1
 
 const VInputSelectRS = ({formActions, id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, autocomplete,
                       required, checkValue, allowedValues, disallowedValues, doRepeat, doNotRepeat, onChange, options, keepHeight, formGroupStyle, inputGroupStyle, clearable, numeric}) => {
@@ -62,7 +62,7 @@ const VInputSelectRS = ({formActions, id, name, value, defaultValue, label, feed
                         formGroupStyle = {formGroupStyle}
                         inputGroupStyle= {inputGroupStyle}>
 
-              <Input    id          = {id}
+              <CustomInput    id          = {id}
                         name        = {name}
                         type        = "select"
                         className   = "custom-select"
@@ -86,7 +86,7 @@ const VInputSelectRS = ({formActions, id, name, value, defaultValue, label, feed
                 {clearable
                  ? <option style={{display: "none"}} value=""></option>
                  : null}
-              </Input>
+              </CustomInput>
               {clearable
                ?  <InputGroupAddon onClick  = {() => {readOnly ? null : clear(inputRef)}}
                                   style    = {{cursor:(nvalue && !readOnly) ? 'pointer' : 'not-allowed'}}
@@ -116,7 +116,8 @@ VInputSelectRS.propTypes = {
 }
 
 VInputSelectRS.defaultProps = {
-  icon: 'list'
+  icon: 'list',
+  id: `valium-reactstrap-input-checkbox-${instanceCount++}`,
 }
 
 export default VInputSelectRS
