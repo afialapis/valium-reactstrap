@@ -15,6 +15,7 @@ const VInputSelectSearchRS = ({formActions, id, name, value, defaultValue, optio
 
   const setValidity   = useRef(undefined)
   const wrapperRef    = useRef(undefined)
+  const listRef       = useRef(undefined)
 
   const [isOpen, setIsOpen]= useState(false)
   const [shownText, setShownText]= useState('')
@@ -22,7 +23,9 @@ const VInputSelectSearchRS = ({formActions, id, name, value, defaultValue, optio
 
   const onClickOutside = (event) => {
     if (wrapperRef && wrapperRef.current && !wrapperRef.current.contains(event.target)) {
-      onSearchAbort()
+      if (listRef && listRef.current && !listRef.current.contains(event.target)) {
+        onSearchAbort()
+      }
     }    
   }
 
@@ -39,6 +42,7 @@ const VInputSelectSearchRS = ({formActions, id, name, value, defaultValue, optio
 
   const onSearchAbort = () => {
     setIsOpen(false)
+    setShownText(options[nvalue] || '')
   }
 
   const onSelect = (newValue, hiddenRef) => {
@@ -148,7 +152,8 @@ const VInputSelectSearchRS = ({formActions, id, name, value, defaultValue, optio
               </div>
               <div>
                 {isOpen
-                ? <div className="valium-reactstrap-select-search-list list-group">
+                ? <div className="valium-reactstrap-select-search-list list-group"
+                       ref = {listRef}>
                     {optionsMap.map((opt) => 
                       <div key     = {`${name}_option_${opt.value}`}
                             value   = {opt.value}

@@ -239,7 +239,7 @@ const VFormReactstrap = () => {
                         numeric          = {true}
                         {... !showAddon && {icon: null}}
                 />
-                <button onClick={() => setAsearch(2)}>HEY HEY</button>
+                {/*<button onClick={() => setAsearch(2)}>HEY HEY</button>*/}
                 <VInputSelectSearch
                         formActions      = {formActions}
                         name             = 'asearch'
