@@ -130,10 +130,12 @@ const VInputSelectSearchRS = ({formActions, id, name, value, defaultValue, optio
   }
 
   const getListStyle= () => {
+    // TODO
+    // Check where tihis gap (13 / 6) comes from and try to make better
     if (filterRef.current) {  
       return {
         left: filterRef.current.parentNode.children[0].offsetWidth+13+'px',
-        width: filterRef.current.offsetWidth+4+'px'
+        minWidth: filterRef.current.offsetWidth+4+'px'
       }
     }
     return {}
