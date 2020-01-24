@@ -21,43 +21,6 @@ const VInputSelectSearchRS = ({formActions, id, name, value, defaultValue, optio
   const [shownText, setShownText]= useState('')
   const [optionsMap, setOptionsMap]= useState([])
 
-  const onClickOutside = (event) => {
-    if (wrapperRef && wrapperRef.current && !wrapperRef.current.contains(event.target)) {
-      if (listRef && listRef.current && !listRef.current.contains(event.target)) {
-        onSearchAbort()
-      }
-    }    
-  }
-
-  const onSearchStart = () => {
-    if (! isOpen) {
-      setIsOpen(true)
-      setShownText('')
-    }
-  }
-
-  const onSearchType = (ev) => {
-    setShownText(ev.target.value)
-  }
-
-  const onSearchAbort = () => {
-    setIsOpen(false)
-    setShownText(options[nvalue] || '')
-  }
-
-  const onSelect = (newValue, hiddenRef) => {
-    hiddenRef.current.value= newValue
-    setValidity.current()
-
-    setIsOpen(false)
-    setShownText(options[newValue] || '')
-    
-    if (onChange!=undefined) { 
-      onChange(parseNumeric(numeric,newValue))
-    }
-  }
-
-
   useEffect(() => {
     document.addEventListener('mousedown', onClickOutside)
     return () => {
@@ -67,11 +30,18 @@ const VInputSelectSearchRS = ({formActions, id, name, value, defaultValue, optio
 
   useEffect(() => {
     setShownText(options[nvalue] || '')
-    
     // necessary?
     // setValidity.current()
   }, [nvalue])
-  
+
+  useEffect(() => {
+    if (isOpen) {
+      setShownText('')
+    } else {
+      setShownText(options[nvalue] || '')
+    }
+  }, [isOpen])
+
   useEffect(() => {
     // make options Map
     const nOptionsMap= []
@@ -89,7 +59,41 @@ const VInputSelectSearchRS = ({formActions, id, name, value, defaultValue, optio
       }
     }
     setOptionsMap(nOptionsMap)
-  }, [disallowedValues, shownText])
+  }, [disallowedValues, shownText])  
+
+  const onClickOutside = (event) => {
+    if (wrapperRef && wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+      if (listRef && listRef.current && !listRef.current.contains(event.target)) {
+        onSearchAbort()
+      }
+    }    
+  }
+
+  const onSearchStart = () => {
+    if (! isOpen) {
+      setIsOpen(true)
+    }
+  }
+
+  const onSearchType = (ev) => {
+    setShownText(ev.target.value)
+  }
+
+  const onSearchAbort = () => {
+    setIsOpen(false)
+  }
+
+  const onSelect = (newValue, hiddenRef) => {
+    hiddenRef.current.value= newValue
+    setValidity.current()
+
+    setIsOpen(false)
+    //setShownText(options[newValue] || '')
+    
+    if (onChange!=undefined) { 
+      onChange(parseNumeric(numeric,newValue))
+    }
+  }
 
 
   return (
