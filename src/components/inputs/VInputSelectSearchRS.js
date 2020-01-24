@@ -62,14 +62,7 @@ const VInputSelectSearchRS = ({formActions, id, name, value, defaultValue, optio
       document.removeEventListener('mousedown', onClickOutside)
     }
   }, [])
-
-  useEffect(() => {
-    if (filterRef.current && listRef.current) {  
-      listRef.current.style.left= filterRef.current.parentNode.children[0].offsetWidth+13+'px'
-      listRef.current.style.width= filterRef.current.offsetWidth+4+'px'
-    }
-  }, [filterRef.current, listRef.current])
-
+  
   useEffect(() => {
     setShownText(options[nvalue] || '')
     // necessary?
@@ -136,6 +129,15 @@ const VInputSelectSearchRS = ({formActions, id, name, value, defaultValue, optio
     }
   }
 
+  const getListStyle= () => {
+    if (filterRef.current) {  
+      return {
+        left: filterRef.current.parentNode.children[0].offsetWidth+13+'px',
+        width: filterRef.current.offsetWidth+4+'px'
+      }
+    }
+    return {}
+  }
 
   return (
     <VInput type            = {"select"}
@@ -199,7 +201,8 @@ const VInputSelectSearchRS = ({formActions, id, name, value, defaultValue, optio
               
                 {isOpen
                 ? <div className="valium-reactstrap-select-search-list list-group"
-                       ref = {listRef}>
+                       ref = {listRef}
+                       style={getListStyle()}>
                     {optionsMap.map((opt) => 
                       <div key     = {`${name}_option_${opt.value}`}
                             value   = {opt.value}
