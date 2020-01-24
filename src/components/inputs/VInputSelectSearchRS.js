@@ -7,6 +7,39 @@ import VInputTypes   from './common/VInputTypes'
 import valueOrDef   from './common/valueOrDef'
 import parseNumeric from './common/numeric'
 
+function getPosition(el) {
+  var xPos = 0;
+  var yPos = 0;
+ 
+  while (el) {
+    if (el.tagName == "BODY") {
+      // deal with browser quirks with body/window/document and page scroll
+      var xScroll = el.scrollLeft || document.documentElement.scrollLeft;
+      var yScroll = el.scrollTop || document.documentElement.scrollTop;
+ 
+      xPos += (el.offsetLeft - xScroll + el.clientLeft);
+      yPos += (el.offsetTop - yScroll + el.clientTop);
+
+      console.log('++ ' + (el.offsetLeft - xScroll + el.clientLeft))
+      console.log(el)      
+    } else {
+      // for all other non-BODY elements
+      xPos += (el.offsetLeft - el.scrollLeft + el.clientLeft);
+      yPos += (el.offsetTop - el.scrollTop + el.clientTop);
+
+      console.log('++ ' + (el.offsetLeft - el.scrollLeft + el.clientLeft))
+      console.log(el)
+    }
+ 
+    el = el.offsetParent;
+  }
+  return {
+    x: xPos,
+    y: yPos
+  };
+}
+
+
 const VInputSelectSearchRS = ({formActions, id, name, value, defaultValue, options, label, feedback, icon, inline, placeholder, readOnly, autocomplete,
                                required, checkValue, allowedValues, disallowedValues, doRepeat, doNotRepeat, keepHeight, formGroupStyle, inputGroupStyle, onChange, clearable, numeric}) => {
   
@@ -15,6 +48,7 @@ const VInputSelectSearchRS = ({formActions, id, name, value, defaultValue, optio
 
   const setValidity   = useRef(undefined)
   const wrapperRef    = useRef(undefined)
+  const filterRef     = useRef(undefined)
   const listRef       = useRef(undefined)
 
   const [isOpen, setIsOpen]= useState(false)
@@ -23,10 +57,18 @@ const VInputSelectSearchRS = ({formActions, id, name, value, defaultValue, optio
 
   useEffect(() => {
     document.addEventListener('mousedown', onClickOutside)
+
     return () => {
       document.removeEventListener('mousedown', onClickOutside)
     }
   }, [])
+
+  useEffect(() => {
+    if (filterRef.current && listRef.current) {  
+      listRef.current.style.left= filterRef.current.parentNode.children[0].offsetWidth+13+'px'
+      listRef.current.style.width= filterRef.current.offsetWidth+4+'px'
+    }
+  }, [filterRef.current, listRef.current])
 
   useEffect(() => {
     setShownText(options[nvalue] || '')
@@ -88,7 +130,6 @@ const VInputSelectSearchRS = ({formActions, id, name, value, defaultValue, optio
     setValidity.current()
 
     setIsOpen(false)
-    //setShownText(options[newValue] || '')
     
     if (onChange!=undefined) { 
       onChange(parseNumeric(numeric,newValue))
@@ -130,6 +171,7 @@ const VInputSelectSearchRS = ({formActions, id, name, value, defaultValue, optio
                   <Input    name        = {`input_select_search_${name}_text`}
                             className   = "valium-reactstrap-select-search-text custom-select"
                             type        = "text"
+                            innerRef    = {filterRef}
                             value       = {shownText}
                             placeholder = {placeholder}
                             readOnly    = {readOnly}
@@ -154,7 +196,7 @@ const VInputSelectSearchRS = ({formActions, id, name, value, defaultValue, optio
                   }                             
                 </VInputAddon>
               </div>
-              <div>
+              
                 {isOpen
                 ? <div className="valium-reactstrap-select-search-list list-group"
                        ref = {listRef}>
@@ -171,7 +213,7 @@ const VInputSelectSearchRS = ({formActions, id, name, value, defaultValue, optio
                   </div>
                 : null
                 }
-              </div>
+            
             </div>
             }/>
   )
