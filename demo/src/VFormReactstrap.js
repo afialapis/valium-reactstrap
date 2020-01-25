@@ -22,7 +22,7 @@ const VFormReactstrap = () => {
   const [acheck, setAcheck] = useState(false)
   const [aselect, setAselect] = useState('1')
   const [aselectmu, setAselectmu] = useState([]) // useState(['1', '4'])
-  const [asearch, setAsearch] = useState('3')
+  const [asearch, setAsearch] = useState(undefined)
   const [afile, setAfile] = useState([])
 
 

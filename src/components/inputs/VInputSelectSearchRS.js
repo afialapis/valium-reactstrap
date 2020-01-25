@@ -94,7 +94,7 @@ const VInputSelectSearchRS = ({formActions, id, name, value, defaultValue, optio
       }
     }
     setOptionsMap(nOptionsMap)
-  }, [disallowedValues, shownText])  
+  }, [options, disallowedValues, shownText])  
 
   const onClickOutside = (event) => {
     if (wrapperRef && wrapperRef.current && !wrapperRef.current.contains(event.target)) {
