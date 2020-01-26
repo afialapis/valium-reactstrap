@@ -1,13 +1,13 @@
 /**
  * feedback
  **/
-.valium-reactstrap .form-group .valium-reactstrap-feedback {
+.valium-reactstrap-form-group .valium-reactstrap-feedback {
   padding-top: $input-padding-y;
   color: $red;
   font-style: italic;
   padding-left: $valium-label-padding;
 }
 
-.valium-reactstrap .form-group .valium-reactstrap-feedback.hidden {
+.valium-reactstrap-form-group .valium-reactstrap-feedback.hidden {
   visibility: hidden;
 }

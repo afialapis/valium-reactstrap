@@ -1,14 +1,14 @@
 /**
  *  select search
  **/
-.valium-reactstrap .valium-reactstrap-select-search .form-group {
+.valium-reactstrap-select-search .form-group {
    margin-bottom: 0;
 }
-.valium-reactstrap .valium-reactstrap-select-search {
+.valium-reactstrap-select-search {
   margin-bottom: $form-group-margin-bottom;
 }
 
-.valium-reactstrap .valium-reactstrap-select-search .valium-reactstrap-select-search-list {
+.valium-reactstrap-select-search .valium-reactstrap-select-search-list {
   background-color: white;
   list-style: none;
   position: absolute;
@@ -18,13 +18,13 @@
   z-index: 2;
 }
 
-.valium-reactstrap .valium-reactstrap-select-search .valium-reactstrap-select-search-list-item {
+.valium-reactstrap-select-search .valium-reactstrap-select-search-list-item {
   cursor: pointer;
 }
 
 
-.valium-reactstrap .valium-reactstrap-select-search .valium-reactstrap-select-search-list-item.list-group-item-action:hover,
-.valium-reactstrap .valium-reactstrap-select-search .valium-reactstrap-select-search-list-item.list-group-item-action:focus {
+.valium-reactstrap-select-search .valium-reactstrap-select-search-list-item.list-group-item-action:hover,
+.valium-reactstrap-select-search .valium-reactstrap-select-search-list-item.list-group-item-action:focus {
   color: $list-group-action-hover-color;
   background-color: $list-group-hover-bg;
 }

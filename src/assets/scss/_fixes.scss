@@ -1,7 +1,7 @@
 /**
  * fix inline
  */
- .valium-reactstrap .form-group.inline {
+.valium-reactstrap-form-group.form-group.inline {
   margin-bottom :0;
   display: inline-block;
 }
@@ -9,13 +9,13 @@
 /**
  * fix for checkbox
  **/
-.valium-reactstrap .form-check-input,
-.valium-reactstrap .custom-switch {
+.valium-reactstrap-form-group .form-check-input,
+.valium-reactstrap-form-group .custom-switch {
   position: relative;
   left: 1em;
 }
 
-.valium-reactstrap .custom-switch input,
-.valium-reactstrap .custom-switch label {
+.valium-reactstrap-form-group .custom-switch input,
+.valium-reactstrap-form-group .custom-switch label {
   cursor: pointer;
 }
