@@ -7,6 +7,7 @@ import VInputTypes   from './common/VInputTypes'
 import valueOrDef   from './common/valueOrDef'
 import parseNumeric from './common/numeric'
 
+/*
 function getPosition(el) {
   var xPos = 0;
   var yPos = 0;
@@ -38,10 +39,11 @@ function getPosition(el) {
     y: yPos
   };
 }
-
+*/
 
 const VInputSelectSearchRS = ({formActions, id, name, value, defaultValue, options, label, feedback, icon, inline, placeholder, readOnly, autocomplete,
-                               required, checkValue, allowedValues, disallowedValues, doRepeat, doNotRepeat, keepHeight, formGroupStyle, inputGroupStyle, onChange, clearable, numeric}) => {
+                               required, checkValue, allowedValues, disallowedValues, doRepeat, doNotRepeat, keepHeight, formGroupStyle, inputGroupStyle,
+                               onChange, clearable, numeric, maxShownOptions}) => {
   
   
   const [vprops, nvalue]= valueOrDef(value, defaultValue, numeric)
@@ -70,9 +72,7 @@ const VInputSelectSearchRS = ({formActions, id, name, value, defaultValue, optio
   }, [nvalue])
 
   useEffect(() => {
-    if (isOpen) {
-      setShownText('')
-    } else {
+    if (! isOpen) {
       setShownText(options[nvalue] || '')
     }
   }, [isOpen])
@@ -112,6 +112,7 @@ const VInputSelectSearchRS = ({formActions, id, name, value, defaultValue, optio
 
   const onSearchType = (ev) => {
     setShownText(ev.target.value)
+    onSearchStart()
   }
 
   const onSearchAbort = () => {
@@ -205,16 +206,25 @@ const VInputSelectSearchRS = ({formActions, id, name, value, defaultValue, optio
                 ? <div className="valium-reactstrap-select-search-list list-group"
                        ref = {listRef}
                        style={getListStyle()}>
-                    {optionsMap.map((opt) => 
-                      <div key     = {`${name}_option_${opt.value}`}
-                            value   = {opt.value}
-                            disabled= {opt.disabled}
-                            className="valium-reactstrap-select-search-list-item list-group-item list-group-item-action" 
-                            onClick = {(_ev) => onSelect(opt.value, inputRef)}
-                            >
-                        {opt.label}
-                      </div>
+                    {optionsMap.map((opt, idx) =>  {
+                      if (idx<=(maxShownOptions-1)) {
+                        return (
+                          <div key     = {`${name}_option_${opt.value}`}
+                                value   = {opt.value}
+                                className={`valium-reactstrap-select-search-list-item list-group-item list-group-item-action ${opt.disabled ? 'disabled' : ''}`}
+                                onClick = {(_ev) => !opt.disabled && onSelect(opt.value, inputRef)}
+                                >
+                            {opt.label}
+                          </div>)
+                      }
+                    }
                     )}
+                    {optionsMap.length>maxShownOptions
+                     ? <div key     = {`${name}_option_ellipsis`}
+                            className={`valium-reactstrap-select-search-list-item list-group-item list-group-item-action disabled ellipsis`}>
+                        ...
+                       </div>
+                     : null}
                   </div>
                 : null
                 }
@@ -233,13 +243,15 @@ VInputSelectSearchRS.propTypes = {
   options      : PropTypes.object,
   autocomplete : PropTypes.oneOf(["on", "off"]),
   clearable    : PropTypes.bool,
-  numeric      : PropTypes.bool
+  numeric      : PropTypes.bool,
+  maxShownOptions: PropTypes.number
 }
 
 
 VInputSelectSearchRS.defaultProps = {
   icon: 'search',
-  prematureValidation: true
+  prematureValidation: true,
+  maxShownOptions: 10
 }
 
 export default VInputSelectSearchRS

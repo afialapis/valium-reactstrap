@@ -20,6 +20,7 @@
 
 .valium-reactstrap-select-search .valium-reactstrap-select-search-list-item {
   cursor: pointer;
+  user-select: none;
 }
 
 
@@ -27,4 +28,11 @@
 .valium-reactstrap-select-search .valium-reactstrap-select-search-list-item.list-group-item-action:focus {
   color: $list-group-action-hover-color;
   background-color: $list-group-hover-bg;
+}
+
+
+.valium-reactstrap-select-search .valium-reactstrap-select-search-list-item.ellipsis {
+  height: 2em;
+  padding: 0rem 1.25rem;
+  text-align: center;
 }
