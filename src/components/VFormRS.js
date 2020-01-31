@@ -1,11 +1,12 @@
-import React            from 'react'
-import PropTypes        from 'prop-types'
-import {VForm}          from 'valium'
-import VIcon            from './icons'
-import { Button }       from 'reactstrap'
+import React, {useState} from 'react'
+import PropTypes         from 'prop-types'
+import {VForm}           from 'valium'
+import VIcon             from './icons'
+import { Button }        from 'reactstrap'
 
 
 const VFormRSButtons = ({onSave, onCancel, colors, icons, labels, autoDisable, disabled, valid, elements}) => {
+  const [isSaving, setIsSaving]= useState(false)
   const isDisabled= autoDisable
     ? !valid
     : (
@@ -13,6 +14,20 @@ const VFormRSButtons = ({onSave, onCancel, colors, icons, labels, autoDisable, d
         ? disabled(valid, elements)
         : disabled
     )
+  
+  const handleSave = async (ev) => {
+    setIsSaving(true)
+
+    const result= onSave(ev)
+    if (result == Promise.resolve(result)) {
+      result.then((r) => {
+        setIsSaving(false)
+      })
+    } else {
+      setIsSaving(false)
+    }
+    
+  }
 
   return (
     <div className="valium-reactstrap-buttons">
@@ -26,8 +41,8 @@ const VFormRSButtons = ({onSave, onCancel, colors, icons, labels, autoDisable, d
       }
       {onSave!=undefined
         ? <Button color  = {colors ? colors[1] : 'primary'}
-                onClick  = {(ev) => onSave(ev)}
-                disabled = {isDisabled}>
+                onClick  = {(ev) => handleSave(ev)}
+                disabled = {isSaving || isDisabled}>
             <VIcon icon  = {icons[1]}/>
             {labels ? labels[1] : 'Guardar'}
           </Button>

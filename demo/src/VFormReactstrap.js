@@ -4,6 +4,10 @@ import {VForm, VInputText, VInputEmail, VInputUrl, VInputPassword, VInputTextAre
         VInputNumber, VInputDate, VInputTime, VInputColor, 
         VInputCheckbox, VInputSelect, VInputSelectMultiple, VInputSelectSearch, VInputFile} from '../../src'
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 const VFormReactstrap = () => {
 
   const [keepHeight, setKeepHeight]=  useState(true)
@@ -19,7 +23,7 @@ const VFormReactstrap = () => {
   const [adate, setAdate] = useState("today")
   const [atime, setAtime] = useState('11:45')
   const [acolor, setAcolor] = useState('#F5F5F5')
-  const [acheck, setAcheck] = useState(false)
+  const [acheck, setAcheck] = useState(true)
   const [aselect, setAselect] = useState('1')
   const [aselectmu, setAselectmu] = useState([]) // useState(['1', '4'])
   const [asearch, setAsearch] = useState(undefined)
@@ -35,16 +39,24 @@ const VFormReactstrap = () => {
   }
   
 
+  const onSubmitAsync = async (ev, valid, elements) => {
+    console.log('Submitting...')
+    console.log(ev)
+    console.log(valid)
+    console.log(elements)
+    await sleep(3000)
+  }
+  
   const onSubmit = (ev, valid, elements) => {
     console.log('Submitting...')
     console.log(ev)
     console.log(valid)
     console.log(elements)
-  }
-  
+    sleep(3000).then(() => console.log('submitted'))
+  }  
 
   return (
-    <Container>
+    <Container style={{marginBottom: "1em"}}>
       <h1>
         Valium Reactstrap demo
       </h1>
@@ -281,6 +293,7 @@ const VFormReactstrap = () => {
                         numeric          = {true}
                         {... !showAddon && {icon: null}}
                 />
+                {/*
                 <VInputCheckbox
                         formActions         = {formActions}
                         name                = 'acheck'
@@ -293,7 +306,7 @@ const VFormReactstrap = () => {
                         disallowedValues    = {['false', false]}
                         keepHeight          = {keepHeight}
                         {... !showAddon && {icon: null}}
-                />
+                />*/}
             </Col>
             </Row>
           }>
