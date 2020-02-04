@@ -1,4 +1,4 @@
-import React         from 'react'
+import React, { useState, useEffect }         from 'react'
 import PropTypes     from 'prop-types'
 import {VInput}      from 'valium'
 import {CustomInput} from 'reactstrap'
@@ -13,6 +13,25 @@ const VInputCheckboxRS = ({formActions, id, name, value, defaultValue, label, de
 
   const [vprops, nvalue]= valueOrDef(value, defaultValue)
 
+  const [innerValue, setInnerValue]= useState(nvalue)
+
+  useEffect(() => {
+    setInnerValue(nvalue)
+  }, [value, defaultValue])
+
+  const handleClick = (ev, inputRef) => {
+    const checked= !innerValue
+    inputRef.current.checked= checked
+    setInnerValue(checked)
+
+    if (onChange!=undefined) {
+      onChange(checked)
+    }
+  }
+
+  console.log('-----------------')
+  console.log(nvalue)
+
   return (
     <VInput type                 = {"checkbox"}
             feedback             = {feedback} 
@@ -26,26 +45,44 @@ const VInputCheckboxRS = ({formActions, id, name, value, defaultValue, label, de
               <VInputAddon name       = {name}
                           label       = {label}
                           feedback    = {feedback || message}
-                          value       = {nvalue}
+                          value       = {innerValue}
                           icon        = {icon}
                           isValid     = {valid}
                           inline      = {inline}
                           keepHeight  = {keepHeight}
                           formGroupStyle = {formGroupStyle}
                           inputGroupStyle= {inputGroupStyle}>
+                
+                {/*
                 <CustomInput  
                         id          = {id}
                         name        = {name}
                         innerRef    = {inputRef}
                         type        = {"switch"}
                         label       = {description}
-                        onClick     = {(event) => {if (onChange!=undefined) { return onChange(event.target.checked)}}}
+                        onChange    = {onChange!=undefined ? (event) => onChange(event.target.checked) : undefined}
                         readOnly    = {readOnly!=undefined ? readOnly  : false}
                         required    = {required}
-                        valid       = {nvalue!=undefined && nvalue!='' && valid}
+                        valid       = {innerValue!=undefined && innerValue!='' && valid}
                         invalid     = {! valid}
                         {...vprops}
                 />
+                */}
+                
+                <div className    = "custom-switch custom-control"
+                      onClick     = {(event) => handleClick(event, inputRef)}> 
+                  <input type     = "checkbox" 
+                         id       = {id} 
+                         name     = {name} 
+                         className= {`custom-control-input ${innerValue && valid ? 'is-valid' : ''} ${! valid ? 'is-invalid' : ''}`}
+                         ref      = {inputRef}
+                         readOnly = {readOnly!=undefined ? readOnly  : false}
+                         required = {required}
+                         {...vprops}                         
+                         ></input>
+                  <label className="custom-control-label"
+                         htmlFor={id}>{description}</label>
+                </div>
               </VInputAddon>
 
               }/>

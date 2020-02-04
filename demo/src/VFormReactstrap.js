@@ -27,7 +27,7 @@ const VFormReactstrap = () => {
   const [aselect, setAselect] = useState('1')
   const [aselectmu, setAselectmu] = useState([]) // useState(['1', '4'])
   const [asearch, setAsearch] = useState(undefined)
-  const [afile, setAfile] = useState([])
+  const [afile, setAfile] = useState({name: 'custom.txt', size: 1000, type: 'txt'})
 
 
 
@@ -293,20 +293,21 @@ const VFormReactstrap = () => {
                         numeric          = {true}
                         {... !showAddon && {icon: null}}
                 />
-                {/*
+                
                 <VInputCheckbox
                         formActions         = {formActions}
                         name                = 'acheck'
                         value               = {acheck}
                         required            = {false}
-                        prematureValidation= {premature}
-                        onChange            = {(v) => setAcheck(v)}
+                        prematureValidation = {premature}
+                        onClick             = {(v) => {console.log(v); setAcheck(v)}}
+                        onChange            = {(v) => {console.log(v); setAcheck(v)}}
                         label               = "A check"
                         description         = "I will not accept it unchecked"
-                        disallowedValues    = {['false', false]}
+                        disallowedValues    = {[false]}
                         keepHeight          = {keepHeight}
                         {... !showAddon && {icon: null}}
-                />*/}
+                />
             </Col>
             </Row>
           }>
