@@ -237,7 +237,7 @@ const VInputFileRS = ({formActions, id, name, value, defaultValue, label, icon, 
                   </div>
                   <InputGroupAddon onClick   = {hasValue() 
                                                 ? () => clear(inputRef) 
-                                                : null
+                                                : () => {}
                                                 }
                                   style     = {{cursor: hasValue() ? 'pointer' : 'not-allowed', zIndex: "2"}}
                                   addonType = "append">
