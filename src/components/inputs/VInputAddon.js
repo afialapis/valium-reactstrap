@@ -1,4 +1,4 @@
-import React, {useRef} from 'react'
+import React, {useRef, useState, useEffect} from 'react'
 import {
   FormGroup,
   InputGroup,
@@ -22,11 +22,16 @@ const VInputFeedback = ({isValid, feedback, keepHeight}) => {
 
 
 const VInputAddon = ({name, value, label, feedback, icon, isValid, children, inline, formClassName, keepHeight, formGroupStyle, inputGroupStyle, middleElement}) => {
-
-  const originalValue= useRef(value)
-
-  const hasChanged= (value != originalValue.current)
+  const originalValue = useRef(value)
   
+  const [loaded, setLoaded]= useState(false)
+
+  useEffect(() => {
+    setLoaded(true)
+  }, [])
+
+  const hasChanged= loaded && (value != originalValue.current)
+
   return (
     <FormGroup className={`valium-reactstrap-form-group ${hasChanged ? 'is-unsaved' : ''} ${inline ? 'inline' : ''} ${formClassName || ''}`}
                style={formGroupStyle}>

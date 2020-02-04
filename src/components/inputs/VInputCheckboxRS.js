@@ -28,10 +28,7 @@ const VInputCheckboxRS = ({formActions, id, name, value, defaultValue, label, de
       onChange(checked)
     }
   }
-
-  console.log('-----------------')
-  console.log(nvalue)
-
+  
   return (
     <VInput type                 = {"checkbox"}
             feedback             = {feedback} 

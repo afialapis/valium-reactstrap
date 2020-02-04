@@ -13,7 +13,12 @@ const ProgressBar = ({progress}) => {
   const col = (progress == 100 ? '#00e64d' : '#ffcc00')
 
   return (
-    <div className="bars valium-reactstrap-progress">
+    <div className="bars valium-reactstrap-progress"
+         style={{position: "relative",
+                 width: "calc(100% - 77px)",
+                 left: "42px",
+                 top: "-3px",
+                 zIndex: "5"}}>
       <div className="progress-xs  mb-0 progress" style={{height: "0.25em", backgroundColor: "transparent"}}>
         <div className={"progress-bar bg-"+col}
               style={{ width: prg+"%", backgroundColor: col }}
@@ -27,17 +32,40 @@ const ProgressBar = ({progress}) => {
   )
 }
 
+const formatBytes = (bytes, decimals = 2) => {
+  if (bytes === 0) return '0 Bytes';
+
+  const k = 1024;
+  const dm = decimals < 0 ? 0 : decimals;
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+}
+
+const geIcon = (mtype, icon, iconMap) => {
+  if (iconMap) {
+    const i1= iconMap[mtype]
+    if (i1) { return i1}
+  }
+  if (icon) {
+    return icon
+  }
+  return 'file'
+}
+
+
 const VInputFileRS = ({formActions, id, name, value, defaultValue, label, icon, inline, readOnly, 
                        required, feedback, checkValue, allowedValues, disallowedValues, 
                        doRepeat, doNotRepeat, 
-                       keepHeight, formGroupStyle, inputGroupStyle, onLoad, onChange}) => {
+                       keepHeight, formGroupStyle, inputGroupStyle, onLoad, onChange, onDownload, accept, iconMap}) => {
   const setValidity= useRef(undefined)
   const [_vprops, nvalue]= valueOrDef(value, defaultValue)
 
   const [progress  , setProgress ]= useState(undefined)
   const [status    , setStatus   ]= useState(undefined)
   // const [statusMsg , setStatusMsg]= useState(undefined)
-  
 
   const hasValue = () => {
     return nvalue.buffer || nvalue.size>0
@@ -130,6 +158,12 @@ const VInputFileRS = ({formActions, id, name, value, defaultValue, label, icon, 
     inputRef.current.dispatchEvent(evt)    
   }
 
+  const download = (inputRef, ev) => {
+    if (onDownload != undefined) {
+      onDownload(inputRef, ev)
+    }
+  }
+
   return (
     <VInput type             = {"file"} 
             feedback         = {feedback} 
@@ -145,7 +179,7 @@ const VInputFileRS = ({formActions, id, name, value, defaultValue, label, icon, 
                             label       = {label}
                             feedback    = {feedback || message}
                             value       = {nvalue}
-                            icon        = {icon}
+                            icon        = {geIcon(nvalue.type, icon, iconMap)}
                             isValid     = {valid}
                             inline      = {inline}
                             keepHeight  = {keepHeight}
@@ -170,21 +204,30 @@ const VInputFileRS = ({formActions, id, name, value, defaultValue, label, icon, 
                           required    = {required}
                           //valid       = {nvalue!=undefined && nvalue!='' && valid}
                           //invalid     = {! valid}
+                          accept      = {accept}
                   />
                   <div  style       = {{opacity: "1", 
-                                       zIndex: "1", 
+                                       zIndex: "3", 
                                        position: "absolute", 
-                                       width: "calc(100% - 75px)", 
+                                       width: valid ? "calc(100% - 75px)" : "calc(100% - 77px)", 
                                        left: "42px", 
                                        display: "flex",
-                                       cursor: hasValue() ? 'not-allowed' : 'pointer',
+                                       cursor: 'pointer',
                                        userSelect: 'none'
                                       }}
                         className   = {`form-control ${valid && hasValue() ? 'is-valid' : ''} ${!valid ? 'is-invalid' : ''}`}
-                        defaultValue="HEY"
-                        onClick     ={hasValue() ? undefined : (_) => browse(inputRef)}>
+                        onClick     ={hasValue() ? (ev) => download(inputRef, ev) : (_) => browse(inputRef)}>
                         {hasValue()
-                          ? nvalue.name 
+                          ? <div style={{display: "flex", width: "100%", alignItems: "stretch"}}>
+                              <div>
+                                {`${onDownload != undefined ? '⤓ ' : ''}${nvalue.name}`}
+                              </div>
+                              <div style={{flex: "1 1 auto", textAlign: "right"}}>
+                                <i style={{fontSize: "0.6em", opacity: "0.75"}}>
+                                  {` (${formatBytes(nvalue.size)})`}
+                                </i>
+                              </div>
+                            </div>
                           : inputRef.current && inputRef.current.files.length
                             ? inputRef.current.files[0].name
                             : '...'
@@ -211,7 +254,10 @@ const VInputFileRS = ({formActions, id, name, value, defaultValue, label, icon, 
 
 VInputFileRS.propTypes = {
   ...VInputTypes,
-  onLoad: PropTypes.func
+  onLoad: PropTypes.func,
+  onDownload: PropTypes.func,
+  accept: PropTypes.string,
+  iconMap: PropTypes.object
 }
 
 VInputFileRS.defaultProps = {
