@@ -216,7 +216,9 @@ const VInputFileRS = ({formActions, id, name, value, defaultValue, label, icon, 
                                        userSelect: 'none'
                                       }}
                         className   = {`form-control ${valid && hasValue() ? 'is-valid' : ''} ${!valid ? 'is-invalid' : ''}`}
-                        onClick     ={hasValue() ? (ev) => download(inputRef, ev) : (_) => browse(inputRef)}>
+                        onClick     ={hasValue() 
+                                      ? (ev) => download(inputRef, ev) 
+                                      : (_)  => browse(inputRef)}>
                         {hasValue()
                           ? <div style={{display: "flex", width: "100%", alignItems: "stretch"}}>
                               <div>
@@ -233,7 +235,10 @@ const VInputFileRS = ({formActions, id, name, value, defaultValue, label, icon, 
                             : '...'
                         }
                   </div>
-                  <InputGroupAddon onClick   = {() => {hasValue() ? clear(inputRef) : null}}
+                  <InputGroupAddon onClick   = {hasValue() 
+                                                ? () => clear(inputRef) 
+                                                : null
+                                                }
                                   style     = {{cursor: hasValue() ? 'pointer' : 'not-allowed', zIndex: "2"}}
                                   addonType = "append">
                         <InputGroupText
