@@ -15,7 +15,7 @@ const VFormRSButtons = ({onSave, onCancel, colors, icons, labels, autoDisable, d
         : disabled
     )
   
-  const handleSave = async (ev) => {
+  const handleSave = (ev) => {
     setIsSaving(true)
 
     const result= onSave(ev)
