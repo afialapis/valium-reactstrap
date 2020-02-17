@@ -21,7 +21,9 @@ const VFormRSButtons = ({onSave, onCancel, colors, icons, labels, autoDisable, d
     const result= onSave(ev)
     if (result == Promise.resolve(result)) {
       result.then((r) => {
-        setIsSaving(false)
+        try {
+          setIsSaving(false)
+        } catch(e) {}
       })
     } else {
       setIsSaving(false)
