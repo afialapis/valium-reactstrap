@@ -55,8 +55,8 @@ const VFormRSButtons = ({onSave, onCancel, colors, icons, labels, autoDisable, d
 }
 
 
-const VFormRS = ({renderInputs, className, onSave, onCancel, colors, icons, labels, autoDisable, disabled, renderButtons}) => 
-   <VForm className    = {`valium-reactstrap ${className!=undefined ? className : ''}`}
+const VFormRS = ({renderInputs, className, onSave, onCancel, colors, icons, labels, autoDisable, disabled, renderButtons, inline}) => 
+   <VForm className    = {`valium-reactstrap ${className!=undefined ? className : ''} ${inline==true ? 'inline' : ''}`}
           renderInputs = {renderInputs}
           renderButtons= {(valid, elements) => 
                           renderButtons!= undefined 
@@ -84,11 +84,13 @@ VFormRS.propTypes = {
   autoDisable  : PropTypes.bool,
   disabled     : PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
   renderButtons: PropTypes.func,
+  inline       : PropTypes.bool
 }
 
 VFormRS.defaultProps = {
   icons      : ['ban', 'save'],
-  autoDisable: true
+  autoDisable: true,
+  inline     : false
 }
 
 

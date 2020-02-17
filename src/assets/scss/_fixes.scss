@@ -1,10 +1,17 @@
 /**
  * fix inline
  */
+ .valium-reactstrap.inline {
+  display: inline-block;
+  vertical-align: top;
+ }
+
+ .valium-reactstrap.inline .valium-reactstrap-form-group.form-group
 .valium-reactstrap-form-group.form-group.inline {
   margin-bottom :0;
   display: inline-block;
-  vertical-align: middle;
+  vertical-align: top;
+  padding-right: 1em;
 }
 
 /**
