@@ -1,3 +1,7 @@
+.valium-reactstrap .valium-reactstrap-form-group {
+  text-align: left;
+}
+
 /**
  * fix inline
  */
@@ -13,6 +17,10 @@
   display: inline-block;
   vertical-align: top;
   padding-right: 1em;
+}
+
+.valium-reactstrap.inline .valium-reactstrap-buttons {
+  margin-top: 0;
 }
 
 /**

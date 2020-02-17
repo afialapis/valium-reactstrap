@@ -80,6 +80,7 @@ const VInputDateRS = ({formActions, id, name, value, defaultValue, label, feedba
                             readOnly    = {readOnly}
                             required    = {required}
                             autocomplete= {autocomplete}
+                            className   = {valid ? 'is-valid' : 'is-invalid'}
                             style       = {{}}
                             
                             {...vprops} />
