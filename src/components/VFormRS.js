@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import PropTypes         from 'prop-types'
 import {VForm}           from 'valium'
 import VIcon             from './icons'
@@ -7,6 +7,8 @@ import { Button }        from 'reactstrap'
 
 const VFormRSButtons = ({onSave, onCancel, colors, icons, labels, autoDisable, disabled, valid, elements}) => {
   const [isSaving, setIsSaving]= useState(false)
+  const [isMounted, setIsMounted]= useState(false)
+
   const isDisabled= autoDisable
     ? !valid
     : (
@@ -15,15 +17,25 @@ const VFormRSButtons = ({onSave, onCancel, colors, icons, labels, autoDisable, d
         : disabled
     )
   
+  useEffect(() => {
+
+    setIsMounted(true)
+
+    return () => {
+      setIsMounted(false)
+    }
+
+  }, [])
+  
   const handleSave = (ev) => {
     setIsSaving(true)
 
     const result= onSave(ev)
     if (result == Promise.resolve(result)) {
       result.then((r) => {
-        try {
+        if (isMounted) {
           setIsSaving(false)
-        } catch(e) {}
+        }
       })
     } else {
       setIsSaving(false)
