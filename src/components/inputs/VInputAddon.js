@@ -43,7 +43,7 @@ const VInputAddon = ({name, value, label, feedback, icon, isValid, children, inl
       : null
       }
       <InputGroup style={inputGroupStyle}>
-        {icon==undefined
+        {icon==undefined || icon=='no-icon'
           ? null
           : 
           <InputGroupAddon addonType="prepend" className="input-group-addon">
