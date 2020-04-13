@@ -6,8 +6,11 @@ import {Input}     from 'reactstrap'
 import {vPropTypes, vDefaultProps} from './common/VInputProps'
 import valueOrDef   from './common/valueOrDef'
 
-const VInputNumberRS = ({formActions, id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, autocomplete,
-                      required, max, min, pattern, step, checkValue, allowedValues, disallowedValues, doRepeat, doNotRepeat, stepRange, onChange, prematureValidation, keepHeight, formGroupStyle, inputGroupStyle}) => {
+const VInputNumberRS = (
+  {formActions, id, name, value, defaultValue, label, feedback, icon, inline, 
+    placeholder, readOnly, autocomplete, required, max, min, pattern, step, 
+    checkValue, allowedValues, disallowedValues, doRepeat, doNotRepeat, stepRange, 
+    onChange, prematureValidation, keepHeight, formGroupStyle, inputGroupStyle, inputStyle}) => {
 
   const [vprops, nvalue]= valueOrDef(value, defaultValue)
   
@@ -48,6 +51,7 @@ const VInputNumberRS = ({formActions, id, name, value, defaultValue, label, feed
                         valid       = {nvalue!=undefined && nvalue!='' && valid}
                         invalid     = {! valid}
                         autoComplete= {autocomplete}
+                        style       = {inputStyle} 
                         {...vprops}
                 />
               </VInputAddon>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect }         from 'react'
 import PropTypes     from 'prop-types'
 import {VInput}      from 'valium'
-import {CustomInput} from 'reactstrap'
+// import {CustomInput} from 'reactstrap'
 import VInputAddon   from './VInputAddon'
 import {vPropTypes, vDefaultProps}   from './common/VInputProps'
 import valueOrDef   from './common/valueOrDef'
@@ -9,7 +9,8 @@ import valueOrDef   from './common/valueOrDef'
 let instanceCount= 1
 
 const VInputCheckboxRS = ({formActions, id, name, value, defaultValue, label, description, feedback, icon, inline, readOnly, 
-                      required, checkValue, allowedValues, disallowedValues, doRepeat, doNotRepeat, onChange, keepHeight, formGroupStyle, inputGroupStyle}) => {
+                      required, checkValue, allowedValues, disallowedValues, doRepeat, doNotRepeat, onChange, keepHeight, 
+                      formGroupStyle, inputGroupStyle, inputStyle}) => {
 
   const [vprops, nvalue]= valueOrDef(value, defaultValue)
 
@@ -62,6 +63,7 @@ const VInputCheckboxRS = ({formActions, id, name, value, defaultValue, label, de
                         required    = {required}
                         valid       = {innerValue!=undefined && innerValue!='' && valid}
                         invalid     = {! valid}
+                        style       = {inputStyle} 
                         {...vprops}
                 />
                 */}
@@ -75,8 +77,9 @@ const VInputCheckboxRS = ({formActions, id, name, value, defaultValue, label, de
                          ref      = {inputRef}
                          readOnly = {readOnly!=undefined ? readOnly  : false}
                          required = {required}
-                         {...vprops}                         
-                         ></input>
+                         style    = {inputStyle} 
+                         {...vprops}
+                  />
                   <label className="custom-control-label"
                          htmlFor={id}>{description}</label>
                 </div>

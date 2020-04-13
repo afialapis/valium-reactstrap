@@ -8,8 +8,11 @@ import valueOrDef   from './common/valueOrDef'
 import parseNumeric from './common/numeric'
 
 
-const VInputSelectMultipleRS = ({formActions, id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, autocomplete,
-                      required, checkValue, allowedValues, disallowedValues, doRepeat, doNotRepeat, onChange, options, keepHeight, formGroupStyle, inputGroupStyle, numeric}) => {
+const VInputSelectMultipleRS = (
+  {formActions, id, name, value, defaultValue, label, feedback, icon, inline, 
+    placeholder, readOnly, autocomplete, required, checkValue, allowedValues, 
+    disallowedValues, doRepeat, doNotRepeat, onChange, options, keepHeight, 
+    formGroupStyle, inputGroupStyle, inputStyle, numeric}) => {
 
   
   
@@ -69,6 +72,7 @@ const VInputSelectMultipleRS = ({formActions, id, name, value, defaultValue, lab
                         valid       = {nvalue!=undefined && nvalue!='' && valid}
                         invalid     = {! valid}
                         autoComplete= {autocomplete}
+                        style       = {inputStyle} 
                         {...vprops}>
                 {options_map.map((opt) => 
                   <option key={`${name}_option_${opt.value}`}

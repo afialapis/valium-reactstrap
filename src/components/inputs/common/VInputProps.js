@@ -25,7 +25,8 @@ const vPropTypes = {
   onChange            : PropTypes.func,
   keepHeight          : PropTypes.bool,
   formGroupStyle      : PropTypes.object,
-  inputGroupStyle     : PropTypes.object
+  inputGroupStyle     : PropTypes.object,
+  inputStyle          : PropTypes.object
 }
 
 const vDefaultProps = {

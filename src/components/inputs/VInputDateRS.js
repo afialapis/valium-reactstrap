@@ -27,7 +27,7 @@ const _toISOString = (value) => {
 }
 
 const VInputDateRS = ({formActions, id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, autocomplete,
-                      required, checkValue, allowedValues, disallowedValues, doRepeat, doNotRepeat, keepHeight, formGroupStyle, inputGroupStyle, toISOString, onChange, prematureValidation}) => {
+                      required, checkValue, allowedValues, disallowedValues, doRepeat, doNotRepeat, keepHeight, formGroupStyle, inputGroupStyle, inputStyle, toISOString, onChange, prematureValidation}) => {
   
   const setValidity= useRef(undefined)
   
@@ -81,9 +81,9 @@ const VInputDateRS = ({formActions, id, name, value, defaultValue, label, feedba
                             required    = {required}
                             autocomplete= {autocomplete}
                             className   = {valid ? 'is-valid' : 'is-invalid'}
-                            style       = {{}}
-                            
-                            {...vprops} />
+                            style       = {inputStyle} 
+                            {...vprops} 
+                />
               </VInputAddon>
               }/>
   )

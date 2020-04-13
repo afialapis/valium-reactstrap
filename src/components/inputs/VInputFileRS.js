@@ -59,7 +59,7 @@ const geIcon = (mtype, icon, iconMap) => {
 const VInputFileRS = ({formActions, id, name, value, defaultValue, label, icon, inline, readOnly, 
                        required, feedback, checkValue, allowedValues, disallowedValues, 
                        doRepeat, doNotRepeat, 
-                       keepHeight, formGroupStyle, inputGroupStyle, onLoad, onChange, onDownload, accept, iconMap}) => {
+                       keepHeight, formGroupStyle, inputGroupStyle, inputStyle, onLoad, onChange, onDownload, accept, iconMap}) => {
   const setValidity= useRef(undefined)
   const [_vprops, nvalue]= valueOrDef(value, defaultValue)
 
@@ -206,14 +206,15 @@ const VInputFileRS = ({formActions, id, name, value, defaultValue, label, icon, 
                           //invalid     = {! valid}
                           accept      = {accept}
                   />
-                  <div  style       = {{opacity: "1", 
-                                       zIndex: "3", 
-                                       position: "absolute", 
-                                       width: valid ? "calc(100% - 75px)" : "calc(100% - 77px)", 
-                                       left: "42px", 
-                                       display: "flex",
-                                       cursor: 'pointer',
-                                       userSelect: 'none'
+                  <div  style       = {{opacity  : "1", 
+                                       zIndex    : "3", 
+                                       position  : "absolute", 
+                                       width     : valid ? "calc(100% - 75px)" : "calc(100% - 77px)", 
+                                       left      : "42px", 
+                                       display   : "flex",
+                                       cursor    : 'pointer',
+                                       userSelect: 'none',
+                                       ...inputStyle
                                       }}
                         className   = {`form-control ${valid && hasValue() ? 'is-valid' : ''} ${!valid ? 'is-invalid' : ''}`}
                         onClick     ={hasValue() 

@@ -41,9 +41,11 @@ function getPosition(el) {
 }
 */
 
-const VInputSelectSearchRS = ({formActions, id, name, value, defaultValue, options, label, feedback, icon, inline, placeholder, readOnly, autocomplete,
-                               required, checkValue, allowedValues, disallowedValues, doRepeat, doNotRepeat, keepHeight, formGroupStyle, inputGroupStyle,
-                               onChange, clearable, numeric, maxShownOptions}) => {
+const VInputSelectSearchRS = (
+  {formActions, id, name, value, defaultValue, options, label, feedback, icon, inline, 
+    placeholder, readOnly, autocomplete, required, checkValue, allowedValues, 
+    disallowedValues, doRepeat, doNotRepeat, keepHeight, formGroupStyle, inputGroupStyle,
+    inputStyle, onChange, clearable, numeric, maxShownOptions}) => {
   
   
   const [vprops, nvalue]= valueOrDef(value, defaultValue, numeric)
@@ -186,6 +188,7 @@ const VInputSelectSearchRS = ({formActions, id, name, value, defaultValue, optio
                             onClick     = {(_ev) => onSearchStart()}
                             onChange    = {(ev) => onSearchType(ev)}
                             autoComplete= {autocomplete}
+                            style       = {inputStyle} 
                             />
 
                   {clearable

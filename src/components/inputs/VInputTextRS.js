@@ -7,8 +7,11 @@ import {vPropTypes, vDefaultProps}  from './common/VInputProps'
 import valueOrDef   from './common/valueOrDef'
 
 
-const VInputTextRS = ({formActions, id, name, value, defaultValue, label, feedback, icon, inline, inputType, placeholder, readOnly, autocomplete,
-                      required, maxLength, minLength, pattern, checkValue, allowedValues, disallowedValues, doRepeat, doNotRepeat, onChange, prematureValidation, keepHeight, formGroupStyle, inputGroupStyle}) => {
+const VInputTextRS = (
+  {formActions, id, name, value, defaultValue, label, feedback, icon, inline, 
+    inputType, placeholder, readOnly, autocomplete, required, maxLength, minLength, 
+    pattern, checkValue, allowedValues, disallowedValues, doRepeat, doNotRepeat, onChange, 
+    prematureValidation, keepHeight, formGroupStyle, inputGroupStyle, inputStyle}) => {
 
   const [vprops, nvalue]= valueOrDef(value, defaultValue)
   
@@ -23,14 +26,14 @@ const VInputTextRS = ({formActions, id, name, value, defaultValue, label, feedba
             prematureValidation= {prematureValidation}
             formActions     = {formActions}
             render  = {({valid, message}, inputRef) => 
-              <VInputAddon name        = {name}
-                          label       = {label}
-                          feedback    = {feedback==='no-feedback' ? undefined : feedback||message}
-                          value       = {nvalue}
-                          icon        = {icon}
-                          isValid     = {valid}
-                          inline      = {inline}
-                          keepHeight  = {keepHeight}
+              <VInputAddon name          = {name}
+                          label          = {label}
+                          feedback       = {feedback==='no-feedback' ? undefined : feedback||message}
+                          value          = {nvalue}
+                          icon           = {icon}
+                          isValid        = {valid}
+                          inline         = {inline}
+                          keepHeight     = {keepHeight}
                           formGroupStyle = {formGroupStyle}
                           inputGroupStyle= {inputGroupStyle}>
                 <Input  id          = {id}
@@ -47,6 +50,7 @@ const VInputTextRS = ({formActions, id, name, value, defaultValue, label, feedba
                         valid       = {nvalue!=undefined && nvalue!='' && valid}
                         invalid     = {! valid}
                         autoComplete= {autocomplete}
+                        style       = {inputStyle} 
                         {...vprops}
                 />
               </VInputAddon>

@@ -7,7 +7,7 @@ import {vPropTypes, vDefaultProps}  from './common/VInputProps'
 import valueOrDef   from './common/valueOrDef'
 
 const VInputColorRS = ({formActions, id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, autocomplete,
-                      required, checkValue, allowedValues, disallowedValues, doRepeat, doNotRepeat, onChange, prematureValidation, keepHeight, formGroupStyle, inputGroupStyle}) => {
+                      required, checkValue, allowedValues, disallowedValues, doRepeat, doNotRepeat, onChange, prematureValidation, keepHeight, formGroupStyle, inputGroupStyle, inputStyle}) => {
 
   const [vprops, nvalue]= valueOrDef(value, defaultValue)
   
@@ -43,6 +43,7 @@ const VInputColorRS = ({formActions, id, name, value, defaultValue, label, feedb
                         valid       = {nvalue!=undefined && nvalue!='' && valid}
                         invalid     = {! valid}
                         autoComplete= {autocomplete}
+                        style       = {inputStyle} 
                         {...vprops}
                 />
               </VInputAddon>

@@ -24,7 +24,9 @@ const VInputFeedback = ({isValid, feedback, keepHeight}) => {
 }
 
 
-const VInputAddon = ({name, value, label, feedback, icon, isValid, children, inline, formClassName, keepHeight, formGroupStyle, inputGroupStyle, middleElement}) => {
+const VInputAddon = (
+  {name, value, label, feedback, icon, isValid, children, inline, formClassName, 
+    keepHeight, formGroupStyle, inputGroupStyle, middleElement}) => {
   const originalValue = useRef(value)
   
   const [loaded, setLoaded]= useState(false)

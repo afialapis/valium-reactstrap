@@ -7,8 +7,11 @@ import {vPropTypes, vDefaultProps}  from './common/VInputProps'
 import valueOrDef   from './common/valueOrDef'
 
 
-const VInputTimeRS = ({formActions, id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, autocomplete,
-                      required, checkValue, allowedValues, disallowedValues, doRepeat, doNotRepeat, stepRange, onChange, prematureValidation, keepHeight, formGroupStyle, inputGroupStyle}) => {
+const VInputTimeRS = (
+  {formActions, id, name, value, defaultValue, label, feedback, icon, inline, placeholder, 
+    readOnly, autocomplete, required, checkValue, allowedValues, disallowedValues, doRepeat, 
+    doNotRepeat, stepRange, onChange, prematureValidation, keepHeight, formGroupStyle, 
+    inputGroupStyle, inputStyle}) => {
 
   const [vprops, nvalue]= valueOrDef(value, defaultValue)
   
@@ -45,6 +48,7 @@ const VInputTimeRS = ({formActions, id, name, value, defaultValue, label, feedba
                         valid       = {nvalue!=undefined && nvalue!='' && valid}
                         invalid     = {! valid}
                         autoComplete= {autocomplete}
+                        style       = {inputStyle} 
                         {...vprops}
                 />
               </VInputAddon>
