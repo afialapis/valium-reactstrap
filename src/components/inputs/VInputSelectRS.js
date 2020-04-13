@@ -3,7 +3,7 @@ import PropTypes   from 'prop-types'
 import VInputAddon from './VInputAddon'
 import {VInput}    from 'valium'
 import {CustomInput, InputGroupAddon, InputGroupText}     from 'reactstrap'
-import VInputTypes from './common/VInputTypes'
+import {vPropTypes, vDefaultProps} from './common/VInputProps'
 import valueOrDef   from './common/valueOrDef'
 import parseNumeric from './common/numeric'
 
@@ -53,7 +53,7 @@ const VInputSelectRS = ({formActions, id, name, value, defaultValue, label, feed
             render          = {({valid, message}, inputRef) => 
             <VInputAddon name        = {name}
                         label       = {label}
-                        feedback    = {feedback || message}
+                        feedback    = {feedback==='no-feedback' ? undefined : feedback||message}
                         value       = {nvalue}
                         icon        = {icon}
                         isValid     = {valid}
@@ -106,7 +106,7 @@ const VInputSelectRS = ({formActions, id, name, value, defaultValue, label, feed
 
 
 VInputSelectRS.propTypes = {
-  ...VInputTypes,
+  ...vPropTypes,
 
   placeholder : PropTypes.string,
   options     : PropTypes.object,
@@ -116,6 +116,7 @@ VInputSelectRS.propTypes = {
 }
 
 VInputSelectRS.defaultProps = {
+  ...vDefaultProps,
   icon: 'list',
   id: `valium-reactstrap-input-checkbox-${instanceCount++}`,
 }

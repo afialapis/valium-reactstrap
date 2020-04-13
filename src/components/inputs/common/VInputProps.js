@@ -1,6 +1,6 @@
 import PropTypes    from 'prop-types'
 
-const VInputTypes = {
+const vPropTypes = {
   formActions         : PropTypes.object,
   id                  : PropTypes.string,
   name                : PropTypes.string.isRequired,
@@ -28,4 +28,10 @@ const VInputTypes = {
   inputGroupStyle     : PropTypes.object
 }
 
-export default VInputTypes
+const vDefaultProps = {
+  prematureValidation: true,
+  keepHeight: false,
+  inline: false
+}
+
+export {vPropTypes, vDefaultProps}

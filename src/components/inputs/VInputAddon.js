@@ -15,7 +15,10 @@ const VInputFeedback = ({isValid, feedback, keepHeight}) => {
 
   return (
     <div className={`valium-reactstrap-feedback ${isValid ? 'hidden' : ''}`}>
-      {feedback || "_"}
+      {feedback!=undefined
+       ? feedback
+       : <>&nbsp;</>
+      }
     </div>
   )
 }
@@ -58,11 +61,12 @@ const VInputAddon = ({name, value, label, feedback, icon, isValid, children, inl
        ? middleElement
        : null
       }
-      {(keepHeight || feedback) &&
-        <VInputFeedback isValid={isValid}
-                        feedback={feedback}
-                        keepHeight={keepHeight}
-                        />
+      {(keepHeight===true || feedback!=undefined) 
+        ? <VInputFeedback isValid={isValid}
+                          feedback={feedback}
+                          keepHeight={keepHeight}
+                          />
+        : null
       }
     </FormGroup>
   )

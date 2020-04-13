@@ -3,7 +3,7 @@ import PropTypes   from 'prop-types'
 import VInputAddon   from './VInputAddon'
 import {VInput}      from 'valium'
 import {InputGroupAddon, InputGroupText}     from 'reactstrap'
-import VInputTypes   from './common/VInputTypes'
+import {vPropTypes, vDefaultProps}   from './common/VInputProps'
 import valueOrDef   from './common/valueOrDef'
 
 let instanceCount= 1
@@ -177,7 +177,7 @@ const VInputFileRS = ({formActions, id, name, value, defaultValue, label, icon, 
             render  = {({valid, message}, inputRef) => 
                 <VInputAddon name        = {name}
                             label       = {label}
-                            feedback    = {feedback || message}
+                            feedback    = {feedback==='no-feedback' ? undefined : feedback||message}
                             value       = {nvalue}
                             icon        = {geIcon(nvalue.type, icon, iconMap)}
                             isValid     = {valid}
@@ -258,7 +258,7 @@ const VInputFileRS = ({formActions, id, name, value, defaultValue, label, icon, 
 
 
 VInputFileRS.propTypes = {
-  ...VInputTypes,
+  ...vPropTypes,
   onLoad: PropTypes.func,
   onDownload: PropTypes.func,
   accept: PropTypes.string,
@@ -266,6 +266,7 @@ VInputFileRS.propTypes = {
 }
 
 VInputFileRS.defaultProps = {
+  ...vDefaultProps,
   id: `valium-reactstrap-input-file-${instanceCount++}`,
   icon : 'file'
 }

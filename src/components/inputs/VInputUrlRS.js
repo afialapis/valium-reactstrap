@@ -15,10 +15,10 @@ VInputUrlRS.propTypes = VInputTextRS.propTypes
 delete VInputUrlRS.propTypes['inputType']
 
 VInputUrlRS.defaultProps = {
+  ...VInputTextRS.defaultProps,
   icon   : 'url',
   label  : 'URL',
-  pattern: "^(https?://)?([a-zA-Z0-9]([a-zA-ZäöüÄÖÜ0-9-]{0,61}[a-zA-Z0-9])?.)+[a-zA-Z/]{2,6}$",
-  prematureValidation: true
+  pattern: "^(https?://)?([a-zA-Z0-9]([a-zA-ZäöüÄÖÜ0-9-]{0,61}[a-zA-Z0-9])?.)+[a-zA-Z/]{2,6}$"
 }
 
 

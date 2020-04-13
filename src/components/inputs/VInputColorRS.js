@@ -3,7 +3,7 @@ import PropTypes    from 'prop-types'
 import VInputAddon  from './VInputAddon'
 import {VInput}     from 'valium'
 import {Input}      from 'reactstrap'
-import VInputTypes  from './common/VInputTypes'
+import {vPropTypes, vDefaultProps}  from './common/VInputProps'
 import valueOrDef   from './common/valueOrDef'
 
 const VInputColorRS = ({formActions, id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, autocomplete,
@@ -24,7 +24,7 @@ const VInputColorRS = ({formActions, id, name, value, defaultValue, label, feedb
             render  = {({valid, message}, inputRef) => 
               <VInputAddon name          = {name}
                           label          = {label}
-                          feedback       = {feedback || message}
+                          feedback       = {feedback==='no-feedback' ? undefined : feedback||message}
                           value          = {nvalue}
                           icon           = {icon}
                           isValid        = {valid}
@@ -52,14 +52,14 @@ const VInputColorRS = ({formActions, id, name, value, defaultValue, label, feedb
 
 
 VInputColorRS.propTypes = {
-  ...VInputTypes,
+  ...vPropTypes,
   prematureValidation : PropTypes.bool,
   autocomplete : PropTypes.oneOf(["on", "off"]),
 }
 
 VInputColorRS.defaultProps = {
-  icon: 'color',
-  prematureValidation: true
+  ...vDefaultProps,
+  icon: 'color'
 }
 
 

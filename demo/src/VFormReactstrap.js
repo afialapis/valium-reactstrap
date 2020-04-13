@@ -117,12 +117,13 @@ const VFormReactstrap = () => {
                 <VInputText
                         formActions         = {formActions}
                         name                = 'atext'
-                        disallowedValues    = {["NOT"]}
+                        disallowedValues    = {["NOT", "not"]}
                         defaultValue        = {atext}
                         onChange            = {(v) => setAtext(v)}
                         required            = {true}
                         prematureValidation = {premature}
                         label               = 'Text'
+                      /*feedback            = {'no-feedback'}*/
                         keepHeight          = {keepHeight}
                         {... !showAddon && {icon: null}}
                         

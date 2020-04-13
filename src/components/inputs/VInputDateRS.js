@@ -3,7 +3,7 @@ import PropTypes   from 'prop-types'
 import VInputAddon from './VInputAddon'
 import {VInput}    from 'valium'
 import DatePicker  from 'reactstrap-date-picker'
-import VInputTypes from './common/VInputTypes'
+import {vPropTypes, vDefaultProps} from './common/VInputProps'
 import valueOrDef  from './common/valueOrDef'
 
 
@@ -62,7 +62,7 @@ const VInputDateRS = ({formActions, id, name, value, defaultValue, label, feedba
             render  = {({valid, message}, inputRef) => 
               <VInputAddon name        = {name}
                           label         = {label}
-                          feedback      = {feedback || message}
+                          feedback      = {feedback==='no-feedback' ? undefined : feedback||message}
                           value         = {nvalue}
                           icon          = {icon}
                           isValid       = {valid}
@@ -91,7 +91,7 @@ const VInputDateRS = ({formActions, id, name, value, defaultValue, label, feedba
 
 
 VInputDateRS.propTypes = {
-  ...VInputTypes,
+  ...vPropTypes,
   prematureValidation : PropTypes.bool,
   placeholder         : PropTypes.string,
   autocomplete        : PropTypes.oneOf(["on", "off"]),
@@ -99,9 +99,9 @@ VInputDateRS.propTypes = {
 }
 
 VInputDateRS.defaultProps = {
+  ...vDefaultProps,
   icon       : 'calendar',
   toISOString: _toISOString,
-  prematureValidation: true
 }
 
 

@@ -3,7 +3,7 @@ import PropTypes     from 'prop-types'
 import {VInput}      from 'valium'
 import {CustomInput} from 'reactstrap'
 import VInputAddon   from './VInputAddon'
-import VInputTypes   from './common/VInputTypes'
+import {vPropTypes, vDefaultProps}   from './common/VInputProps'
 import valueOrDef   from './common/valueOrDef'
 
 let instanceCount= 1
@@ -41,7 +41,7 @@ const VInputCheckboxRS = ({formActions, id, name, value, defaultValue, label, de
             render  = {({valid, message}, inputRef) => 
               <VInputAddon name       = {name}
                           label       = {label}
-                          feedback    = {feedback || message}
+                          feedback    = {feedback==='no-feedback' ? undefined : feedback||message}
                           value       = {innerValue}
                           icon        = {icon}
                           isValid     = {valid}
@@ -90,11 +90,12 @@ const VInputCheckboxRS = ({formActions, id, name, value, defaultValue, label, de
 
 
 VInputCheckboxRS.propTypes = {
-  ...VInputTypes,
+  ...vPropTypes,
   description         : PropTypes.string,
 }
 
 VInputCheckboxRS.defaultProps = {
+  ...vDefaultProps,
   id: `valium-reactstrap-input-checkbox-${instanceCount++}`,
   icon: undefined
 }

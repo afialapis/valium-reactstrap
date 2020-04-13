@@ -3,7 +3,7 @@ import PropTypes     from 'prop-types'
 import VInputAddon   from './VInputAddon'
 import {VInput}      from 'valium'
 import {Input, InputGroupAddon, InputGroupText}       from 'reactstrap'
-import VInputTypes   from './common/VInputTypes'
+import {vPropTypes, vDefaultProps}   from './common/VInputProps'
 import valueOrDef   from './common/valueOrDef'
 import parseNumeric from './common/numeric'
 
@@ -158,7 +158,7 @@ const VInputSelectSearchRS = ({formActions, id, name, value, defaultValue, optio
               <div>
                 <VInputAddon name        = {name}
                             label       = {label}
-                            feedback    = {isOpen ? undefined : (feedback || message)}
+                            feedback    = {isOpen ? undefined : (feedback==='no-feedback' ? undefined : feedback||message)}
                             value       = {nvalue}
                             icon        = {icon}
                             isValid     = {valid}
@@ -236,7 +236,7 @@ const VInputSelectSearchRS = ({formActions, id, name, value, defaultValue, optio
 
 
 VInputSelectSearchRS.propTypes = {
-  ...VInputTypes,
+  ...vPropTypes,
 
   prematureValidation : PropTypes.bool,
   placeholder  : PropTypes.string,
@@ -249,8 +249,8 @@ VInputSelectSearchRS.propTypes = {
 
 
 VInputSelectSearchRS.defaultProps = {
+  ...vDefaultProps,
   icon: 'search',
-  prematureValidation: true,
   maxShownOptions: 10
 }
 

@@ -11,9 +11,9 @@ VInputEmailRS.propTypes = VInputTextRS.propTypes
 delete VInputEmailRS.propTypes['inputType']
 
 VInputEmailRS.defaultProps = {
+  ...VInputTextRS.defaultProps,
   icon: 'email',
-  label: 'E-Mail',
-  prematureValidation: true
+  label: 'E-Mail'
 }
 
 

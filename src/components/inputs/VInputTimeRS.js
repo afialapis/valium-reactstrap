@@ -3,7 +3,7 @@ import PropTypes    from 'prop-types'
 import VInputAddon  from './VInputAddon'
 import {VInput}     from 'valium'
 import {Input}      from 'reactstrap'
-import VInputTypes  from './common/VInputTypes'
+import {vPropTypes, vDefaultProps}  from './common/VInputProps'
 import valueOrDef   from './common/valueOrDef'
 
 
@@ -26,7 +26,7 @@ const VInputTimeRS = ({formActions, id, name, value, defaultValue, label, feedba
             render             = {({valid, message}, inputRef) => 
               <VInputAddon name        = {name}
                           label       = {label}
-                          feedback    = {feedback || message}
+                          feedback    = {feedback==='no-feedback' ? undefined : feedback||message}
                           value       = {nvalue}
                           icon        = {icon}
                           isValid     = {valid}
@@ -55,15 +55,15 @@ const VInputTimeRS = ({formActions, id, name, value, defaultValue, label, feedba
 
 
 VInputTimeRS.propTypes = {
-  ...VInputTypes,
+  ...vPropTypes,
   prematureValidation : PropTypes.bool,
   placeholder  : PropTypes.string,
   autocomplete : PropTypes.oneOf(["on", "off"]),
 }
 
 VInputTimeRS.defaultProps = {
-  icon: 'time',
-  prematureValidation: true
+  ...vDefaultProps,
+  icon: 'time'
 }
 
 

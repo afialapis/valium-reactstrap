@@ -3,7 +3,7 @@ import PropTypes    from 'prop-types'
 import VInputAddon  from './VInputAddon'
 import {VInput}     from 'valium'
 import {Input}      from 'reactstrap'
-import VInputTypes  from './common/VInputTypes'
+import {vPropTypes, vDefaultProps}  from './common/VInputProps'
 import valueOrDef   from './common/valueOrDef'
 
 
@@ -25,7 +25,7 @@ const VInputTextRS = ({formActions, id, name, value, defaultValue, label, feedba
             render  = {({valid, message}, inputRef) => 
               <VInputAddon name        = {name}
                           label       = {label}
-                          feedback    = {feedback || message}
+                          feedback    = {feedback==='no-feedback' ? undefined : feedback||message}
                           value       = {nvalue}
                           icon        = {icon}
                           isValid     = {valid}
@@ -58,7 +58,7 @@ const VInputTextRS = ({formActions, id, name, value, defaultValue, label, feedba
 
 
 VInputTextRS.propTypes = {
-  ...VInputTypes,
+  ...vPropTypes,
 
   prematureValidation : PropTypes.bool,  
   inputType    : PropTypes.string,
@@ -70,8 +70,8 @@ VInputTextRS.propTypes = {
 }
 
 VInputTextRS.defaultProps = {
-  icon: 'text',
-  prematureValidation: true
+  ...vDefaultProps,
+  icon: 'text'
 }
 
 export default VInputTextRS
