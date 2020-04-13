@@ -69,7 +69,9 @@ const VInputCheckboxRS = ({formActions, id, name, value, defaultValue, label, de
                 */}
                 
                 <div className    = "custom-switch custom-control"
-                      onClick     = {(event) => handleClick(event, inputRef)}> 
+                      onClick     = {(event) => handleClick(event, inputRef)}
+                      /* better styling on the div, it is not very useful on the input here */
+                      style    = {inputStyle} > 
                   <input type     = "checkbox" 
                          id       = {id} 
                          name     = {name} 
@@ -77,7 +79,6 @@ const VInputCheckboxRS = ({formActions, id, name, value, defaultValue, label, de
                          ref      = {inputRef}
                          readOnly = {readOnly!=undefined ? readOnly  : false}
                          required = {required}
-                         style    = {inputStyle} 
                          {...vprops}
                   />
                   <label className="custom-control-label"
