@@ -38,7 +38,7 @@ const VInputAddon = (
   const hasChanged= loaded && (value != originalValue.current)
 
   return (
-    <FormGroup className={`valium-reactstrap-form-group ${hasChanged ? 'is-unsaved' : ''} ${inline ? 'inline' : ''} ${formClassName || ''}`}
+    <FormGroup className={`valium-reactstrap-form-group ${hasChanged ? 'is-unsaved' : ''} ${inline===true ? 'inline' : ''} ${formClassName || ''}`}
                style={formGroupStyle}>
       {label!=undefined
       ? <Label for={name}

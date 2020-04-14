@@ -102,6 +102,7 @@ VInputDateRS.defaultProps = {
   ...vDefaultProps,
   icon       : 'calendar',
   toISOString: _toISOString,
+  inputStyle : {} // invalidate the r-d-p width default
 }
 
 
