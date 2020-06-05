@@ -13,9 +13,13 @@ const VInputCheckboxRS = ({formActions, id, name, value, defaultValue, label, de
                       formGroupStyle, inputGroupStyle, inputStyle}) => {
 
   const [vprops, nvalue]= valueOrDef(value, defaultValue)
+  const cprops= {
+    checked: vprops.value,
+    defaultChecked: vprops.defaultChecked
+  }
 
   const [innerValue, setInnerValue]= useState(nvalue)
-
+  
   useEffect(() => {
     setInnerValue(nvalue)
   }, [value, defaultValue])
@@ -79,7 +83,8 @@ const VInputCheckboxRS = ({formActions, id, name, value, defaultValue, label, de
                          ref      = {inputRef}
                          readOnly = {readOnly!=undefined ? readOnly  : false}
                          required = {required}
-                         {...vprops}
+                         onChange    = {(event) => {if (onChange!=undefined) { return onChange(event.target.value)}}}
+                         {...cprops}
                   />
                   <label className="custom-control-label"
                          htmlFor={id}>{description}</label>

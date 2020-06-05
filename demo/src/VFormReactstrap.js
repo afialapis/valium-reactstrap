@@ -301,8 +301,8 @@ const VFormReactstrap = () => {
                         value               = {acheck}
                         required            = {false}
                         prematureValidation = {premature}
-                        onClick             = {(v) => {console.log(v); setAcheck(v)}}
-                        onChange            = {(v) => {console.log(v); setAcheck(v)}}
+                        onClick             = {(v) => {console.log('cl'+v); setAcheck(v)}}
+                        onChange            = {(v) => {console.log('ch'+v); setAcheck(v)}}
                         label               = "A check"
                         description         = "I will not accept it unchecked"
                         disallowedValues    = {[false]}
