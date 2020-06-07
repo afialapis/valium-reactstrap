@@ -1,3 +1,10 @@
+-- InputFloating
+
+  ? commonize how it handles [un]controlled values
+  ? onChange sends a 2nd parameter confirmed... commonize it?
+
+
+
 - Feedback visibility:
   Broken for VInputSelectSearch
 

@@ -1,22 +1,15 @@
-const numOrArrayToString = (v) => {
-  if (Array.isArray(v)) {
-    return v.map((a) => isNaN(a) ? '' : a.toString())
-  }
-  return isNaN(v) ? '' : v.toString()
-}
-
-const valueOrDefaultValue= (value, defaultValue, numeric= false) => {
+const valueOrDefaultValue= (value, defaultValue, transform= undefined) => {
   let vprops= {}
   let nvalue= undefined
   if (defaultValue!=undefined) {
-    vprops.defaultValue= numeric 
-                         ? numOrArrayToString(defaultValue)
+    vprops.defaultValue= transform!=undefined 
+                         ? transform(defaultValue)
                          : defaultValue
     nvalue= vprops.defaultValue
   } else {
     if (value!=undefined) {
-      vprops.value= numeric 
-                    ? numOrArrayToString(value)
+      vprops.value= transform!=undefined 
+                    ? transform(value)
                     : value
       nvalue= vprops.value
     } else {

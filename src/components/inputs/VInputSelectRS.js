@@ -9,6 +9,15 @@ import parseNumeric from './common/numeric'
 
 let instanceCount= 1
 
+const numOrArrayToString = (v) => {
+  if (Array.isArray(v)) {
+    return v.map((a) => isNaN(a) ? '' : a.toString())
+  }
+  return isNaN(v) ? '' : v.toString()
+}
+
+
+
 const VInputSelectRS = (
   {formActions, id, name, value, defaultValue, label, feedback, icon, inline, 
     placeholder, readOnly, autocomplete, required, checkValue, allowedValues, 
@@ -16,7 +25,7 @@ const VInputSelectRS = (
     formGroupStyle, inputGroupStyle, inputStyle, clearable, numeric}) => {
 
   const setValidity= useRef(undefined)
-  const [vprops, nvalue]= valueOrDef(value, defaultValue, numeric)
+  const [vprops, nvalue]= valueOrDef(value, defaultValue, numOrArrayToString)
   
   const sdisallowedValues= disallowedValues!=undefined ? disallowedValues.map((v) => v.toString()) : []
   let options_map= []

@@ -41,6 +41,14 @@ function getPosition(el) {
 }
 */
 
+const numOrArrayToString = (v) => {
+  if (Array.isArray(v)) {
+    return v.map((a) => isNaN(a) ? '' : a.toString())
+  }
+  return isNaN(v) ? '' : v.toString()
+}
+
+
 const VInputSelectSearchRS = (
   {formActions, id, name, value, defaultValue, options, label, feedback, icon, inline, 
     placeholder, readOnly, autocomplete, required, checkValue, allowedValues, 
@@ -48,7 +56,7 @@ const VInputSelectSearchRS = (
     inputStyle, onChange, clearable, numeric, maxShownOptions}) => {
   
   
-  const [vprops, nvalue]= valueOrDef(value, defaultValue, numeric)
+  const [vprops, nvalue]= valueOrDef(value, defaultValue, numOrArrayToString)
 
   const setValidity   = useRef(undefined)
   const wrapperRef    = useRef(undefined)

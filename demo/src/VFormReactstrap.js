@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import {Container, Row, Col, CustomInput} from 'reactstrap'
 import {VForm, VInputText, VInputEmail, VInputUrl, VInputPassword, VInputTextArea,
         VInputNumber, VInputDate, VInputTime, VInputColor, 
-        VInputCheckbox, VInputSelect, VInputSelectMultiple, VInputSelectSearch, VInputFile} from '../../src'
+        VInputCheckbox, VInputSelect, VInputSelectMultiple, VInputSelectSearch, VInputFile, VInputFloating} from '../../src'
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -28,7 +28,8 @@ const VFormReactstrap = () => {
   const [aselectmu, setAselectmu] = useState([]) // useState(['1', '4'])
   const [asearch, setAsearch] = useState(undefined)
   const [afile, setAfile] = useState({name: 'custom.txt', size: 1000, type: 'txt'})
-
+  const [afloat, setAfloat]= useState(1.23)
+  const [afloatu, setAfloatu]= useState(3.34)
 
 
   const onCancel = (ev, valid, elements) => {
@@ -184,6 +185,28 @@ const VFormReactstrap = () => {
                         keepHeight          = {keepHeight}
                         {... !showAddon && {icon: null}}
                 /> 
+                <VInputFloating
+                        formActions         = {formActions}
+                        name                = 'afloat'
+                        value               = {afloat}
+                        required            = {false}
+                        prematureValidation = {premature}
+                        onChange            = {(v) => setAfloat(v)}
+                        label               = "A Floating"
+                        keepHeight          = {keepHeight}
+                        {... !showAddon && {icon: null}}
+                /> 
+                <VInputFloating
+                        formActions         = {formActions}
+                        name                = 'afloatu'
+                        value               = {afloatu}
+                        required            = {false}
+                        prematureValidation = {premature}
+                        onChange            = {(v) => setAfloatu(v)}
+                        label               = "A Floating uncontrolled"
+                        keepHeight          = {keepHeight}
+                        {... !showAddon && {icon: null}}
+                />                                      
                 <VInputDate
                         formActions         = {formActions}
                         name                = 'adate'
@@ -216,16 +239,6 @@ const VFormReactstrap = () => {
                         disallowedValues    = {["#000000", "#ffffff"]}
                         onChange            = {(v) => setAcolor(v)}
                         label               = "A color"
-                        keepHeight          = {keepHeight}
-                        {... !showAddon && {icon: null}}
-                />
-                <VInputFile
-                        formActions         = {formActions}
-                        name                = 'afile'
-                        value               = {afile}
-                        required            = {false}
-                        onChange            = {(v) => setAfile(v)}
-                        label               = 'A file'
                         keepHeight          = {keepHeight}
                         {... !showAddon && {icon: null}}
                 />
@@ -309,6 +322,18 @@ const VFormReactstrap = () => {
                         keepHeight          = {keepHeight}
                         {... !showAddon && {icon: null}}
                 />
+                <VInputFile
+                        formActions         = {formActions}
+                        name                = 'afile'
+                        value               = {afile}
+                        required            = {false}
+                        onChange            = {(v) => setAfile(v)}
+                        label               = 'A file'
+                        keepHeight          = {keepHeight}
+                        {... !showAddon && {icon: null}}
+                />
+
+
             </Col>
             </Row>
           }>
