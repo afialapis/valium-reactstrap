@@ -14,12 +14,12 @@ const VFormReactstrap = () => {
   const [showAddon, setShowAddon]=  useState(true)
   const [premature, setPremature]=  useState(true)
 
-  const [atext, setAtext] = useState("I won't take NOT for an answer")
+  //const [atext, setAtext] = useState("I won't take NOT for an answer")
   const [aemail, setAemail] = useState('info@afialapis.com')
   const [aurl, setAurl] = useState('www.afialapis.com')
   const [apwd, setApwd] = useState('123456')
   const [aarea, setAarea] = useState('Long text\nLong Text\nYes')
-  const [anumber, setAnumber] = useState(123)
+  //const [anumber, setAnumber] = useState(123)
   const [adate, setAdate] = useState("today")
   const [atime, setAtime] = useState('11:45')
   const [acolor, setAcolor] = useState('#F5F5F5')
@@ -31,6 +31,19 @@ const VFormReactstrap = () => {
   const [afloat, setAfloat]= useState(1.23)
   const [afloatu, setAfloatu]= useState(3.34)
 
+  const [values, setValues]= useState({
+    'anumber': 123,
+    'atext': "I won't take NOT for an answer"
+  })
+
+  const handleChange = (name, value, confirmed) => {
+    console.log(`handleChange(${name}, ${value}, ${confirmed})`)
+    const nValues= {
+      ...values,
+      [name]: value
+    }
+    setValues(nValues)
+  }
 
   const onCancel = (ev, valid, elements) => {
     console.log('Cancelling...')
@@ -119,9 +132,9 @@ const VFormReactstrap = () => {
                         formActions         = {formActions}
                         name                = 'atext'
                         disallowedValues    = {["NOT", "not"]}
-                        defaultValue        = {atext}
-                        onChange            = {(v) => {console.log('Change  ATEXT ' + v); setAtext(v)}}
-                        onConfirm           = {(v) => {console.log('Confirm ATEXT ' + v); setAtext(v)}}
+                        defaultValue        = {values.atext}
+                        onChange            = {(v) => handleChange('atext', v, false)}
+                        onConfirm           = {(v) => handleChange('atext', v, true)}
                         required            = {true}
                         prematureValidation = {premature}
                         label               = 'Text'
@@ -178,11 +191,11 @@ const VFormReactstrap = () => {
                 <VInputNumber
                         formActions         = {formActions}
                         name                = 'anumber'
-                        value               = {anumber}
                         required            = {false}
                         prematureValidation = {premature}
-                        onChange            = {(v) => {console.log('Change  ATNUMBER ' + v); setAnumber(v)}}
-                        onConfirm           = {(v) => {console.log('Confirm ATNUMBER ' + v); setAnumber(v)}}                        
+                        defaultValue        = {values.atext}
+                        onChange            = {(v) => handleChange('anumber', v, false)}
+                        onConfirm           = {(v) => handleChange('anumber', v, true)}                       
                         label               = "A Number"
                         keepHeight          = {keepHeight}
                         {... !showAddon && {icon: null}}

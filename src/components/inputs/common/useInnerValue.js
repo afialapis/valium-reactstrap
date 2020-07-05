@@ -25,6 +25,7 @@ const useInnerValue = (value, defaultValue, onChange, onConfirm) => {
 
   const handleChange = (event) => {
     const value= event.target.value
+    console.log(`inner handleChange(${value} -- ${innerValue})`)
     if (value!=innerValue) {
       setInnerValue(value)
 
@@ -38,6 +39,7 @@ const useInnerValue = (value, defaultValue, onChange, onConfirm) => {
     setConfirmedValue(innerValue)
   }
   const handleOnBlur = () => {
+    console.log(`inner handleBlur(${confirmedValue} - ${innerValue})`)
     if (onConfirm!=undefined) {
       if (confirmedValue!=innerValue) {
         setConfirmedValue(innerValue)
