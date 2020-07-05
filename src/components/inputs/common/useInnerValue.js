@@ -1,4 +1,4 @@
-import React, {useState, useEffect}        from 'react'
+import React, {useState, useEffect, useCallback} from 'react'
 import valueOrDef   from './valueOrDef'
 
 
@@ -23,30 +23,40 @@ const useInnerValue = (value, defaultValue, onChange, onConfirm) => {
     }*/
   }, [value, defaultValue])
 
-  const handleChange = (event) => {
-    const value= event.target.value
-    console.log(`inner handleChange(${value} -- ${innerValue})`)
-    if (value!=innerValue) {
-      setInnerValue(value)
+  const handleChange = useCallback(
+    (event) => {
+      const value= event.target.value
+      console.log(`inner handleChange(${value} -- ${innerValue})`)
+      if (value!=innerValue) {
+        setInnerValue(value)
 
-      if (onChange!=undefined) {
-        onChange(value)
+        if (onChange!=undefined) {
+          onChange(value)
+        }
       }
-    }
-  }
+    },
+    [innerValue, onChange]
+  )
 
-  const handleOnFocus= () => {
-    setConfirmedValue(innerValue)
-  }
-  const handleOnBlur = () => {
-    console.log(`inner handleBlur(${confirmedValue} - ${innerValue})`)
-    if (onConfirm!=undefined) {
-      if (confirmedValue!=innerValue) {
-        setConfirmedValue(innerValue)
-        onConfirm(innerValue)
+  const handleOnFocus= useCallback(
+    () => {
+      setConfirmedValue(innerValue)
+    },
+    [innerValue]
+  )
+
+  const handleOnBlur = useCallback(
+    () => {
+      console.log(`inner handleBlur(${confirmedValue} - ${innerValue})`)
+      if (onConfirm!=undefined) {
+        if (confirmedValue!=innerValue) {
+          setConfirmedValue(innerValue)
+          onConfirm(innerValue)
+        }
       }
-    }
-  }
+    },
+    [innerValue, onConfirm]
+  )
 
 
   return [innerValue, {...vProps, onChange: handleChange,onFocus: handleOnFocus, onBlur: handleOnBlur }]
