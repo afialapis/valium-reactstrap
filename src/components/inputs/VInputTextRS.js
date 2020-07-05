@@ -4,16 +4,16 @@ import VInputAddon  from './VInputAddon'
 import {VInput}     from 'valium'
 import {Input}      from 'reactstrap'
 import {vPropTypes, vDefaultProps}  from './common/VInputProps'
-import valueOrDef   from './common/valueOrDef'
+import useInnerValue   from './common/useInnerValue'
 
 
 const VInputTextRS = (
   {formActions, id, name, value, defaultValue, label, feedback, icon, inline, 
     inputType, placeholder, readOnly, autocomplete, required, maxLength, minLength, 
-    pattern, checkValue, allowedValues, disallowedValues, doRepeat, doNotRepeat, onChange, 
+    pattern, checkValue, allowedValues, disallowedValues, doRepeat, doNotRepeat, onChange, onConfirm,
     prematureValidation, keepHeight, formGroupStyle, inputGroupStyle, inputStyle}) => {
 
-  const [vprops, nvalue]= valueOrDef(value, defaultValue)
+  const [innerValue, innerProps]= useInnerValue(value, defaultValue, onChange, onConfirm)
   
   return (
     <VInput type            = "text"
@@ -29,7 +29,7 @@ const VInputTextRS = (
               <VInputAddon name          = {name}
                           label          = {label}
                           feedback       = {feedback==='no-feedback' ? undefined : feedback||message}
-                          value          = {nvalue}
+                          value          = {innerValue}
                           icon           = {icon}
                           isValid        = {valid}
                           inline         = {inline}
@@ -41,17 +41,16 @@ const VInputTextRS = (
                         innerRef    = {inputRef}
                         type        = {inputType || "text"}
                         placeholder = {placeholder || ""}
-                        onChange    = {(event) => {if (onChange!=undefined) { return onChange(event.target.value)}}}
                         readOnly    = {readOnly!=undefined ? readOnly  : false}
                         required    = {required}
                         maxLength   = {maxLength}
                         minLength   = {minLength}
                         pattern     = {pattern}
-                        valid       = {nvalue!=undefined && nvalue!='' && valid}
+                        valid       = {innerValue!=undefined && innerValue!='' && valid}
                         invalid     = {! valid}
                         autoComplete= {autocomplete}
                         style       = {inputStyle} 
-                        {...vprops}
+                        {...innerProps}
                 />
               </VInputAddon>
 

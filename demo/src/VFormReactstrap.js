@@ -120,7 +120,8 @@ const VFormReactstrap = () => {
                         name                = 'atext'
                         disallowedValues    = {["NOT", "not"]}
                         defaultValue        = {atext}
-                        onChange            = {(v) => setAtext(v)}
+                        onChange            = {(v) => {console.log('Change  ATEXT ' + v); setAtext(v)}}
+                        onConfirm           = {(v) => {console.log('Confirm ATEXT ' + v); setAtext(v)}}
                         required            = {true}
                         prematureValidation = {premature}
                         label               = 'Text'
@@ -180,7 +181,8 @@ const VFormReactstrap = () => {
                         value               = {anumber}
                         required            = {false}
                         prematureValidation = {premature}
-                        onChange            = {(v) => setAnumber(v)}
+                        onChange            = {(v) => {console.log('Change  ATNUMBER ' + v); setAnumber(v)}}
+                        onConfirm           = {(v) => {console.log('Confirm ATNUMBER ' + v); setAnumber(v)}}                        
                         label               = "A Number"
                         keepHeight          = {keepHeight}
                         {... !showAddon && {icon: null}}
@@ -211,7 +213,7 @@ const VFormReactstrap = () => {
                         formActions         = {formActions}
                         name                = 'adate'
                         value               = {adate}
-                        required            = {false}
+                        required            = {true}
                         prematureValidation = {premature}
                         onChange            = {(v) => setAdate(v)}
                         label               = "A date"

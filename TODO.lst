@@ -3,7 +3,8 @@
   ? commonize how it handles [un]controlled values
   ? onChange sends a 2nd parameter confirmed... commonize it?
 
-
+  - add FloatingSum field here
+  
 
 - Feedback visibility:
   Broken for VInputSelectSearch

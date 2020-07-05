@@ -4,15 +4,15 @@ import VInputAddon from './VInputAddon'
 import {VInput}    from 'valium'
 import {Input}     from 'reactstrap'
 import {vPropTypes, vDefaultProps} from './common/VInputProps'
-import valueOrDef   from './common/valueOrDef'
+import useInnerValue   from './common/useInnerValue'
 
 const VInputNumberRS = (
   {formActions, id, name, value, defaultValue, label, feedback, icon, inline, 
     placeholder, readOnly, autocomplete, required, max, min, pattern, step, 
     checkValue, allowedValues, disallowedValues, doRepeat, doNotRepeat, stepRange, 
-    onChange, prematureValidation, keepHeight, formGroupStyle, inputGroupStyle, inputStyle}) => {
+    onChange, onConfirm, prematureValidation, keepHeight, formGroupStyle, inputGroupStyle, inputStyle}) => {
 
-  const [vprops, nvalue]= valueOrDef(value, defaultValue)
+  const [innerValue, innerProps]= useInnerValue(value, defaultValue, onChange, onConfirm)
   
   return (
     <VInput type               = {"number"}
@@ -29,7 +29,7 @@ const VInputNumberRS = (
               <VInputAddon name        = {name}
                           label       = {label}
                           feedback    = {feedback==='no-feedback' ? undefined : feedback||message}
-                          value       = {nvalue}
+                          value       = {innerValue}
                           icon        = {icon}
                           isValid     = {valid}
                           inline      = {inline}
@@ -48,11 +48,11 @@ const VInputNumberRS = (
                         min         = {min}
                         pattern     = {pattern}
                         step        = {step || undefined}
-                        valid       = {nvalue!=undefined && nvalue!='' && valid}
+                        valid       = {innerValue!=undefined && innerValue!='' && valid}
                         invalid     = {! valid}
                         autoComplete= {autocomplete}
                         style       = {inputStyle} 
-                        {...vprops}
+                        {...innerProps}
                 />
               </VInputAddon>
 

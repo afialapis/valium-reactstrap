@@ -23,6 +23,7 @@ const vPropTypes = {
   doNotRepeat         : PropTypes.string,
   stepRange           : PropTypes.number,
   onChange            : PropTypes.func,
+  onConfirm           : PropTypes.func,
   keepHeight          : PropTypes.bool,
   formGroupStyle      : PropTypes.object,
   inputGroupStyle     : PropTypes.object,
