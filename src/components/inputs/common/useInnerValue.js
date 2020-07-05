@@ -11,9 +11,12 @@ const useInnerValue = (value, defaultValue, onChange, onConfirm) => {
   useEffect(() => {
     console.log(`Effect ${value} ${defaultValue}`)
     const [vprops, nvalue]= valueOrDef(value, defaultValue)
+    if (vprops!=vProps) {
+      console.log(`Effect vProps => ${JSON.stringify(vProps)}`)
+      setVProps(vprops)
+    }
     if (nvalue!=innerValue) {
       console.log(`Effect innerValue => ${innerValue}`)
-      setVProps(vprops)
       setInnerValue(nvalue)
       setConfirmedValue(nvalue)
     }
