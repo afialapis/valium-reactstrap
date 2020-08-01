@@ -1,5 +1,5 @@
 import React       from 'react'
-import VInputTextRS from './VInputTextRS'
+import VInputTextRS from '../VInputTextRS'
 
 const VInputTextAreaRS = (props) =>
 

@@ -1,5 +1,5 @@
 import React        from 'react'
-import VInputTextRS from './VInputTextRS'
+import VInputTextRS from '../VInputTextRS'
 
 /*
 https://justmarkup.com/articles/2012-12-28-input-url/

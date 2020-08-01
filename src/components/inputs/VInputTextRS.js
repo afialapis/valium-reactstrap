@@ -3,17 +3,18 @@ import PropTypes    from 'prop-types'
 import VInputAddon  from './VInputAddon'
 import {VInput}     from 'valium'
 import {Input}      from 'reactstrap'
-import {vPropTypes, vDefaultProps}  from './common/VInputProps'
+import {vPropTypes, vDefaultProps}  from './common/inputProps'
 import useInnerValue   from './common/useInnerValue'
 
 
-const VInputTextRS = (
-  {formActions, id, name, value, defaultValue, label, feedback, icon, inline, 
+const VInputTextRS = (props) => {
+  const {formActions, id, name, value, defaultValue, label, feedback, icon, inline, 
     inputType, placeholder, readOnly, autocomplete, required, maxLength, minLength, 
     pattern, checkValue, allowedValues, disallowedValues, doRepeat, doNotRepeat, onChange, onConfirm,
-    prematureValidation, keepHeight, formGroupStyle, inputGroupStyle, inputStyle}) => {
+    prematureValidation, keepHeight, formGroupStyle, inputGroupStyle, inputStyle} = props
+  
 
-  const [innerValue, innerProps]= useInnerValue(value, defaultValue, onChange, onConfirm)
+  const [innerValue, innerProps]= useInnerValue(props)
   
   return (
     <VInput type            = "text"

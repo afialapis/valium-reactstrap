@@ -3,16 +3,16 @@ import PropTypes   from 'prop-types'
 import VInputAddon from './VInputAddon'
 import {VInput}    from 'valium'
 import {Input}     from 'reactstrap'
-import {vPropTypes, vDefaultProps} from './common/VInputProps'
+import {vPropTypes, vDefaultProps} from './common/inputProps'
 import useInnerValue   from './common/useInnerValue'
 
-const VInputNumberRS = (
-  {formActions, id, name, value, defaultValue, label, feedback, icon, inline, 
+const VInputNumberRS = (props) => {
+  const {formActions, id, name, value, defaultValue, label, feedback, icon, inline, 
     placeholder, readOnly, autocomplete, required, max, min, pattern, step, 
     checkValue, allowedValues, disallowedValues, doRepeat, doNotRepeat, stepRange, 
-    onChange, onConfirm, prematureValidation, keepHeight, formGroupStyle, inputGroupStyle, inputStyle}) => {
+    onChange, onConfirm, prematureValidation, keepHeight, formGroupStyle, inputGroupStyle, inputStyle}= props
 
-  const [innerValue, innerProps]= useInnerValue(value, defaultValue, onChange, onConfirm)
+  const [innerValue, innerProps]= useInnerValue(props)
   
   return (
     <VInput type               = {"number"}

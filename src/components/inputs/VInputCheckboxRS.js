@@ -3,7 +3,7 @@ import PropTypes     from 'prop-types'
 import {VInput}      from 'valium'
 // import {CustomInput} from 'reactstrap'
 import VInputAddon   from './VInputAddon'
-import {vPropTypes, vDefaultProps}   from './common/VInputProps'
+import {vPropTypes, vDefaultProps}   from './common/inputProps'
 import valueOrDef   from './common/valueOrDef'
 
 let instanceCount= 1

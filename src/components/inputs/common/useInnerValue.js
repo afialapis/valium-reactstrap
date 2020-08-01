@@ -1,15 +1,22 @@
 import React, {useState, useEffect, useCallback} from 'react'
-import valueOrDef   from './valueOrDef'
+
+const checkControlledValue = (props) => {
+  if (Object.keys(props).indexOf('defaultValue')>=0) {
+    return [props.defaultValue, {defaultValue: props.defaultValue}]
+  }
+  return [props.value, {value: props.value}]
+}
 
 
-const useInnerValue = (value, defaultValue, onChange, onConfirm) => {
+const useInnerValue = (props) => {
   
-  const [vProps, setVProps]= useState(valueOrDef(value, defaultValue)[0])
-  const [innerValue, setInnerValue]= useState(valueOrDef(value, defaultValue)[1])
+  const [innerValue, setInnerValue]= useState(checkControlledValue(props)[0])
+  const [vProps, setVProps]= useState(checkControlledValue(props)[1])
+  
   const [confirmedValue, setConfirmedValue]= useState(undefined)
 
   useEffect(() => {
-    const [vprops, nvalue]= valueOrDef(value, defaultValue)
+    const [nvalue, vprops]= checkControlledValue(props)
     if (vprops!=vProps) {
       setVProps(vprops)
     }
@@ -23,7 +30,7 @@ const useInnerValue = (value, defaultValue, onChange, onConfirm) => {
         onConfirm(innerValue)
       }
     }*/
-  }, [value, defaultValue])
+  }, [props])
 
   const handleChange = useCallback(
     (event) => {
@@ -31,12 +38,12 @@ const useInnerValue = (value, defaultValue, onChange, onConfirm) => {
       if (value!=innerValue) {
         setInnerValue(value)
 
-        if (onChange!=undefined) {
-          onChange(value)
+        if (props.onChange!=undefined) {
+          props.onChange(value)
         }
       }
     },
-    [innerValue, onChange]
+    [innerValue, props.onChange]
   )
 
   const handleOnFocus= useCallback(
@@ -48,14 +55,14 @@ const useInnerValue = (value, defaultValue, onChange, onConfirm) => {
 
   const handleOnBlur = useCallback(
     () => {
-      if (onConfirm!=undefined) {
+      if (props.onConfirm!=undefined) {
         if (confirmedValue!=innerValue) {
           setConfirmedValue(innerValue)
-          onConfirm(innerValue)
+          props.onConfirm(innerValue)
         }
       }
     },
-    [innerValue, onConfirm]
+    [innerValue, props.onConfirm]
   )
 
 

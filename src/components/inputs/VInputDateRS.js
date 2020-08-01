@@ -3,7 +3,7 @@ import PropTypes   from 'prop-types'
 import VInputAddon from './VInputAddon'
 import {VInput}    from 'valium'
 import DatePicker  from 'reactstrap-date-picker'
-import {vPropTypes, vDefaultProps} from './common/VInputProps'
+import {vPropTypes, vDefaultProps} from './common/inputProps'
 import valueOrDef  from './common/valueOrDef'
 
 

@@ -1,10 +1,6 @@
 
 import VFormRS                from './components/VFormRS'
 import VInputTextRS           from './components/inputs/VInputTextRS'
-import VInputEmailRS          from './components/inputs/VInputEmailRS'
-import VInputUrlRS            from './components/inputs/VInputUrlRS'
-import VInputPasswordRS       from './components/inputs/VInputPasswordRS'
-import VInputTextAreaRS       from './components/inputs/VInputTextAreaRS'
 import VInputNumberRS         from './components/inputs/VInputNumberRS'
 import VInputDateRS           from './components/inputs/VInputDateRS'
 import VInputTimeRS           from './components/inputs/VInputTimeRS'
@@ -15,13 +11,14 @@ import VInputSelectMultipleRS from './components/inputs/VInputSelectMultipleRS'
 import VInputSelectSearchRS   from './components/inputs/VInputSelectSearchRS'
 import VInputFileRS           from './components/inputs/VInputFileRS'
 import VInputFloatingRS       from './components/inputs/VInputFloatingRS'
- 
+
+import VInputEmailRS          from './components/inputs/derived/VInputEmailRS'
+import VInputUrlRS            from './components/inputs/derived/VInputUrlRS'
+import VInputPasswordRS       from './components/inputs/derived/VInputPasswordRS'
+import VInputTextAreaRS       from './components/inputs/derived/VInputTextAreaRS'
+
 export {VFormRS as VForm,
         VInputTextRS as VInputText,
-        VInputEmailRS as VInputEmail,
-        VInputUrlRS as VInputUrl,
-        VInputPasswordRS as VInputPassword,
-        VInputTextAreaRS as VInputTextArea,
         VInputNumberRS as VInputNumber,
         VInputDateRS as VInputDate,
         VInputTimeRS as VInputTime,
@@ -31,7 +28,11 @@ export {VFormRS as VForm,
         VInputSelectMultipleRS as VInputSelectMultiple,
         VInputSelectSearchRS as VInputSelectSearch,
         VInputFileRS as VInputFile,
-        VInputFloatingRS as VInputFloating
+        VInputFloatingRS as VInputFloating,
+        VInputEmailRS as VInputEmail,
+        VInputUrlRS as VInputUrl,
+        VInputPasswordRS as VInputPassword,
+        VInputTextAreaRS as VInputTextArea,
        }
 
        
