@@ -10,12 +10,13 @@ import VInputSelectRS         from './components/inputs/VInputSelectRS'
 import VInputSelectMultipleRS from './components/inputs/VInputSelectMultipleRS'
 import VInputSelectSearchRS   from './components/inputs/VInputSelectSearchRS'
 import VInputFileRS           from './components/inputs/VInputFileRS'
-import VInputFloatingRS       from './components/inputs/VInputFloatingRS'
 
 import VInputEmailRS          from './components/inputs/derived/VInputEmailRS'
 import VInputUrlRS            from './components/inputs/derived/VInputUrlRS'
 import VInputPasswordRS       from './components/inputs/derived/VInputPasswordRS'
 import VInputTextAreaRS       from './components/inputs/derived/VInputTextAreaRS'
+import VInputFloatRS          from './components/inputs/derived/VInputFloatRS'
+import VInputUintRS           from './components/inputs/derived/VInputUintRS'
 
 export {VFormRS as VForm,
         VInputTextRS as VInputText,
@@ -28,11 +29,12 @@ export {VFormRS as VForm,
         VInputSelectMultipleRS as VInputSelectMultiple,
         VInputSelectSearchRS as VInputSelectSearch,
         VInputFileRS as VInputFile,
-        VInputFloatingRS as VInputFloating,
+        VInputFloatRS as VInputFloat,
         VInputEmailRS as VInputEmail,
         VInputUrlRS as VInputUrl,
         VInputPasswordRS as VInputPassword,
         VInputTextAreaRS as VInputTextArea,
+        VInputUintRS as VInputUint
        }
 
        

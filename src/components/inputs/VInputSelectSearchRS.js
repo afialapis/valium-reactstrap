@@ -1,11 +1,10 @@
 import React, {useRef, useState, useEffect}        from 'react'
 import PropTypes     from 'prop-types'
 import VInputAddon   from './base/VInputAddon'
-import {VInput}      from 'valium'
 import {Input, InputGroupAddon, InputGroupText}       from 'reactstrap'
-import {vPropTypes, vDefaultProps}   from './common/inputProps'
-import valueOrDef   from './common/valueOrDef'
+import {vPropTypes, vDefaultProps}   from './base/inputProps'
 import parseNumeric from './common/numeric'
+import {withValue, withValium} from './base'
 
 /*
 function getPosition(el) {
@@ -48,17 +47,20 @@ const numOrArrayToString = (v) => {
   return isNaN(v) ? '' : v.toString()
 }
 
+const valueTransform = {
+  from: (v) => numOrArrayToString(v),
+  to: (v) => v
+}
 
-const VInputSelectSearchRS = (
-  {formActions, id, name, value, defaultValue, options, label, feedback, icon, inline, 
-    placeholder, readOnly, autocomplete, required, checkValue, allowedValues, 
-    disallowedValues, doRepeat, doNotRepeat, keepHeight, formGroupStyle, inputGroupStyle,
-    inputStyle, onChange, clearable, numeric, maxShownOptions}) => {
-  
-  
-  const [vprops, nvalue]= valueOrDef(value, defaultValue, numOrArrayToString)
 
-  const setValidity   = useRef(undefined)
+const _VInputSelectSearchRS = (props) => {
+  const {id, name, options, label, feedback, icon, inline, 
+         placeholder, readOnly, autocomplete, required,
+         disallowedValues, keepHeight, formGroupStyle, inputGroupStyle,
+         inputStyle, onChange, clearable, numeric, maxShownOptions,
+         innerValue, message, valid, inputRef, setValidity
+         } = props
+  
   const wrapperRef    = useRef(undefined)
   const filterRef     = useRef(undefined)
   const listRef       = useRef(undefined)
@@ -74,16 +76,16 @@ const VInputSelectSearchRS = (
       document.removeEventListener('mousedown', onClickOutside)
     }
   }, [])
-  
+
   useEffect(() => {
-    setShownText(options[nvalue] || '')
+    setShownText(options[innerValue] || '')
     // necessary?
     // setValidity.current()
-  }, [nvalue])
+  }, [innerValue])
 
   useEffect(() => {
     if (! isOpen) {
-      setShownText(options[nvalue] || '')
+      setShownText(options[innerValue] || '')
     }
   }, [isOpen])
 
@@ -129,20 +131,20 @@ const VInputSelectSearchRS = (
     setIsOpen(false)
   }
 
-  const onSelect = (newValue, hiddenRef) => {
-    hiddenRef.current.value= newValue
+  const onSelect = (newValue) => {
+    inputRef.current.value= newValue
     setValidity.current()
 
     setIsOpen(false)
     
     if (onChange!=undefined) { 
-      onChange(parseNumeric(numeric,newValue))
+      onChange(parseNumeric(numeric, newValue))
     }
   }
 
   const getListStyle= () => {
     // TODO
-    // Check where tihis gap (13 / 6) comes from and try to make better
+    // Check where this gap (13 / 6) comes from and try to make better
     if (filterRef.current) {  
       return {
         left: filterRef.current.parentNode.children[0].offsetWidth+13+'px',
@@ -153,97 +155,89 @@ const VInputSelectSearchRS = (
   }
 
   return (
-    <VInput type            = {"select"}
-            feedback        = {feedback} 
-            checkValue      = {checkValue}
-            allowedValues   = {allowedValues}
-            disallowedValues= {disallowedValues}
-            doRepeat        = {doRepeat}
-            doNotRepeat     = {doNotRepeat}
-            bindSetValidity = {(f) => {setValidity.current= f}}
-            formActions     = {formActions}
-            render          = {({valid, message}, inputRef) => 
-            <div className="valium-reactstrap-select-search"
-                  ref = {wrapperRef}>
-              <div>
-                <VInputAddon name        = {name}
-                            label       = {label}
-                            feedback    = {isOpen ? undefined : (feedback==='no-feedback' ? undefined : feedback||message)}
-                            value       = {nvalue}
-                            icon        = {icon}
-                            isValid     = {valid}
-                            inline      = {inline}
-                            keepHeight  = {isOpen ? false : keepHeight}
-                        formGroupStyle  = {formGroupStyle}
-                        inputGroupStyle = {inputGroupStyle}>
-                  <Input    id          = {id}
-                            name        = {name}
-                            className   = "valium-reactstrap-select-search-hidden"
-                            type        = "hidden"
-                            innerRef    = {inputRef}
-                            required    = {required}
-                            {...vprops}/>
-                  <Input    name        = {`input_select_search_${name}_text`}
-                            className   = "valium-reactstrap-select-search-text custom-select"
-                            type        = "text"
-                            innerRef    = {filterRef}
-                            value       = {shownText}
-                            placeholder = {placeholder}
-                            readOnly    = {readOnly}
-                            required    = {required}
-                            valid       = {nvalue!=undefined && nvalue!='' && valid}
-                            invalid     = {! valid}
-                            onClick     = {(_ev) => onSearchStart()}
-                            onChange    = {(ev) => onSearchType(ev)}
-                            autoComplete= {autocomplete}
-                            style       = {inputStyle} 
-                            />
 
-                  {clearable
-                  ?  <InputGroupAddon onClick  = {() => {readOnly ? null : onSelect('', inputRef)}}
-                                      style    = {{cursor:(nvalue && !readOnly) ? 'pointer' : 'not-allowed'}}
-                                      addonType= "append">
-                        <InputGroupText
-                                    style={{opacity: (nvalue && !readOnly) ? 1 : 0.5}}>
-                          {"x"}
-                        </InputGroupText>
-                      </InputGroupAddon>  
-                    : null
-                  }                             
-                </VInputAddon>
-              </div>
-              
-                {isOpen
-                ? <div className="valium-reactstrap-select-search-list list-group"
-                       ref = {listRef}
-                       style={getListStyle()}>
-                    {optionsMap.map((opt, idx) =>  {
-                      if (idx<=(maxShownOptions-1)) {
-                        return (
-                          <div key     = {`${name}_option_${opt.value}`}
-                                value   = {opt.value}
-                                className={`valium-reactstrap-select-search-list-item list-group-item list-group-item-action ${opt.disabled ? 'disabled' : ''}`}
-                                onClick = {(_ev) => !opt.disabled && onSelect(opt.value, inputRef)}
-                                >
-                            {opt.label}
-                          </div>)
-                      }
-                    }
-                    )}
-                    {optionsMap.length>maxShownOptions
-                     ? <div key     = {`${name}_option_ellipsis`}
-                            className={`valium-reactstrap-select-search-list-item list-group-item list-group-item-action disabled ellipsis`}>
-                        ...
-                       </div>
-                     : null}
-                  </div>
-                : null
+      <div className="valium-reactstrap-select-search"
+            ref = {wrapperRef}>
+        <div>
+          <VInputAddon name        = {name}
+                      label       = {label}
+                      feedback    = {isOpen ? undefined : (feedback==='no-feedback' ? undefined : feedback||message)}
+                      value       = {innerValue}
+                      icon        = {icon}
+                      isValid     = {valid}
+                      inline      = {inline}
+                      keepHeight  = {isOpen ? false : keepHeight}
+                  formGroupStyle  = {formGroupStyle}
+                  inputGroupStyle = {inputGroupStyle}>
+            <Input    id          = {id}
+                      name        = {name}
+                      className   = "valium-reactstrap-select-search-hidden"
+                      type        = "hidden"
+                      innerRef    = {inputRef}
+                      required    = {required}
+                      value       = {innerValue}/>
+            <Input    name        = {`input_select_search_${name}_text`}
+                      className   = "valium-reactstrap-select-search-text custom-select"
+                      type        = "text"
+                      innerRef    = {filterRef}
+                      value       = {shownText}
+                      placeholder = {placeholder}
+                      readOnly    = {readOnly}
+                      required    = {required}
+                      valid       = {innerValue!=undefined && innerValue!='' && valid}
+                      invalid     = {! valid}
+                      onClick     = {(_ev) => onSearchStart()}
+                      onChange    = {(ev) => onSearchType(ev)}
+                      autoComplete= {autocomplete}
+                      style       = {inputStyle} 
+                      />
+
+            {clearable
+            ?  <InputGroupAddon onClick  = {() => {readOnly ? null : onSelect('')}}
+                                style    = {{cursor:(innerValue && !readOnly) ? 'pointer' : 'not-allowed'}}
+                                addonType= "append">
+                  <InputGroupText
+                              style={{opacity: (innerValue && !readOnly) ? 1 : 0.5}}>
+                    {"x"}
+                  </InputGroupText>
+                </InputGroupAddon>  
+              : null
+            }                             
+          </VInputAddon>
+        </div>
+        
+          {isOpen
+          ? <div className="valium-reactstrap-select-search-list list-group"
+                  ref = {listRef}
+                  style={getListStyle()}>
+              {optionsMap.map((opt, idx) =>  {
+                if (idx<=(maxShownOptions-1)) {
+                  return (
+                    <div key     = {`${name}_option_${opt.value}`}
+                          value   = {opt.value}
+                          className={`valium-reactstrap-select-search-list-item list-group-item list-group-item-action ${opt.disabled ? 'disabled' : ''}`}
+                          onClick = {(_ev) => !opt.disabled && onSelect(opt.value)}
+                          >
+                      {opt.label}
+                    </div>)
                 }
-            
+              }
+              )}
+              {optionsMap.length>maxShownOptions
+                ? <div key     = {`${name}_option_ellipsis`}
+                      className={`valium-reactstrap-select-search-list-item list-group-item list-group-item-action disabled ellipsis`}>
+                  ...
+                  </div>
+                : null}
             </div>
-            }/>
+          : null
+          }
+      
+      </div>
   )
 }
+
+const VInputSelectSearchRS = withValue(withValium(_VInputSelectSearchRS, 'select'), valueTransform)
 
 
 VInputSelectSearchRS.propTypes = {

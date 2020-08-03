@@ -3,8 +3,9 @@ import VInputAddon  from './VInputAddon'
 
 const withAddon = BaseComponent => (props) => {
 
-  const {name, label, feedback, message, innerValue, icon, 
-         valid, inline, keepHeight, formGroupStyle, inputGroupStyle}= props
+  let {name, label, feedback, message, innerValue, icon, 
+       valid, inline, keepHeight, formGroupStyle, 
+       inputGroupStyle, middleElement } = props
   
   return (
     <VInputAddon name           = {name}
@@ -16,7 +17,8 @@ const withAddon = BaseComponent => (props) => {
                  inline         = {inline}
                  keepHeight     = {keepHeight}
                  formGroupStyle = {formGroupStyle}
-                 inputGroupStyle= {inputGroupStyle}>
+                 inputGroupStyle= {inputGroupStyle}
+                 middleElement  = {middleElement}>
 
       <BaseComponent {...props}/>
       

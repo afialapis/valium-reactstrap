@@ -1,10 +1,9 @@
-import React, {useState, useRef}         from 'react'
-import PropTypes   from 'prop-types'
-import VInputAddon   from './base/VInputAddon'
-import {VInput}      from 'valium'
+import React, {useState} from 'react'
+import PropTypes from 'prop-types'
+import VInputAddon from './base/VInputAddon'
 import {InputGroupAddon, InputGroupText}     from 'reactstrap'
-import {vPropTypes, vDefaultProps}   from './common/inputProps'
-import valueOrDef   from './common/valueOrDef'
+import {vPropTypes, vDefaultProps}   from './base/inputProps'
+import {withValue, withValium} from './base'
 
 let instanceCount= 1
 
@@ -44,7 +43,7 @@ const formatBytes = (bytes, decimals = 2) => {
   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
 }
 
-const geIcon = (mtype, icon, iconMap) => {
+const getIcon = (mtype, icon, iconMap) => {
   if (iconMap) {
     const i1= iconMap[mtype]
     if (i1) { return i1}
@@ -55,20 +54,19 @@ const geIcon = (mtype, icon, iconMap) => {
   return 'file'
 }
 
+const _VInputFileRS = (props) => {
+  const {id, name, label, icon, inline, readOnly, 
+         required, feedback, keepHeight, formGroupStyle, inputGroupStyle, 
+         inputStyle, onLoad, onChange, onDownload, accept, iconMap,
+         innerValue, setValidity, valid, message, inputRef} = props
 
-const VInputFileRS = ({formActions, id, name, value, defaultValue, label, icon, inline, readOnly, 
-                       required, feedback, checkValue, allowedValues, disallowedValues, 
-                       doRepeat, doNotRepeat, 
-                       keepHeight, formGroupStyle, inputGroupStyle, inputStyle, onLoad, onChange, onDownload, accept, iconMap}) => {
-  const setValidity= useRef(undefined)
-  const [_vprops, nvalue]= valueOrDef(value, defaultValue)
 
   const [progress  , setProgress ]= useState(undefined)
   const [status    , setStatus   ]= useState(undefined)
   // const [statusMsg , setStatusMsg]= useState(undefined)
 
   const hasValue = () => {
-    return nvalue.buffer || nvalue.size>0
+    return innerValue.buffer || innerValue.size>0
   }
 
   const handleChange = (ev) => {
@@ -79,7 +77,8 @@ const VInputFileRS = ({formActions, id, name, value, defaultValue, label, icon, 
     try {
       const reader = new FileReader()
 
-      reader.onerror = (e) => {
+      reader.onerror = (_e) => {
+        /*
         let st_msg=''
         
         switch (e.target.error.code) {
@@ -94,8 +93,10 @@ const VInputFileRS = ({formActions, id, name, value, defaultValue, label, icon, 
           default:
             st_msg = 'Error reading file'
         }
+        setStatusMsg(st_msg)
+        */
+
         setStatus('error')
-        // setStatusMsg(st_msg)
       };
 
       reader.onabort = (_e) => {
@@ -165,97 +166,85 @@ const VInputFileRS = ({formActions, id, name, value, defaultValue, label, icon, 
   }
 
   return (
-    <VInput type             = {"file"} 
-            feedback         = {feedback} 
-            checkValue       = {checkValue}
-            allowedValues    = {allowedValues}
-            disallowedValues = {disallowedValues}
-            doRepeat         = {doRepeat}
-            doNotRepeat      = {doNotRepeat}
-            formActions      = {formActions}
-            bindSetValidity  = {(f) => {setValidity.current= f}}
-            render  = {({valid, message}, inputRef) => 
-                <VInputAddon name        = {name}
-                            label       = {label}
-                            feedback    = {feedback==='no-feedback' ? undefined : feedback||message}
-                            value       = {nvalue}
-                            icon        = {geIcon(nvalue.type, icon, iconMap)}
-                            isValid     = {valid}
-                            inline      = {inline}
-                            keepHeight  = {keepHeight}
-                            formGroupStyle = {formGroupStyle}
-                            inputGroupStyle= {inputGroupStyle}
-                            middleElement  = {status!=undefined
-                                            ? <ProgressBar progress={progress}/>
-                                            : null}
-                            >
-                  {/* Hidden file input*/}
-                  <input  style={{zIndex: "0", display: "inline", opacity: "0", visibility: "hidden"}}
-                          className   = "form-control"
-                          id          = {id}
-                          name        = {name}
-                          // Do not lose the form-control class
-                          // TODO maybe open PR on reactstrap?
-                          //className   = "form-control"
-                          ref         = {inputRef}
-                          type        = {"file"}
-                          onChange    = {(e) => handleChange(e)}
-                          readOnly    = {readOnly!=undefined ? readOnly  : false}
-                          required    = {required}
-                          //valid       = {nvalue!=undefined && nvalue!='' && valid}
-                          //invalid     = {! valid}
-                          accept      = {accept}
-                  />
-                  <div  style       = {{opacity  : "1", 
-                                       zIndex    : "3", 
-                                       position  : "absolute", 
-                                       width     : valid ? "calc(100% - 75px)" : "calc(100% - 77px)", 
-                                       left      : "42px", 
-                                       display   : "flex",
-                                       cursor    : 'pointer',
-                                       userSelect: 'none',
-                                       ...inputStyle
-                                      }}
-                        className   = {`form-control ${valid && hasValue() ? 'is-valid' : ''} ${!valid ? 'is-invalid' : ''}`}
-                        onClick     ={hasValue() 
-                                      ? (ev) => download(inputRef, ev) 
-                                      : (_)  => browse(inputRef)}>
-                        {hasValue()
-                          ? <div style={{display: "flex", width: "100%", alignItems: "stretch"}}>
-                              <div>
-                                {`${onDownload != undefined ? '⤓ ' : ''}${nvalue.name}`}
-                              </div>
-                              <div style={{flex: "1 1 auto", textAlign: "right"}}>
-                                <i style={{fontSize: "0.6em", opacity: "0.75"}}>
-                                  {` (${formatBytes(nvalue.size)})`}
-                                </i>
-                              </div>
-                            </div>
-                          : inputRef.current && inputRef.current.files.length
-                            ? inputRef.current.files[0].name
-                            : '...'
-                        }
-                  </div>
-                  <InputGroupAddon onClick   = {hasValue() 
-                                                ? () => clear(inputRef) 
-                                                : () => {}
-                                                }
-                                  style     = {{cursor: hasValue() ? 'pointer' : 'not-allowed', zIndex: "2"}}
-                                  addonType = "append">
-                        <InputGroupText
-                                    style={{opacity:hasValue() ? 1 : 0.5}}>
-                          {"x"}
-                        </InputGroupText>
-                  </InputGroupAddon>    
-                              
-                  
-                  
-                  
 
-                </VInputAddon>
-              }/>
+    <VInputAddon name        = {name}
+                label       = {label}
+                feedback    = {feedback==='no-feedback' ? undefined : feedback||message}
+                value       = {innerValue}
+                icon        = {getIcon(innerValue.type, icon, iconMap)}
+                isValid     = {valid}
+                inline      = {inline}
+                keepHeight  = {keepHeight}
+                formGroupStyle = {formGroupStyle}
+                inputGroupStyle= {inputGroupStyle}
+                middleElement  = {status!=undefined
+                                ? <ProgressBar progress={progress}/>
+                                : null}
+                >
+      {/* Hidden file input*/}
+      <input  style       = {{zIndex: "0", display: "inline", opacity: "0", visibility: "hidden"}}
+              id          = {id}
+              name        = {name}
+              // Do not lose the form-control class
+              // TODO maybe open PR on reactstrap?
+              className   = "form-control"
+              ref         = {inputRef}
+              type        = {"file"}
+              onChange    = {(e) => handleChange(e)}
+              readOnly    = {readOnly!=undefined ? readOnly  : false}
+              required    = {required}
+              //valid       = {nvalue!=undefined && nvalue!='' && valid}
+              //invalid     = {! valid}
+              accept      = {accept}
+      />
+      <div  style       = {{opacity  : "1", 
+                            zIndex    : "3", 
+                            position  : "absolute", 
+                            width     : valid ? "calc(100% - 75px)" : "calc(100% - 77px)", 
+                            left      : "42px", 
+                            display   : "flex",
+                            cursor    : 'pointer',
+                            userSelect: 'none',
+                            ...inputStyle
+                          }}
+            className   = {`form-control ${valid && hasValue() ? 'is-valid' : ''} ${!valid ? 'is-invalid' : ''}`}
+            onClick     ={hasValue() 
+                          ? (ev) => download(inputRef, ev) 
+                          : (_)  => browse(inputRef)}>
+            {hasValue()
+              ? <div style={{display: "flex", width: "100%", alignItems: "stretch"}}>
+                  <div style={{whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis"}}>
+                    {`${onDownload != undefined ? '⤓ ' : ''}${innerValue.name}`}
+                  </div>
+                  <div style={{flex: "1 1 auto", textAlign: "right"}}>
+                    <i style={{fontSize: "0.6em", opacity: "0.75", whiteSpace: "nowrap"}}>
+                      {` (${formatBytes(innerValue.size)})`}
+                    </i>
+                  </div>
+                </div>
+              : inputRef.current && inputRef.current.files.length
+                ? inputRef.current.files[0].name
+                : '...'
+            }
+      </div>
+      <InputGroupAddon onClick   = {hasValue() 
+                                    ? () => clear(inputRef) 
+                                    : () => {}
+                                    }
+                      style     = {{cursor: hasValue() ? 'pointer' : 'not-allowed', zIndex: "2"}}
+                      addonType = "append">
+            <InputGroupText
+                        style={{opacity:hasValue() ? 1 : 0.5}}>
+              {"x"}
+            </InputGroupText>
+      </InputGroupAddon>    
+                  
+    </VInputAddon>    
   )
 }
+
+
+const VInputFileRS= withValue(withValium(_VInputFileRS, 'checkbox'))
 
 
 VInputFileRS.propTypes = {

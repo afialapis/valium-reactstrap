@@ -1,11 +1,9 @@
 import React        from 'react'
 import PropTypes    from 'prop-types'
-import VInputAddon  from './base/VInputAddon'
-import {VInput}     from 'valium'
 import {Input}      from 'reactstrap'
-import {vPropTypes, vDefaultProps}  from './common/inputProps'
-import valueOrDef   from './common/valueOrDef'
+import {vPropTypes, vDefaultProps}  from './base/inputProps'
 import parseNumeric from './common/numeric'
+import {withValue, withValium, withAddon} from './base'
 
 const numOrArrayToString = (v) => {
   if (Array.isArray(v)) {
@@ -14,17 +12,17 @@ const numOrArrayToString = (v) => {
   return isNaN(v) ? '' : v.toString()
 }
 
+const valueTransform = {
+  from: (v) => numOrArrayToString(v),
+  to: (v) => v
+}
 
+const _VInputSelectMultipleRS = (props) => {
+  const {id, name, innerValue, innerProps, inputRef, valid, setValidity,
+         placeholder, readOnly, autocomplete, required,
+         disallowedValues, onChange, options, 
+         inputStyle, numeric} = props
 
-const VInputSelectMultipleRS = (
-  {formActions, id, name, value, defaultValue, label, feedback, icon, inline, 
-    placeholder, readOnly, autocomplete, required, checkValue, allowedValues, 
-    disallowedValues, doRepeat, doNotRepeat, onChange, options, keepHeight, 
-    formGroupStyle, inputGroupStyle, inputStyle, numeric}) => {
-
-  
-  
-  const [vprops, nvalue]= valueOrDef(value, defaultValue, numOrArrayToString)
   
   const sdisallowedValues= disallowedValues!=undefined ? disallowedValues.map((v) => v.toString()) : []
   let options_map= []
@@ -38,6 +36,7 @@ const VInputSelectMultipleRS = (
   }
 
   const handleChange= (ev) => {
+    setValidity.current()
     if (onChange!=undefined) { 
       const value= Array.prototype.slice.call(ev.target.options)
         .filter((opt) => opt.selected)
@@ -46,56 +45,36 @@ const VInputSelectMultipleRS = (
     }
   }
 
-
   return (
-    <VInput type = {"select-multiple"} 
-            feedback        = {feedback} 
-            checkValue      = {checkValue}
-            allowedValues   = {allowedValues}
-            disallowedValues= {disallowedValues}
-            doRepeat             = {doRepeat}
-            doNotRepeat          = {doNotRepeat}
-            formActions     = {formActions}
-            render          = {({valid, message}, inputRef) => 
-            <VInputAddon name        = {name}
-                        label       = {label}
-                        feedback    = {feedback==='no-feedback' ? undefined : feedback||message}
-                        value       = {nvalue}
-                        icon        = {icon}
-                        isValid     = {valid}
-                        inline      = {inline}
-                        keepHeight  = {keepHeight}
-                        formGroupStyle = {formGroupStyle}
-                        inputGroupStyle= {inputGroupStyle}>
-              <Input    id          = {id}
-                        name        = {name}
-                        type        = "select"
-                        className   = "custom-select"
-                        multiple
-                        innerRef    = {inputRef}
-                        placeholder = {placeholder || ""}
-                        onChange    = {(event) => handleChange(event)}
-                        readOnly    = {readOnly!=undefined ? readOnly  : false}
-                        required    = {required}
-                        valid       = {nvalue!=undefined && nvalue!='' && valid}
-                        invalid     = {! valid}
-                        autoComplete= {autocomplete}
-                        style       = {inputStyle} 
-                        {...vprops}>
-                {options_map.map((opt) => 
-                  <option key={`${name}_option_${opt.value}`}
-                          value={opt.value}
-                          disabled={opt.disabled}
-                          >
-                    {opt.label}
-                  </option>
-                )}
-              </Input>
-            </VInputAddon>
-            }/>
+    <Input    id          = {id}
+              name        = {name}
+              type        = "select"
+              className   = "custom-select"
+              multiple
+              innerRef    = {inputRef}
+              placeholder = {placeholder || ""}
+              readOnly    = {readOnly!=undefined ? readOnly  : false}
+              required    = {required}
+              valid       = {innerValue!=undefined && innerValue!='' && valid}
+              invalid     = {! valid}
+              autoComplete= {autocomplete}
+              style       = {inputStyle} 
+              {...innerProps}
+              onChange    = {(event) => handleChange(event)}
+              >
+      {options_map.map((opt) => 
+        <option key={`${name}_option_${opt.value}`}
+                value={opt.value}
+                disabled={opt.disabled}
+                >
+          {opt.label}
+        </option>
+      )}
+    </Input>
   )
 }
 
+const VInputSelectMultipleRS= withValue(withValium(withAddon(_VInputSelectMultipleRS), 'select-multiple'), valueTransform)
 
 VInputSelectMultipleRS.propTypes = {
   ...vPropTypes,

@@ -1,11 +1,16 @@
-import React, {useRef, useEffect}       from 'react'
+import React, {useState, useEffect}       from 'react'
 import PropTypes   from 'prop-types'
 import VInputAddon from './base/VInputAddon'
-import {VInput}    from 'valium'
 import DatePicker  from 'reactstrap-date-picker'
-import {vPropTypes, vDefaultProps} from './common/inputProps'
-import valueOrDef  from './common/valueOrDef'
+import {vPropTypes, vDefaultProps} from './base/inputProps'
+import {withValium} from './base'
 
+const checkControlledValue = (props, toISOString) => {
+  if (Object.keys(props).indexOf('defaultValue')>=0) {
+    return [toISOString(props.defaultValue), {defaultValue: toISOString(props.defaultValue)}]
+  }
+  return [toISOString(props.value), {value: toISOString(props.value)}]
+}
 
 const _toISOString = (value) => {
   if (typeof value == 'string' && value.length>0) {
@@ -26,22 +31,39 @@ const _toISOString = (value) => {
   return undefined
 }
 
-const VInputDateRS = ({formActions, id, name, value, defaultValue, label, feedback, icon, inline, placeholder, readOnly, autocomplete,
-                      required, checkValue, allowedValues, disallowedValues, doRepeat, doNotRepeat, keepHeight, formGroupStyle, inputGroupStyle, inputStyle, toISOString, onChange, prematureValidation}) => {
-  
-  const setValidity= useRef(undefined)
-  
+
+const _VInputDateRS = (props) => {
+  const {id, placeholder, readOnly, autocomplete, inline,
+         label, feedback, message, icon, keepHeight, inputGroupStyle, formGroupStyle,
+         required, inputStyle, toISOString, onChange, setValidity,
+         inputRef, valid, value, defaultValue} = props
+
+  const [innerValue, setInnerValue]= useState(checkControlledValue(props, toISOString)[0])
+  const [innerProps, setInnerProps]= useState(checkControlledValue(props, toISOString)[1])
+
   useEffect(() => {
-    setValidity.current()
+    const [nInnerValue, nInnerProps]= checkControlledValue(props, toISOString)
+
+    if (nInnerProps!=innerProps) {
+      setInnerProps(nInnerProps)
+    }
+    if (nInnerValue!=innerValue) {
+      setInnerValue(nInnerValue)
+    }
   }, [value, defaultValue])
 
+  useEffect(() => {
+    if (setValidity && setValidity.current) {
+      setValidity.current()
+    }
+  }, [innerValue])
+
   const handleChange = (value, formattedValue) => {
-    setValidity.current()
+    if (setValidity && setValidity.current) {
+      setValidity.current()
+    }
     onChange(formattedValue)
   }
-
-
-  const [vprops, nvalue]= valueOrDef(toISOString(value), toISOString(defaultValue))
 
   const nInputGroupStyle ={
     ...inputGroupStyle,
@@ -49,46 +71,38 @@ const VInputDateRS = ({formActions, id, name, value, defaultValue, label, feedba
   }
 
   return (
-    <VInput type            = {"text"} 
-            feedback        = {feedback} 
-            checkValue      = {checkValue}
-            allowedValues   = {allowedValues}
-            disallowedValues= {disallowedValues}
-            doRepeat             = {doRepeat}
-            doNotRepeat          = {doNotRepeat}
-            prematureValidation= {prematureValidation}
-            bindSetValidity = {(f) => {setValidity.current= f}}
-            formActions     = {formActions}
-            render  = {({valid, message}, inputRef) => 
-              <VInputAddon name        = {name}
-                          label         = {label}
-                          feedback      = {feedback==='no-feedback' ? undefined : feedback||message}
-                          value         = {nvalue}
-                          icon          = {icon}
-                          isValid       = {valid}
-                          inline        = {inline}
-                          keepHeight    = {keepHeight}
-                          inputGroupStyle= {nInputGroupStyle}
-                          formGroupStyle = {formGroupStyle}
-                          >
-                <DatePicker id          = {id}
-                            onChange    = {(v,f) => handleChange(v, f)} 
-                            weekStartsOn= {1} 
-                            placeholder = {placeholder}
-                            inputRef    = {inputRef}
-                            dateFormat  = {"DD/MM/YYYY"}
-                            readOnly    = {readOnly}
-                            required    = {required}
-                            autocomplete= {autocomplete}
-                            className   = {valid ? 'is-valid' : 'is-invalid'}
-                            style       = {inputStyle} 
-                            {...vprops} 
-                />
-              </VInputAddon>
-              }/>
+    <VInputAddon name           = {name}
+                 label          = {label}
+                 feedback       = {feedback==='no-feedback' ? undefined : feedback||message}
+                 value          = {innerValue}
+                 icon           = {icon}
+                 isValid        = {valid}
+                 inline         = {inline}
+                 keepHeight     = {keepHeight}
+                 inputGroupStyle= {nInputGroupStyle}
+                 formGroupStyle = {formGroupStyle}
+                 >
+
+      <DatePicker id          = {id}
+                  weekStartsOn= {1} 
+                  placeholder = {placeholder}
+                  inputRef    = {inputRef}
+                  dateFormat  = {"DD/MM/YYYY"}
+                  readOnly    = {readOnly}
+                  required    = {required}
+                  autocomplete= {autocomplete}
+                  className   = {valid ? 'is-valid' : 'is-invalid'}
+                  style       = {inputStyle} 
+                  onChange    = {(v,f) => handleChange(v, f)}
+                  {...innerProps} 
+      />
+    </VInputAddon>
   )
 }
 
+
+const VInputDateRS= withValium(_VInputDateRS, 'text')
+  
 
 VInputDateRS.propTypes = {
   ...vPropTypes,

@@ -1,7 +1,7 @@
 import React        from 'react'
 import PropTypes    from 'prop-types'
 import {Input}      from 'reactstrap'
-import {vPropTypes, vDefaultProps}  from './common/inputProps'
+import {vPropTypes, vDefaultProps}  from './base/inputProps'
 
 import {withValue, withValium, withAddon} from './base'
 

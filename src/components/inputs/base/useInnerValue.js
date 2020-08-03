@@ -53,7 +53,7 @@ const useInnerValue = (props, transform) => {
         getTransformedValue(transform?.from, value)
 
         if (props.onChange!=undefined) {
-          console.log(`onChange ${getTransformedValue(transform?.to, value)} ${typeof getTransformedValue(transform?.to, value)}`)
+          //console.log(`onChange ${getTransformedValue(transform?.to, value)} ${typeof getTransformedValue(transform?.to, value)}`)
           //props.onChange(value)
           props.onChange(getTransformedValue(transform?.to, value))
         }
@@ -74,10 +74,10 @@ const useInnerValue = (props, transform) => {
       if (props.onConfirm!=undefined) {
         if (confirmedValue!=innerValue) {
           setConfirmedValue(innerValue)
-          console.log(`onConfirm ${innerValue} ${typeof innerValue}`)
-          console.log(`onConfirm ${getTransformedValue(transform?.to, innerValue)} ${typeof getTransformedValue(transform?.to, innerValue)}`)
+          //console.log(`onConfirm ${innerValue} ${typeof innerValue}`)
+          //console.log(`onConfirm ${getTransformedValue(transform?.to, innerValue)} ${typeof getTransformedValue(transform?.to, innerValue)}`)
           //props.onConfirm(innerValue)
-          props.onChange(getTransformedValue(transform?.to, innerValue))
+          props.onConfirm(getTransformedValue(transform?.to, innerValue))
         }
       }
     },

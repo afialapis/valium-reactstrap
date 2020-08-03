@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import {Container, Row, Col, CustomInput} from 'reactstrap'
 import {VForm, VInputText, VInputEmail, VInputUrl, VInputPassword, VInputTextArea,
         VInputNumber, VInputDate, VInputTime, VInputColor, 
-        VInputCheckbox, VInputSelect, VInputSelectMultiple, VInputSelectSearch, VInputFile, VInputFloating} from '../../src'
+        VInputCheckbox, VInputSelect, VInputSelectMultiple, VInputSelectSearch, VInputFile, VInputFloat, VInputUint} from '../../src'
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -29,7 +29,7 @@ const VFormReactstrap = () => {
   const [asearch, setAsearch] = useState(undefined)
   const [afile, setAfile] = useState({name: 'custom.txt', size: 1000, type: 'txt'})
   const [afloat, setAfloat]= useState(1.23)
-  const [afloatu, setAfloatu]= useState(3.34)
+  const [auint, setAuint]= useState(34)
 
   const [values, setValues]= useState({
     'anumber': 123,
@@ -200,25 +200,25 @@ const VFormReactstrap = () => {
                         keepHeight          = {keepHeight}
                         {... !showAddon && {icon: null}}
                 /> 
-                <VInputFloating
+                <VInputFloat
                         formActions         = {formActions}
                         name                = 'afloat'
                         value               = {afloat}
                         required            = {false}
                         prematureValidation = {premature}
                         onChange            = {(v) => setAfloat(v)}
-                        label               = "A Floating"
+                        label               = "A Float"
                         keepHeight          = {keepHeight}
                         {... !showAddon && {icon: null}}
                 /> 
-                <VInputFloating
+                <VInputUint
                         formActions         = {formActions}
-                        name                = 'afloatu'
-                        value               = {afloatu}
+                        name                = 'auint'
+                        value               = {auint}
                         required            = {false}
                         prematureValidation = {premature}
-                        onChange            = {(v) => setAfloatu(v)}
-                        label               = "A Floating uncontrolled"
+                        onChange            = {(v) => setAuint(v)}
+                        label               = "An integer"
                         keepHeight          = {keepHeight}
                         {... !showAddon && {icon: null}}
                 />                                      
@@ -267,17 +267,17 @@ const VFormReactstrap = () => {
                         onChange         = {(v) => setAselect(v)}
                         label            = "A select"
                         options          = {{
-                            1: 'One',
-                            2: 'Two',
-                            3: 'Three',
-                            4: 'Four',
-                            5: 'Five'
+                            '1': 'One',
+                            '2': 'Two',
+                            '3': 'Three',
+                            '4': 'Four',
+                            '5': 'Five'
                         }}
-                        disallowedValues = {[2]}
-                        /*allowedValues    = {[1, 2, 5]}*/
+                        disallowedValues = {[2,3]}
+                        allowedValues    = {[4]}
                         keepHeight       = {keepHeight}
                         clearable        = {true}
-                        numeric          = {true}
+                        numeric          = {false}
                         {... !showAddon && {icon: null}}
                 />
                 {/*<button onClick={() => setAsearch(2)}>HEY HEY</button>*/}
@@ -296,7 +296,7 @@ const VFormReactstrap = () => {
                             5: 'Five'
                         }}
                         disallowedValues = {[2]}
-                        /*allowedValues    = {['1', '2', '5']}*/
+                        allowedValues    = {[1, 3, 4]}
                         keepHeight       = {keepHeight}
                         clearable        = {true}
                         numeric          = {true}
