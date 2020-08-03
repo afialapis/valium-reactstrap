@@ -1,68 +1,64 @@
-import React       from 'react'
+import React   from 'react'
 import PropTypes   from 'prop-types'
-import VInputAddon from './VInputAddon'
-import {VInput}    from 'valium'
 import {Input}     from 'reactstrap'
 import {vPropTypes, vDefaultProps} from './common/inputProps'
-import useInnerValue   from './common/useInnerValue'
+import {withValue, withValium, withAddon} from './base'
 
-const VInputNumberRS = (props) => {
-  const {formActions, id, name, value, defaultValue, label, feedback, icon, inline, 
-    placeholder, readOnly, autocomplete, required, max, min, pattern, step, 
-    checkValue, allowedValues, disallowedValues, doRepeat, doNotRepeat, stepRange, 
-    onChange, onConfirm, prematureValidation, keepHeight, formGroupStyle, inputGroupStyle, inputStyle}= props
 
-  const [innerValue, innerProps]= useInnerValue(props)
-  
+const _VInputNumberRS = (props) => {
+  const {id, name, inputRef, placeholder, 
+    readOnly, required, min, max, step,
+    pattern, innerValue, innerProps, valid, 
+    autocomplete, inputStyle}= props
+
   return (
-    <VInput type               = {"number"}
-            feedback           = {feedback} 
-            checkValue         = {checkValue}
-            allowedValues      = {allowedValues}
-            disallowedValues   = {disallowedValues}
-            doRepeat           = {doRepeat}
-            doNotRepeat        = {doNotRepeat}
-            stepRange          = {stepRange}
-            prematureValidation= {prematureValidation}
-            formActions        = {formActions}
-            render             = {({valid, message}, inputRef) => 
-              <VInputAddon name        = {name}
-                          label       = {label}
-                          feedback    = {feedback==='no-feedback' ? undefined : feedback||message}
-                          value       = {innerValue}
-                          icon        = {icon}
-                          isValid     = {valid}
-                          inline      = {inline}
-                          keepHeight  = {keepHeight}
-                          formGroupStyle = {formGroupStyle}
-                          inputGroupStyle= {inputGroupStyle}>
-                <Input  id          = {id}
-                        name        = {name}
-                        innerRef    = {inputRef}
-                        type        = {"number"}
-                        placeholder = {placeholder || ""}
-                        onChange    = {(event) => {if (onChange!=undefined) { return onChange(event.target.value)}}}
-                        readOnly    = {readOnly!=undefined ? readOnly  : false}
-                        required    = {required}
-                        max         = {max}
-                        min         = {min}
-                        pattern     = {pattern}
-                        step        = {step || undefined}
-                        valid       = {innerValue!=undefined && innerValue!='' && valid}
-                        invalid     = {! valid}
-                        autoComplete= {autocomplete}
-                        style       = {inputStyle} 
-                        {...innerProps}
-                />
-              </VInputAddon>
-
-            }/>
+    <Input  id          = {id}
+            name        = {name}
+            innerRef    = {inputRef}
+            type        = {"text"}
+            placeholder = {placeholder || ""}
+            readOnly    = {readOnly!=undefined ? readOnly  : false}
+            required    = {required}
+            max         = {max}
+            min         = {min}
+            pattern     = {pattern}
+            step        = {step || undefined}
+            valid       = {innerValue!=undefined && innerValue!='' && valid}
+            invalid     = {! valid}
+            autoComplete= {autocomplete}
+            style       = {inputStyle} 
+            {...innerProps}
+    />
   )
 }
+
+/*
+
+NOTE: we cannot do the transofrm here. or when typing decimal seps
+  (for example "123,", will be transformed and the separator tailored)
+
+const transform= {
+  from: (n) => {
+    if (n==undefined) {
+      return ''
+    }
+    return n.toString()
+  },
+  to: (s) => {
+    const f= parseFloat(s)
+    if (isNaN(f)) {
+      return undefined
+    }
+    return f
+  }
+}*/
+
+const VInputNumberRS = withValue(withValium(withAddon(_VInputNumberRS), 'text') /*, transform*/)
 
 
 VInputNumberRS.propTypes = {
   ...vPropTypes,
+  defaultValue        : PropTypes.number,  
   prematureValidation : PropTypes.bool,
   placeholder         : PropTypes.string,
   max                 : PropTypes.number,
@@ -74,7 +70,8 @@ VInputNumberRS.propTypes = {
 
 VInputNumberRS.defaultProps = {
   ...vDefaultProps,
-  icon: 'dollar'
+  icon: 'dollar',
+  inputFilter: value => /^-?\d*[.,]?\d*$/.test(value)
 }
 
 export default VInputNumberRS

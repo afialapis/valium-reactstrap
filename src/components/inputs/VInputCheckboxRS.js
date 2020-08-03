@@ -2,7 +2,7 @@ import React, { useState, useEffect }         from 'react'
 import PropTypes     from 'prop-types'
 import {VInput}      from 'valium'
 // import {CustomInput} from 'reactstrap'
-import VInputAddon   from './VInputAddon'
+import VInputAddon   from './base/VInputAddon'
 import {vPropTypes, vDefaultProps}   from './common/inputProps'
 import valueOrDef   from './common/valueOrDef'
 

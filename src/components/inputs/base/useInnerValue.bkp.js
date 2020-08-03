@@ -39,6 +39,7 @@ const useInnerValue = (props) => {
         setInnerValue(value)
 
         if (props.onChange!=undefined) {
+          console.log(`onChange ${value} ${typeof value}`)
           props.onChange(value)
         }
       }
@@ -57,6 +58,7 @@ const useInnerValue = (props) => {
     () => {
       if (props.onConfirm!=undefined) {
         if (confirmedValue!=innerValue) {
+          console.log(`onConfirm ${innerValue} ${typeof innerValue}`)
           setConfirmedValue(innerValue)
           props.onConfirm(innerValue)
         }

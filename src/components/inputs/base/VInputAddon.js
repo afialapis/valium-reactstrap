@@ -6,7 +6,7 @@ import {
   InputGroupText,
   Label
 } from 'reactstrap'
-import VIcon from '../icons'
+import VIcon from '../../icons'
 
 const VInputFeedback = ({isValid, feedback, keepHeight}) => {
   const show= keepHeight || (! isValid && feedback)

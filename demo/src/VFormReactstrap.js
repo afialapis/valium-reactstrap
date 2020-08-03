@@ -193,8 +193,8 @@ const VFormReactstrap = () => {
                         name                = 'anumber'
                         required            = {false}
                         prematureValidation = {premature}
-                        defaultValue        = {values.atext}
-                        onChange            = {(v) => handleChange('anumber', v, false)}
+                        value               = {values.anumber}
+                        onChange            = {(v) => {console.log(`changes anumber to ${typeof v} ${v}`); handleChange('anumber', v, false)}}
                         onConfirm           = {(v) => handleChange('anumber', v, true)}                       
                         label               = "A Number"
                         keepHeight          = {keepHeight}

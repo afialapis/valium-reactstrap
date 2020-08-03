@@ -1,62 +1,33 @@
 import React        from 'react'
 import PropTypes    from 'prop-types'
-import VInputAddon  from './VInputAddon'
-import {VInput}     from 'valium'
 import {Input}      from 'reactstrap'
 import {vPropTypes, vDefaultProps}  from './common/inputProps'
-import valueOrDef   from './common/valueOrDef'
 
+import {withValue, withValium, withAddon} from './base'
 
-const VInputTimeRS = (
-  {formActions, id, name, value, defaultValue, label, feedback, icon, inline, placeholder, 
-    readOnly, autocomplete, required, checkValue, allowedValues, disallowedValues, doRepeat, 
-    doNotRepeat, stepRange, onChange, prematureValidation, keepHeight, formGroupStyle, 
-    inputGroupStyle, inputStyle}) => {
+const _VInputTimeRS = (props) => {
+  const {id, name, inputRef, placeholder, 
+    readOnly, required, valid, innerValue, innerProps,
+    autocomplete, inputStyle}= props
 
-  const [vprops, nvalue]= valueOrDef(value, defaultValue)
-  
   return (
-    <VInput type               = {"text"} 
-            feedback           = {feedback} 
-            checkValue         = {checkValue}
-            allowedValues      = {allowedValues}
-            disallowedValues   = {disallowedValues}
-            doRepeat           = {doRepeat}
-            doNotRepeat        = {doNotRepeat}
-            stepRange          = {stepRange}
-            prematureValidation= {prematureValidation}
-            formActions        = {formActions}
-            render             = {({valid, message}, inputRef) => 
-              <VInputAddon name        = {name}
-                          label       = {label}
-                          feedback    = {feedback==='no-feedback' ? undefined : feedback||message}
-                          value       = {nvalue}
-                          icon        = {icon}
-                          isValid     = {valid}
-                          inline      = {inline}
-                          keepHeight  = {keepHeight}
-                          formGroupStyle = {formGroupStyle}
-                          inputGroupStyle= {inputGroupStyle}>
-                <Input  id          = {id}
-                        name        = {name}
-                        innerRef    = {inputRef}
-                        type        = {"time"}
-                        placeholder = {placeholder || ""}
-                        onChange    = {(event) => {if (onChange!=undefined) { return onChange(event.target.value)}}}
-                        readOnly    = {readOnly!=undefined ? readOnly  : false}
-                        required    = {required}
-                        valid       = {nvalue!=undefined && nvalue!='' && valid}
-                        invalid     = {! valid}
-                        autoComplete= {autocomplete}
-                        style       = {inputStyle} 
-                        {...vprops}
-                />
-              </VInputAddon>
-
-              }/>
+      <Input  id          = {id}
+              name        = {name}
+              innerRef    = {inputRef}
+              type        = {"time"}
+              placeholder = {placeholder || ""}
+              readOnly    = {readOnly!=undefined ? readOnly  : false}
+              required    = {required}
+              valid       = {innerValue!=undefined && innerValue!='' && valid}
+              invalid     = {! valid}
+              autoComplete= {autocomplete}
+              style       = {inputStyle} 
+              {...innerProps}
+    />
   )
 }
 
+const VInputTimeRS = withValue(withValium(withAddon(_VInputTimeRS), 'text'))
 
 VInputTimeRS.propTypes = {
   ...vPropTypes,

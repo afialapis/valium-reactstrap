@@ -22,6 +22,7 @@ const vPropTypes = {
   doRepeat            : PropTypes.string,
   doNotRepeat         : PropTypes.string,
   stepRange           : PropTypes.number,
+  inputFilter         : PropTypes.func,
   onChange            : PropTypes.func,
   onConfirm           : PropTypes.func,
   keepHeight          : PropTypes.bool,
