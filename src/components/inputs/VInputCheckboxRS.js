@@ -20,7 +20,6 @@ const _VInputCheckboxRS = (props) => {
   useEffect(() => {
     setInnerChecked(innerValue)
   }, [innerValue])
-  //}, [value, defaultValue])
 
   const handleClick = (ev, inputRef) => {
     const checked= !innerChecked
