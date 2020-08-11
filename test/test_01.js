@@ -1,9 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import TestUtils from 'react-dom/test-utils'
 import co from "co"
 import ES6Promise from 'es6-promise'
 import UUID from "node-uuid"
-//import assert from 'assert'
+import assert from 'assert'
 
 
 ES6Promise.polyfill()

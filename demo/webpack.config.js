@@ -5,11 +5,11 @@ module.exports = {
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   context: __dirname,
   entry: [
-    './src/demo.js'
+    './src/Demo.js'
   ],
   output: {
     path: __dirname,
-    filename: 'bundle.js',
+    filename: 'dist/bundle.js',
     publicPath: __dirname
   },
   module: {
@@ -56,7 +56,7 @@ module.exports = {
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
-      filename: 'bundle.css',
+      filename: 'dist/bundle.css',
       allChunks: true
     }), 
   ]  
