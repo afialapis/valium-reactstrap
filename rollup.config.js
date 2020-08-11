@@ -4,15 +4,16 @@ import replace from '@rollup/plugin-replace'
 import resolve from '@rollup/plugin-node-resolve'
 import external from 'rollup-plugin-peer-deps-external'
 import { terser } from 'rollup-plugin-terser'
+import scss from 'rollup-plugin-scss'
 
 import packageJSON from './package.json'
 
 const NODE_ENV = 'production'
 const minifyExtension = pathToFile => pathToFile.replace(/\.js$/, '.min.js');
+
 const input = './src/index.js';
 
-
-const baseCfg= (output, withReplace, withTerser) => {
+const baseCfg= (output, withReplace, withTerser, withCss) => {
   let plugins= []
   if (withReplace) {
     plugins.push(
@@ -27,14 +28,37 @@ const baseCfg= (output, withReplace, withTerser) => {
       /*https://github.com/rollup/plugins/tree/master/packages/babel#babelhelpers*/
       babelHelpers: 'runtime'
     }),
-    external([/@babel\/runtime/, 'react', 'prop-types']),
+    external([/@babel\/runtime/, 'react', 'react-dom', 'reactstrap', 'prop-types']),
     resolve(),
-    commonjs()  
+    commonjs()
   ])
   if (withTerser) {
     plugins.push(
       terser()
     )
+  }
+  if (withCss) {
+    if (withTerser) {
+      plugins.push(
+        scss({
+          output: 'dist/styles.min.css',
+          outputStyle: 'compressed'
+        })
+      )
+    } else {
+      plugins.push(
+        scss({
+          output: 'dist/styles.css',
+        })
+      )
+    }
+
+  } else {
+    plugins.push(
+      scss({
+        output: false
+      })
+    )    
   }
 
   return {
@@ -75,20 +99,24 @@ module.exports = [
   baseCfg({
     file: packageJSON.browser,
     format: 'umd',
-    name: 'Valium',
+    name: 'ValiumReactstrap',
     globals: {
       react: 'React',
-      'prop-types': 'PropTypes'
+      'react-dom': 'ReactDOM',
+      'prop-types': 'PropTypes',
+      'reactstrap': 'Reactstrap'
     }
-  }, true, false),
+  }, true, false, true),
   baseCfg({
     file: minifyExtension(packageJSON.browser),
     format: 'umd',
-    name: 'Valium',
+    name: 'ValiumReactstrap',
     globals: {
       react: 'React',
-      'prop-types': 'PropTypes'
+      'react-dom': 'ReactDOM',
+      'prop-types': 'PropTypes',
+      'reactstrap': 'Reactstrap'
     }
-  }, true, true), 
+  }, true, true, true), 
   
 ];

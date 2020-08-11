@@ -1,8 +1,8 @@
 import babel from '@rollup/plugin-babel'
-//import external from 'rollup-plugin-peer-deps-external'
-import resolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import replace from '@rollup/plugin-replace'
+import resolve from '@rollup/plugin-node-resolve'
+//import external from 'rollup-plugin-peer-deps-external'
 import nodePolyfills from 'rollup-plugin-node-polyfills'
 
 const NODE_ENV = 'development'
@@ -12,12 +12,14 @@ export default {
   output: {
     file: 'test/bundle.js',
     format: 'umd',
-    name: 'Valium',
+    name: 'ValiumReactstrap',
     globals: {
       react: 'React',
+      'react-dom': 'ReactDOM',
       'prop-types': 'PropTypes',
-      'prop-types/checkPropTypes': 'checkPropTypes'
-    }   
+      'reactstrap': 'Reactstrap',
+      'es6-promise': 'ES6Promise'
+    }
   },
   plugins: [
     replace({
@@ -28,7 +30,7 @@ export default {
       /*https://github.com/rollup/plugins/tree/master/packages/babel#babelhelpers*/
       babelHelpers: 'runtime'
     }),
-    //external([/@babel\/runtime/, 'react', 'prop-types', 'prop-types/checkPropTypes']),
+    //external([/@babel\/runtime/, 'react', 'react-dom', 'reactstrap', 'prop-types', 'es6-promise']), 
     resolve({
       browser: true,
       preferBuiltins: false

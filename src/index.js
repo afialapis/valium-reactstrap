@@ -18,6 +18,8 @@ import VInputTextAreaRS       from './components/inputs/derived/VInputTextAreaRS
 import VInputFloatRS          from './components/inputs/derived/VInputFloatRS'
 import VInputUintRS           from './components/inputs/derived/VInputUintRS'
 
+import './assets/style.scss'
+
 export {VFormRS as VForm,
         VInputTextRS as VInputText,
         VInputNumberRS as VInputNumber,

@@ -8,15 +8,18 @@ import serve from 'rollup-plugin-serve'
 import livereload from 'rollup-plugin-livereload'
 
 const NODE_ENV = 'development'
+
 export default {
   input: 'demo/src/Demo.js',
   output: {
     file: 'demo/dist/bundle.js',
     format: 'umd',
-    name: 'Valium',
+    name: 'ValiumReactstrap',
     globals: {
       react: 'React',
-      'prop-types': 'PropTypes'
+      'react-dom': 'ReactDOM',
+      'prop-types': 'PropTypes',
+      'reactstrap': 'Reactstrap'
     }
   },
   plugins: [
@@ -29,8 +32,7 @@ export default {
       babelHelpers: 'runtime'
     }),
     resolve(),
-    //external(['react', 'prop-types']),
-    //external([/@babel\/runtime/, 'react', 'prop-types']),    
+    //external([/@babel\/runtime/, 'react', 'react-dom', 'reactstrap', 'prop-types']),  
     commonjs(),
     scss(),
     serve({
