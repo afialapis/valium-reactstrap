@@ -66,7 +66,7 @@ const _VInputFileRS = (props) => {
   // const [statusMsg , setStatusMsg]= useState(undefined)
 
   const hasValue = () => {
-    return innerValue.buffer || innerValue.size>0
+    return innerValue?.buffer || innerValue?.size>0
   }
 
   const handleChange = (ev) => {

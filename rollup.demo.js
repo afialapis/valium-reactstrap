@@ -3,7 +3,8 @@ import commonjs from '@rollup/plugin-commonjs'
 import replace from '@rollup/plugin-replace'
 import resolve from '@rollup/plugin-node-resolve'
 //import external from 'rollup-plugin-peer-deps-external'
-import scss from 'rollup-plugin-scss'
+//import scss from 'rollup-plugin-scss'
+import postcss from 'rollup-plugin-postcss'
 import serve from 'rollup-plugin-serve'
 import livereload from 'rollup-plugin-livereload'
 
@@ -34,7 +35,9 @@ export default {
     resolve(),
     //external([/@babel\/runtime/, 'react', 'react-dom', 'reactstrap', 'prop-types']),  
     commonjs(),
-    scss(),
+    postcss({
+      extract: 'bundle.css'
+    }),
     serve({
       contentBase: './demo',
       host: 'localhost',
@@ -45,7 +48,7 @@ export default {
       watch: '',
       port: 3001,
       verbose: true,
-      delay: 200
+      delay: 500
     })
   ]
 }

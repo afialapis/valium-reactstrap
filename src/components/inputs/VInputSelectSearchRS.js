@@ -148,7 +148,8 @@ const _VInputSelectSearchRS = (props) => {
     if (filterRef.current) {  
       return {
         left: filterRef.current.parentNode.children[0].offsetWidth+13+'px',
-        minWidth: filterRef.current.offsetWidth+4+'px'
+        minWidth: filterRef.current.offsetWidth+'px',
+        maxWidth: filterRef.current.offsetWidth+'px'
       }
     }
     return {}
@@ -207,7 +208,7 @@ const _VInputSelectSearchRS = (props) => {
         </div>
         
           {isOpen
-          ? <div className="valium-reactstrap-select-search-list list-group"
+          ? <div className="valium-reactstrap-select-search-list list-group shadow-lg"
                   ref = {listRef}
                   style={getListStyle()}>
               {optionsMap.map((opt, idx) =>  {

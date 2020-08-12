@@ -10,10 +10,9 @@ const _VInputCheckboxRS = (props) => {
          innerValue, innerProps, valid, inputStyle,
          onChange, description}= props
   
-  const checkedProps= {
-    checked: innerProps.value,
-    defaultChecked: innerProps.defaultChecked
-  }
+  const checkedProps= innerProps.defaultValue!=undefined
+   ? {defaultChecked: innerValue}
+   : {checked: innerValue || false}
 
   const [innerChecked, setInnerChecked]= useState(innerValue)
   
@@ -30,7 +29,6 @@ const _VInputCheckboxRS = (props) => {
       onChange(checked)
     }
   }
-
 
   return (    
     <div className    = "custom-switch custom-control"

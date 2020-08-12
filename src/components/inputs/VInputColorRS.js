@@ -8,7 +8,7 @@ const _VInputColorRS = (props) => {
   const {id, name, inputRef, placeholder, 
     readOnly, required, valid, innerValue, innerProps,
     autocomplete, inputStyle}= props
-
+  
   return (
     <Input  id          = {id}
             name        = {name}

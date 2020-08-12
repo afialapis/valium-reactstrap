@@ -1,10 +1,15 @@
 import {useState, useEffect, useCallback} from 'react'
 
+const uvl = (v) => 
+  v===undefined
+    ? ''
+    : v
+
 const checkControlledValue = (props) => {
   if (Object.keys(props).indexOf('defaultValue')>=0) {
-    return [props.defaultValue, {defaultValue: props.defaultValue}]
+    return [props.defaultValue, {defaultValue: uvl(props.defaultValue)}]
   }
-  return [props.value, {value: props.value}]
+  return [props.value, {value: uvl(props.value)}]
 }
 
 const getTransformedValue = (func, value) => {
@@ -19,6 +24,8 @@ const getTransformedValue = (func, value) => {
 const useInnerValue = (props, transform) => {
 
   const [nInnerValue, nVProps]= checkControlledValue(props)
+
+
   const tInnerValue = getTransformedValue(transform?.from, nInnerValue)
 
   const [innerValue, setInnerValue]= useState(tInnerValue)

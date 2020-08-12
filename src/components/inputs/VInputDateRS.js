@@ -70,6 +70,7 @@ const _VInputDateRS = (props) => {
     flexWrap: "unset"
   }
 
+
   return (
     <VInputAddon name           = {name}
                  label          = {label}
@@ -83,7 +84,7 @@ const _VInputDateRS = (props) => {
                  formGroupStyle = {formGroupStyle}
                  >
 
-      <DatePicker id          = {id}
+      <DatePicker.default id          = {id}
                   weekStartsOn= {1} 
                   placeholder = {placeholder}
                   inputRef    = {inputRef}
