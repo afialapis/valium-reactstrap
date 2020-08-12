@@ -249,7 +249,7 @@ const VFormReactstrap = () => {
                         formActions         = {formActions}
                         name                = 'acolor'
                         value               = {acolor}
-                        required            = {false}
+                        required            = {true}
                         prematureValidation = {premature}
                         disallowedValues    = {["#000000", "#ffffff"]}
                         onChange            = {(v) => setAcolor(v)}

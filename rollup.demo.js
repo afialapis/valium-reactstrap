@@ -41,14 +41,14 @@ export default {
     serve({
       contentBase: './demo',
       host: 'localhost',
-      port: 3000,      
+      port: 3002,      
     }),
     
     livereload({
       watch: '',
-      port: 3001,
+      port: 3003,
       verbose: true,
-      delay: 500
+      delay: 700
     })
   ]
 }
