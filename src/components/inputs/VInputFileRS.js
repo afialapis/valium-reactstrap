@@ -171,7 +171,7 @@ const _VInputFileRS = (props) => {
                 label       = {label}
                 feedback    = {feedback==='no-feedback' ? undefined : feedback||message}
                 value       = {innerValue}
-                icon        = {getIcon(innerValue.type, icon, iconMap)}
+                icon        = {getIcon(innerValue?.type, icon, iconMap)}
                 isValid     = {valid}
                 inline      = {inline}
                 keepHeight  = {keepHeight}
