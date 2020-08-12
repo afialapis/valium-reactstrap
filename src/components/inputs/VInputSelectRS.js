@@ -7,17 +7,6 @@ import {withValue, withValium, withAddon} from './base'
 
 let instanceCount= 1
 
-const numOrArrayToString = (v) => {
-  if (Array.isArray(v)) {
-    return v.map((a) => isNaN(a) ? '' : a.toString())
-  }
-  return isNaN(v) ? '' : v.toString()
-}
-
-const valueTransform = {
-  from: (v) => numOrArrayToString(v),
-  to: (v) => v
-}
 
 const _VInputSelectRS = (props) => {
 
@@ -44,11 +33,6 @@ const _VInputSelectRS = (props) => {
     }
   }    
 
-  const handleChange = (event) => {
-    if (onChange!=undefined) { 
-      return onChange(parseNumeric(numeric, event.target.value))
-    }
-  }  
   
   return (
     <>
@@ -66,7 +50,6 @@ const _VInputSelectRS = (props) => {
                 autoComplete= {autocomplete}
                 style       = {inputStyle} 
                 {...innerProps}
-                onChange    = {(event) => handleChange(event)}
                 >
         {options_map.map((opt) => 
           <option key       = {`${name}_option_${opt.value}`}
@@ -95,7 +78,7 @@ const _VInputSelectRS = (props) => {
   )
 }
 
-const VInputSelectRS= withValue(withValium(withAddon(_VInputSelectRS), 'select'), valueTransform)
+const VInputSelectRS= withValue(withValium(withAddon(_VInputSelectRS), 'select'))
 
 
 VInputSelectRS.propTypes = {

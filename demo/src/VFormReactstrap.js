@@ -264,7 +264,7 @@ const VFormReactstrap = () => {
                         name             = 'aselect'
                         value            = {aselect}
                         required         = {true}
-                        onChange         = {(v) => setAselect(v)}
+                        onChange         = {(v) => {console.log(`ASELECT => ${typeof v} ${v}`); setAselect(v)}}
                         label            = "A select"
                         options          = {{
                             '1': 'One',
@@ -286,7 +286,7 @@ const VFormReactstrap = () => {
                         name             = 'asearch'
                         value            = {asearch}
                         required         = {true}
-                        onChange         = {(v) => setAsearch(v)}
+                        onChange         = {(v) => {console.log(`ASEARCH => ${typeof v} ${v}`); setAsearch(v)}}
                         label            = "A searchable select"
                         options          = {{
                             1: 'One',
@@ -295,10 +295,10 @@ const VFormReactstrap = () => {
                             4: 'Four',
                             5: 'Five'
                         }}
-                        disallowedValues = {[2]}
+                        //disallowedValues = {[2]}
                         allowedValues    = {[1, 3, 4]}
                         keepHeight       = {keepHeight}
-                        clearable        = {true}
+                        clearable        = {false}
                         numeric          = {true}
                         {... !showAddon && {icon: null}}
                 />  

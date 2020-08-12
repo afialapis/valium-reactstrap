@@ -40,17 +40,6 @@ function getPosition(el) {
 }
 */
 
-const numOrArrayToString = (v) => {
-  if (Array.isArray(v)) {
-    return v.map((a) => isNaN(a) ? '' : a.toString())
-  }
-  return isNaN(v) ? '' : v.toString()
-}
-
-const valueTransform = {
-  from: (v) => numOrArrayToString(v),
-  to: (v) => v
-}
 
 
 const _VInputSelectSearchRS = (props) => {
@@ -58,36 +47,92 @@ const _VInputSelectSearchRS = (props) => {
          placeholder, readOnly, autocomplete, required,
          disallowedValues, keepHeight, formGroupStyle, inputGroupStyle,
          inputStyle, onChange, clearable, numeric, maxShownOptions,
-         innerValue, message, valid, inputRef, setValidity
+         innerValue, /*innerProps,*/ message, valid, inputRef, setValidity
          } = props
   
+  //console.log('----------------------- innerValue='+innerValue)
   const wrapperRef    = useRef(undefined)
   const filterRef     = useRef(undefined)
   const listRef       = useRef(undefined)
 
   const [isOpen, setIsOpen]= useState(false)
-  const [shownText, setShownText]= useState('')
+  const [shownText, setShownText]= useState(options[innerValue] || '')
   const [optionsMap, setOptionsMap]= useState([])
 
+
+  const handleChange = (value) => {
+    //console.log(`handleChange ${value}`)
+    inputRef.current.value= value
+    setValidity.current()
+        
+    if (onChange!=undefined) { 
+      onChange(parseNumeric(numeric, value))
+    } 
+  }
+
+  const onSearchStart = () => {
+    if (! isOpen) {
+      setIsOpen(true)
+    }
+  }
+
+  const onSearchType = (ev) => {
+    //console.log('SEARCH TYPE')
+    setShownText(ev.target.value)
+    onSearchStart()
+  }
+
+  const onSearchAbort = () => {
+    setIsOpen(false)
+    if (shownText=='') {
+      handleChange('')
+    }
+  }
+
+  const onSelect = (newValue) => {
+    setIsOpen(false)
+    //setShownText(options[newValue])
+    handleChange(newValue)
+  }
+
+  const getListStyle= () => {
+    // TODO
+    // Check where this gap (13 / 6) comes from and try to make better
+    if (filterRef.current) {  
+      return {
+        left: filterRef.current.parentNode.children[0].offsetWidth+13+'px',
+        minWidth: filterRef.current.offsetWidth+'px',
+        maxWidth: filterRef.current.offsetWidth+'px'
+      }
+    }
+    return {}
+  }
+
+
   useEffect(() => {
+    const onClickOutside = (event) => {
+      if (wrapperRef && wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+        if (listRef && listRef.current && !listRef.current.contains(event.target)) {
+          //console.log('CLICK OUTSIDE, ABORT')
+          onSearchAbort()
+        }
+      }    
+    }    
+
     document.addEventListener('mousedown', onClickOutside)
 
     return () => {
       document.removeEventListener('mousedown', onClickOutside)
     }
-  }, [])
+  })
 
   useEffect(() => {
+    //console.log(`SETTING SHOWN ${options[innerValue] || ''}`)
     setShownText(options[innerValue] || '')
     // necessary?
     // setValidity.current()
-  }, [innerValue])
+  }, [options, innerValue])
 
-  useEffect(() => {
-    if (! isOpen) {
-      setShownText(options[innerValue] || '')
-    }
-  }, [isOpen])
 
   useEffect(() => {
     // make options Map
@@ -107,53 +152,6 @@ const _VInputSelectSearchRS = (props) => {
     }
     setOptionsMap(nOptionsMap)
   }, [options, disallowedValues, shownText])  
-
-  const onClickOutside = (event) => {
-    if (wrapperRef && wrapperRef.current && !wrapperRef.current.contains(event.target)) {
-      if (listRef && listRef.current && !listRef.current.contains(event.target)) {
-        onSearchAbort()
-      }
-    }    
-  }
-
-  const onSearchStart = () => {
-    if (! isOpen) {
-      setIsOpen(true)
-    }
-  }
-
-  const onSearchType = (ev) => {
-    setShownText(ev.target.value)
-    onSearchStart()
-  }
-
-  const onSearchAbort = () => {
-    setIsOpen(false)
-  }
-
-  const onSelect = (newValue) => {
-    inputRef.current.value= newValue
-    setValidity.current()
-
-    setIsOpen(false)
-    
-    if (onChange!=undefined) { 
-      onChange(parseNumeric(numeric, newValue))
-    }
-  }
-
-  const getListStyle= () => {
-    // TODO
-    // Check where this gap (13 / 6) comes from and try to make better
-    if (filterRef.current) {  
-      return {
-        left: filterRef.current.parentNode.children[0].offsetWidth+13+'px',
-        minWidth: filterRef.current.offsetWidth+'px',
-        maxWidth: filterRef.current.offsetWidth+'px'
-      }
-    }
-    return {}
-  }
 
   return (
 
@@ -176,7 +174,7 @@ const _VInputSelectSearchRS = (props) => {
                       type        = "hidden"
                       innerRef    = {inputRef}
                       required    = {required}
-                      value       = {innerValue}/>
+                      defaultValue= {innerValue}/>
             <Input    name        = {`input_select_search_${name}_text`}
                       className   = "valium-reactstrap-select-search-text custom-select"
                       type        = "text"
@@ -238,7 +236,7 @@ const _VInputSelectSearchRS = (props) => {
   )
 }
 
-const VInputSelectSearchRS = withValue(withValium(_VInputSelectSearchRS, 'select'), valueTransform)
+const VInputSelectSearchRS = withValue(withValium(_VInputSelectSearchRS, 'select'))
 
 
 VInputSelectSearchRS.propTypes = {

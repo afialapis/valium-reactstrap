@@ -1,4 +1,5 @@
 import {useState, useEffect, useCallback} from 'react'
+import parseNumeric from '../common/numeric'
 
 const uvl = (v) => 
   v===undefined
@@ -25,10 +26,10 @@ const useInnerValue = (props, transform) => {
 
   const [nInnerValue, nVProps]= checkControlledValue(props)
 
-
   const tInnerValue = getTransformedValue(transform?.from, nInnerValue)
 
   const [innerValue, setInnerValue]= useState(tInnerValue)
+
   const [vProps, setVProps]= useState(nVProps)
   
   const [confirmedValue, setConfirmedValue]= useState(undefined)
@@ -62,7 +63,7 @@ const useInnerValue = (props, transform) => {
         if (props.onChange!=undefined) {
           //console.log(`onChange ${getTransformedValue(transform?.to, value)} ${typeof getTransformedValue(transform?.to, value)}`)
           //props.onChange(value)
-          props.onChange(getTransformedValue(transform?.to, value))
+          props.onChange(parseNumeric(props.numeric, getTransformedValue(transform?.to, value)))
         }
       }
     },
@@ -84,7 +85,7 @@ const useInnerValue = (props, transform) => {
           //console.log(`onConfirm ${innerValue} ${typeof innerValue}`)
           //console.log(`onConfirm ${getTransformedValue(transform?.to, innerValue)} ${typeof getTransformedValue(transform?.to, innerValue)}`)
           //props.onConfirm(innerValue)
-          props.onConfirm(getTransformedValue(transform?.to, innerValue))
+          props.onConfirm(parseNumeric(props.numeric, getTransformedValue(transform?.to, innerValue)))
         }
       }
     },
