@@ -285,7 +285,7 @@ const VFormReactstrap = () => {
                         formActions      = {formActions}
                         name             = 'asearch'
                         value            = {asearch}
-                        required         = {true}
+                        required         = {false}
                         onChange         = {(v) => {console.log(`ASEARCH => ${typeof v} ${v}`); setAsearch(v)}}
                         label            = "A searchable select"
                         options          = {{
@@ -296,7 +296,7 @@ const VFormReactstrap = () => {
                             5: 'Five'
                         }}
                         //disallowedValues = {[2]}
-                        allowedValues    = {[1, 3, 4]}
+                        //allowedValues    = {[1, 3, 4]}
                         keepHeight       = {keepHeight}
                         clearable        = {false}
                         numeric          = {true}
@@ -341,7 +341,7 @@ const VFormReactstrap = () => {
                         formActions         = {formActions}
                         name                = 'afile'
                         value               = {afile}
-                        required            = {false}
+                        required            = {true}
                         onChange            = {(v) => setAfile(v)}
                         label               = 'A file'
                         keepHeight          = {keepHeight}

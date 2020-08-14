@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState /*, useEffect*/} from 'react'
 import PropTypes from 'prop-types'
 import VInputAddon from './base/VInputAddon'
 import {InputGroupAddon, InputGroupText}     from 'reactstrap'
@@ -59,15 +59,31 @@ const _VInputFileRS = (props) => {
          required, feedback, keepHeight, formGroupStyle, inputGroupStyle, 
          inputStyle, onLoad, onChange, onDownload, accept, iconMap,
          innerValue, setValidity, valid, message, inputRef} = props
-
-
+  
   const [progress  , setProgress ]= useState(undefined)
   const [status    , setStatus   ]= useState(undefined)
   // const [statusMsg , setStatusMsg]= useState(undefined)
 
+  /*
+  useEffect(() => {
+    if (setValidity.current && innerValue) {
+      if (innerValue.buffer==undefined || innerValue.buffer.length==0) {
+        if (innerValue.size>0) {
+          //inputRef.current.value= 'not-empty'
+          //setValidity.current()
+          console.log(inputRef.current)
+          inputRef.current.setCustomValidity(true)
+          inputRef.current.removeAttribute('data-valium-validity')
+          console.log(inputRef.current)
+        }
+      }
+    }
+  })*/
+
   const hasValue = () => {
     return innerValue?.buffer || innerValue?.size>0
   }
+  
 
   const handleChange = (ev) => {
     ev.persist()
@@ -164,7 +180,7 @@ const _VInputFileRS = (props) => {
       onDownload(inputRef, ev)
     }
   }
-
+  
   return (
 
     <VInputAddon name        = {name}
@@ -192,9 +208,15 @@ const _VInputFileRS = (props) => {
               type        = {"file"}
               onChange    = {(e) => handleChange(e)}
               readOnly    = {readOnly!=undefined ? readOnly  : false}
-              required    = {required}
-              //valid       = {nvalue!=undefined && nvalue!='' && valid}
-              //invalid     = {! valid}
+              // If we receive some value on initing,
+              // we have no way to assign it to this input (file are readonly)
+              // So we hack this.
+              // TODO Would be better to use maybe another type of hidden input,
+              // keeping the <file> just for the file upload.
+              required    = {required && !hasValue()}
+
+              valid       = {valid ? 'true' : 'false'}
+              invalid     = {!valid ? 'true' : 'false'}
               accept      = {accept}
       />
       <div  style       = {{opacity  : "1", 
@@ -244,7 +266,7 @@ const _VInputFileRS = (props) => {
 }
 
 
-const VInputFileRS= withValue(withValium(_VInputFileRS, 'checkbox'))
+const VInputFileRS= withValue(withValium(_VInputFileRS, 'file'))
 
 
 VInputFileRS.propTypes = {

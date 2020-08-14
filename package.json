@@ -1,6 +1,6 @@
 {
   "name": "valium-reactstrap",
-  "version": "0.0.81",
+  "version": "0.0.82",
   "description": "A Valium implementation for Reactstrap",
   "author": "Donato Lorenzo <donato@afialapis.com>",
   "contributors": [
@@ -82,7 +82,7 @@
   "dependencies": {
     "@babel/runtime": "^7.11.2",
     "reactstrap-date-picker": "0.0.9",
-    "valium": "0.0.33"
+    "valium": "0.0.34"
   },
   "peerDependencies": {
     "react": ">=16.13.1",

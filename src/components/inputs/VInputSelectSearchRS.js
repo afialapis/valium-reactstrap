@@ -183,7 +183,7 @@ const _VInputSelectSearchRS = (props) => {
                       placeholder = {placeholder}
                       readOnly    = {readOnly}
                       required    = {required}
-                      valid       = {innerValue!=undefined && innerValue!='' && valid}
+                      valid       = {/*innerValue!=undefined && innerValue!='' &&*/ valid}
                       invalid     = {! valid}
                       onClick     = {(_ev) => onSearchStart()}
                       onChange    = {(ev) => onSearchType(ev)}
