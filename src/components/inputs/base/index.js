@@ -1,5 +1,6 @@
-import withValue from './withValue'
+import useInnerValue from './useInnerValue'
+import useHandlers from './useHandlers'
 import withValium from './withValium'
 import withAddon from './withAddon'
 
-export {withValue, withValium, withAddon}
+export {useInnerValue, useHandlers, withValium, withAddon}

@@ -9,7 +9,7 @@ VInputUintRS.propTypes = VInputNumberRS.propTypes
 
 VInputUintRS.defaultProps = {
   ...VInputNumberRS.defaultProps,
-  inputFilter: value => /^\d+$/.test(value)
+  inputFilter: 'uint'
 }
 
 export default VInputUintRS

@@ -1,7 +1,9 @@
 const parseNumeric= (numeric, value) => 
-  numeric 
-    ? value!='' ? parseInt(value) : undefined
-    : value
+  (value==undefined || value=='')
+    ? ''
+    : numeric 
+      ? parseInt(value)
+      : value
 
 export default parseNumeric
 

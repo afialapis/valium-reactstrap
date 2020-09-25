@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import {Container, Row, Col, CustomInput} from 'reactstrap'
 import {VForm, VInputText, VInputEmail, VInputUrl, VInputPassword, VInputTextArea,
-        VInputNumber, VInputDate, VInputTime, VInputColor, 
-        VInputCheckbox, VInputSelect, VInputSelectMultiple, VInputSelectSearch, VInputFile, VInputFloat, VInputUint} from '../../src'
+        VInputNumber, VInputTime, VInputColor,  VInputCheckbox, VInputFile, VInputDate, 
+        VInputSelect, /*VInputSelectMultiple, VInputSelectSearch, */ VInputInt, VInputUint} from '../../src'
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -36,8 +36,8 @@ const VFormReactstrap = () => {
     'atext': "I won't take NOT for an answer"
   })
 
-  const handleChange = (name, value, confirmed) => {
-    console.log(`handleChange(${name}, ${value}, ${confirmed})`)
+  const handleChange = (name, value) => {
+    console.log(`handleChange(${name}, ${value})`)
     const nValues= {
       ...values,
       [name]: value
@@ -125,142 +125,129 @@ const VFormReactstrap = () => {
                         console.log(e)
                 }}
                 */
-                renderInputs= {(formActions) => 
+                >
             <Row>
-            <Col sm="12" md="6" lg="4">
-                <VInputText
-                        formActions         = {formActions}
-                        name                = 'atext'
-                        disallowedValues    = {["NOT", "not"]}
-                        defaultValue        = {values.atext}
-                        onChange            = {(v) => handleChange('atext', v, false)}
-                        onConfirm           = {(v) => handleChange('atext', v, true)}
-                        required            = {true}
-                        prematureValidation = {premature}
-                        label               = 'Text'
-                      /*feedback            = {'no-feedback'}*/
-                        keepHeight          = {keepHeight}
-                        {... !showAddon && {icon: null}}
-                        
-                />
-                <VInputEmail
-                        formActions         = {formActions}
-                        name                = 'aemail'
-                        value               = {aemail}
-                        required            = {false}
-                        prematureValidation = {premature}
-                        onChange            = {(v) => setAemail(v)}
-                        keepHeight          = {keepHeight}
-                        {... !showAddon && {icon: null}}
-                /> 
-                <VInputUrl
-                        formActions         = {formActions}
-                        name                = 'aurl'
-                        value               = {aurl}
-                        required            = {false}
-                        prematureValidation = {premature}
-                        onChange            = {(v) => setAurl(v)}
-                        keepHeight          = {keepHeight}
-                        {... !showAddon && {icon: null}}                  
-                /> 
-                <VInputPassword
-                        formActions         = {formActions}
-                        name                = 'apwd'
-                        value               = {apwd}
-                        required            = {true}
-                        prematureValidation = {premature}
-                        onChange            = {(v) => setApwd(v)}
-                        disallowedValues    = {["1234"]}
-                        keepHeight          = {keepHeight}
-                        {... !showAddon && {icon: null}}
-                />
-                <VInputTextArea
-                        formActions         = {formActions}
-                        name                = 'aarea'
-                        value               = {aarea}
-                        required            = {false}
-                        prematureValidation = {premature}
-                        onChange            = {(v) => setAarea(v)}
-                        disallowedValues    = {["NO"]}
-                        label               = 'Area'
-                        keepHeight          = {keepHeight}
-                        {... !showAddon && {icon: null}}
-                />                   
-            </Col>
-            <Col sm="12" md="6" lg="4"> 
-                <VInputNumber
-                        formActions         = {formActions}
-                        name                = 'anumber'
-                        required            = {false}
-                        prematureValidation = {premature}
-                        value               = {values.anumber}
-                        onChange            = {(v) => {console.log(`changes anumber to ${typeof v} ${v}`); handleChange('anumber', v, false)}}
-                        onConfirm           = {(v) => handleChange('anumber', v, true)}                       
-                        label               = "A Number"
-                        keepHeight          = {keepHeight}
-                        {... !showAddon && {icon: null}}
-                /> 
-                <VInputFloat
-                        formActions         = {formActions}
-                        name                = 'afloat'
-                        value               = {afloat}
-                        required            = {false}
-                        prematureValidation = {premature}
-                        onChange            = {(v) => setAfloat(v)}
-                        label               = "A Float"
-                        keepHeight          = {keepHeight}
-                        {... !showAddon && {icon: null}}
-                /> 
-                <VInputUint
-                        formActions         = {formActions}
-                        name                = 'auint'
-                        value               = {auint}
-                        required            = {false}
-                        prematureValidation = {premature}
-                        onChange            = {(v) => setAuint(v)}
-                        label               = "An integer"
-                        keepHeight          = {keepHeight}
-                        {... !showAddon && {icon: null}}
-                />                                      
-                <VInputDate
-                        formActions         = {formActions}
-                        name                = 'adate'
-                        value               = {adate}
-                        required            = {true}
-                        prematureValidation = {premature}
-                        onChange            = {(v) => setAdate(v)}
-                        label               = "A date"
-                        keepHeight          = {keepHeight}
-                        disallowedValues    = {["31/12/2019"]}
-                        {... !showAddon && {icon: null}}
-                /> 
-                <VInputTime
-                        formActions         = {formActions}
-                        name                = 'atime'
-                        value               = {atime}
-                        required            = {false}
-                        prematureValidation = {premature}
-                        onChange            = {(v) => setAtime(v)}
-                        label               = "A time"
-                        keepHeight          = {keepHeight}
-                        {... !showAddon && {icon: null}}
-                />
-                <VInputColor
-                        formActions         = {formActions}
-                        name                = 'acolor'
-                        value               = {acolor}
-                        required            = {true}
-                        prematureValidation = {premature}
-                        disallowedValues    = {["#000000", "#ffffff"]}
-                        onChange            = {(v) => setAcolor(v)}
-                        label               = "A color"
-                        keepHeight          = {keepHeight}
-                        {... !showAddon && {icon: null}}
-                />
-            </Col>
-            <Col sm="12" md="6" lg="4">
+                <Col sm="12" md="6" lg="4">
+                        <VInputText
+                                name                = 'atext'
+                                disallowedValues    = {["NOT", "not"]}
+                                defaultValue        = {values.atext}
+                                onChange            = {(v) => handleChange('atext', v)}
+                                required            = {true}
+                                prematureValidation = {premature}
+                                label               = 'Text'
+                        /*feedback            = {'no-feedback'}*/
+                                keepHeight          = {keepHeight}
+                                {... !showAddon && {icon: null}}
+                                
+                        />
+                        <VInputEmail
+                                name                = 'aemail'
+                                value               = {aemail}
+                                required            = {false}
+                                prematureValidation = {premature}
+                                onChange            = {(v) => setAemail(v)}
+                                keepHeight          = {keepHeight}
+                                {... !showAddon && {icon: null}}
+                        /> 
+                        <VInputUrl
+                                name                = 'aurl'
+                                value               = {aurl}
+                                required            = {false}
+                                prematureValidation = {premature}
+                                onChange            = {(v) => setAurl(v)}
+                                keepHeight          = {keepHeight}
+                                {... !showAddon && {icon: null}}                  
+                        /> 
+                        <VInputPassword
+                                name                = 'apwd'
+                                value               = {apwd}
+                                required            = {true}
+                                prematureValidation = {premature}
+                                onChange            = {(v) => setApwd(v)}
+                                disallowedValues    = {["1234"]}
+                                keepHeight          = {keepHeight}
+                                {... !showAddon && {icon: null}}
+                        />
+                        <VInputTextArea
+                                name                = 'aarea'
+                                value               = {aarea}
+                                required            = {false}
+                                prematureValidation = {premature}
+                                onChange            = {(v) => setAarea(v)}
+                                disallowedValues    = {["NO"]}
+                                label               = 'Area'
+                                keepHeight          = {keepHeight}
+                                {... !showAddon && {icon: null}}
+                        />                   
+                </Col>
+                <Col sm="12" md="6" lg="4"> 
+                        <VInputInt
+                                name                = 'anumber'
+                                required            = {false}
+                                prematureValidation = {premature}
+                                value               = {values.anumber}
+                                onChange            = {(v) => handleChange('anumber', v)}
+                                label               = "A Number"
+                                keepHeight          = {keepHeight}
+                                {... !showAddon && {icon: null}}
+                        /> 
+                        <VInputNumber
+                                name                = 'afloat'
+                                value               = {afloat}
+                                required            = {false}
+                                prematureValidation = {premature}
+                                onChange            = {(v) => setAfloat(v)}
+                                label               = "A Float"
+                                keepHeight          = {keepHeight}
+                                {... !showAddon && {icon: null}}
+                        /> 
+                        <VInputUint
+                                name                = 'auint'
+                                value               = {auint}
+                                required            = {false}
+                                prematureValidation = {premature}
+                                onChange            = {(v) => setAuint(v)}
+                                label               = "An integer"
+                                keepHeight          = {keepHeight}
+                                {... !showAddon && {icon: null}}
+                        />  
+                                                        
+                        <VInputDate
+                                name                = 'adate'
+                                value               = {adate}
+                                required            = {true}
+                                prematureValidation = {premature}
+                                onChange            = {(v) => setAdate(v)}
+                                label               = "A date"
+                                keepHeight          = {keepHeight}
+                                disallowedValues    = {["31/12/2019"]}
+                                {... !showAddon && {icon: null}}
+                        /> 
+                        <VInputTime
+                                name                = 'atime'
+                                value               = {atime}
+                                required            = {false}
+                                prematureValidation = {premature}
+                                onChange            = {(v) => setAtime(v)}
+                                label               = "A time"
+                                keepHeight          = {keepHeight}
+                                {... !showAddon && {icon: null}}
+                        />
+                        <VInputColor
+                                name                = 'acolor'
+                                value               = {acolor}
+                                required            = {true}
+                                prematureValidation = {premature}
+                                disallowedValues    = {["#000000", "#ffffff"]}
+                                onChange            = {(v) => setAcolor(v)}
+                                label               = "A color"
+                                keepHeight          = {keepHeight}
+                                {... !showAddon && {icon: null}}
+                        />
+                </Col>
+                <Col sm="12" md="6" lg="4">
                 <VInputSelect
-                        formActions      = {formActions}
                         name             = 'aselect'
                         value            = {aselect}
                         required         = {true}
@@ -280,9 +267,8 @@ const VFormReactstrap = () => {
                         numeric          = {false}
                         {... !showAddon && {icon: null}}
                 />
-                {/*<button onClick={() => setAsearch(2)}>HEY HEY</button>*/}
+                {/*
                 <VInputSelectSearch
-                        formActions      = {formActions}
                         name             = 'asearch'
                         value            = {asearch}
                         required         = {false}
@@ -303,7 +289,6 @@ const VFormReactstrap = () => {
                         {... !showAddon && {icon: null}}
                 />  
                 <VInputSelectMultiple
-                        formActions      = {formActions}
                         name             = 'aselectmu'
                         value            = {aselectmu}
                         required         = {false}
@@ -321,15 +306,13 @@ const VFormReactstrap = () => {
                         keepHeight       = {keepHeight}
                         numeric          = {true}
                         {... !showAddon && {icon: null}}
-                />
+                />*/}
                 
                 <VInputCheckbox
-                        formActions         = {formActions}
                         name                = 'acheck'
                         value               = {acheck}
                         required            = {false}
                         prematureValidation = {premature}
-                        onClick             = {(v) => {console.log('cl'+v); setAcheck(v)}}
                         onChange            = {(v) => {console.log('ch'+v); setAcheck(v)}}
                         label               = "A check"
                         description         = "I will not accept it unchecked"
@@ -338,7 +321,6 @@ const VFormReactstrap = () => {
                         {... !showAddon && {icon: null}}
                 />
                 <VInputFile
-                        formActions         = {formActions}
                         name                = 'afile'
                         value               = {afile}
                         required            = {true}
@@ -348,10 +330,8 @@ const VFormReactstrap = () => {
                         {... !showAddon && {icon: null}}
                 />
 
-
             </Col>
             </Row>
-          }>
         </VForm>
       </Row>
     </Container>

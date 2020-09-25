@@ -1,7 +1,17 @@
-import PropTypes    from 'prop-types'
+import PropTypes from 'prop-types'
 
 const vPropTypes = {
-  formActions         : PropTypes.object,
+  // Props for valium
+  prematureValidation : PropTypes.bool,
+  feedback            : PropTypes.string,  
+  checkValue          : PropTypes.Promise || PropTypes.func,
+  allowedValues       : PropTypes.arrayOf(PropTypes.any),
+  disallowedValues    : PropTypes.arrayOf(PropTypes.any),
+  doRepeat            : PropTypes.string,
+  doNotRepeat         : PropTypes.string,
+  decimals            : PropTypes.number,
+  inputFilter         : PropTypes.oneOfType([PropTypes.func, PropTypes.instanceOf(RegExp), PropTypes.string]),
+  
   id                  : PropTypes.string,
   name                : PropTypes.string.isRequired,
   value               : function(props, _propName, _componentName) {
@@ -11,20 +21,11 @@ const vPropTypes = {
   },
   defaultValue        : PropTypes.string,
   label               : PropTypes.string,
-  feedback            : PropTypes.string,
   icon                : PropTypes.oneOfType([PropTypes.string, PropTypes.element, PropTypes.func]),
   inline              : PropTypes.bool,
   readOnly            : PropTypes.bool,
   required            : PropTypes.bool,
-  checkValue          : PropTypes.Promise || PropTypes.func,
-  allowedValues       : PropTypes.arrayOf(PropTypes.any),
-  disallowedValues    : PropTypes.arrayOf(PropTypes.any),
-  doRepeat            : PropTypes.string,
-  doNotRepeat         : PropTypes.string,
-  stepRange           : PropTypes.number,
-  inputFilter         : PropTypes.func,
   onChange            : PropTypes.func,
-  onConfirm           : PropTypes.func,
   keepHeight          : PropTypes.bool,
   formGroupStyle      : PropTypes.object,
   inputGroupStyle     : PropTypes.object,

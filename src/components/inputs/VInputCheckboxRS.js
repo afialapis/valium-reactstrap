@@ -1,28 +1,30 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes    from 'prop-types'
 import {vPropTypes, vDefaultProps}  from './base/inputProps'
-import {withValue, withValium, withAddon} from './base'
+import {useInnerValue, withValium, withAddon} from './base'
 
 let instanceCount= 1
 
 const _VInputCheckboxRS = (props) => {
   const {id, name, inputRef, readOnly, required, 
-         innerValue, innerProps, valid, inputStyle,
+         valid, inputStyle,
          onChange, description}= props
-  
-  const checkedProps= innerProps.defaultValue!=undefined
-   ? {defaultChecked: innerValue}
-   : {checked: innerValue || false}
 
+  const [innerValue, valueProps]= useInnerValue(props)
   const [innerChecked, setInnerChecked]= useState(innerValue)
+
+  const checkedProps= valueProps.defaultValue!=undefined
+   ? {defaultChecked: innerValue}
+   : {checked: innerValue || false} 
   
   useEffect(() => {
     setInnerChecked(innerValue)
   }, [innerValue])
 
-  const handleClick = (ev, inputRef) => {
-    const checked= !innerChecked
-    inputRef.current.checked= checked
+  const handleChange = (ev) => {
+    ev.stopPropagation()
+
+    const checked= inputRef.current.checked
     setInnerChecked(checked)
 
     if (onChange!=undefined) {
@@ -32,9 +34,8 @@ const _VInputCheckboxRS = (props) => {
 
   return (    
     <div className    = "custom-switch custom-control"
-          onClick     = {(event) => handleClick(event, inputRef)}
           /* better styling on the div, it is not very useful on the input here */
-          style       = {inputStyle} > 
+         style        = {inputStyle} > 
       <input type     = "checkbox" 
              id       = {id} 
              name     = {name} 
@@ -42,7 +43,7 @@ const _VInputCheckboxRS = (props) => {
              ref      = {inputRef}
              readOnly = {readOnly!=undefined ? readOnly  : false}
              required = {required}
-             onChange = {(event) => {if (onChange!=undefined) { return onChange(event.target.value)}}}
+             onChange = {(event) => handleChange(event)}
              {...checkedProps}
       />
       <label className="custom-control-label"
@@ -52,7 +53,7 @@ const _VInputCheckboxRS = (props) => {
 }
 
 
-const VInputCheckboxRS= withValue(withValium(withAddon(_VInputCheckboxRS), 'checkbox'))
+const VInputCheckboxRS= withValium(withAddon(_VInputCheckboxRS), 'checkbox')
 
 
 VInputCheckboxRS.propTypes = {

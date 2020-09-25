@@ -3,7 +3,7 @@ import PropTypes    from 'prop-types'
 import {Input}      from 'reactstrap'
 import {vPropTypes, vDefaultProps}  from './base/inputProps'
 import parseNumeric from './common/numeric'
-import {withValue, withValium, withAddon} from './base'
+import {useInnerValue, useHandlers, withValium, withAddon} from './base'
 
 const numOrArrayToString = (v) => {
   if (Array.isArray(v)) {
@@ -18,12 +18,16 @@ const valueTransform = {
 }
 
 const _VInputSelectMultipleRS = (props) => {
-  const {id, name, innerValue, innerProps, inputRef, valid, setValidity,
+  const {id, name, inputRef, valid, setValidity,
          placeholder, readOnly, autocomplete, required,
          disallowedValues, onChange, options, 
          inputStyle, numeric} = props
 
   
+
+  const [innerValue, valueProps]= useInnerValue(props)
+  const handlers = useHandlers(innerValue, props)
+
   const sdisallowedValues= disallowedValues!=undefined ? disallowedValues.map((v) => v.toString()) : []
   let options_map= []
   
@@ -74,7 +78,7 @@ const _VInputSelectMultipleRS = (props) => {
   )
 }
 
-const VInputSelectMultipleRS= withValue(withValium(withAddon(_VInputSelectMultipleRS), 'select-multiple'), valueTransform)
+const VInputSelectMultipleRS= withValium(withAddon(_VInputSelectMultipleRS), 'select-multiple')
 
 VInputSelectMultipleRS.propTypes = {
   ...vPropTypes,

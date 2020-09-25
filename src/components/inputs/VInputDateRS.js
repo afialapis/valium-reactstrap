@@ -1,16 +1,10 @@
-import React, {useState, useEffect}       from 'react'
+import React, {useEffect} from 'react'
 import PropTypes   from 'prop-types'
 import VInputAddon from './base/VInputAddon'
 import DatePicker  from 'reactstrap-date-picker'
 import {vPropTypes, vDefaultProps} from './base/inputProps'
-import {withValium} from './base'
+import {useInnerValue,  withValium} from './base'
 
-const checkControlledValue = (props, toISOString) => {
-  if (Object.keys(props).indexOf('defaultValue')>=0) {
-    return [toISOString(props.defaultValue), {defaultValue: toISOString(props.defaultValue)}]
-  }
-  return [toISOString(props.value), {value: toISOString(props.value)}]
-}
 
 const _toISOString = (value) => {
   if (typeof value == 'string' && value.length>0) {
@@ -36,27 +30,16 @@ const _VInputDateRS = (props) => {
   const {id, placeholder, readOnly, autocomplete, inline,
          label, feedback, message, icon, keepHeight, inputGroupStyle, formGroupStyle,
          required, inputStyle, toISOString, onChange, setValidity,
-         inputRef, valid, value, defaultValue} = props
+         inputRef, valid} = props
 
-  const [innerValue, setInnerValue]= useState(checkControlledValue(props, toISOString)[0])
-  const [innerProps, setInnerProps]= useState(checkControlledValue(props, toISOString)[1])
-
-  useEffect(() => {
-    const [nInnerValue, nInnerProps]= checkControlledValue(props, toISOString)
-
-    if (nInnerProps!=innerProps) {
-      setInnerProps(nInnerProps)
-    }
-    if (nInnerValue!=innerValue) {
-      setInnerValue(nInnerValue)
-    }
-  }, [value, defaultValue])
+  const [innerValue, valueProps]= useInnerValue(props, toISOString)
 
   useEffect(() => {
     if (setValidity && setValidity.current) {
       setValidity.current()
     }
-  }, [innerValue])
+  }, [innerValue, setValidity])
+
 
   const handleChange = (value, formattedValue) => {
     if (setValidity && setValidity.current) {
@@ -84,7 +67,8 @@ const _VInputDateRS = (props) => {
                  formGroupStyle = {formGroupStyle}
                  >
 
-      <DatePicker.default id          = {id}
+      <DatePicker.default 
+                  id          = {id}
                   weekStartsOn= {1} 
                   placeholder = {placeholder}
                   inputRef    = {inputRef}
@@ -95,7 +79,7 @@ const _VInputDateRS = (props) => {
                   className   = {valid ? 'is-valid' : 'is-invalid'}
                   style       = {inputStyle} 
                   onChange    = {(v,f) => handleChange(v, f)}
-                  {...innerProps} 
+                  {...valueProps} 
       />
     </VInputAddon>
   )

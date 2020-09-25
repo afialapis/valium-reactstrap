@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import VInputAddon from './base/VInputAddon'
 import {InputGroupAddon, InputGroupText}     from 'reactstrap'
 import {vPropTypes, vDefaultProps}   from './base/inputProps'
-import {withValue, withValium} from './base'
+import {useInnerValue, withValium} from './base'
 
 let instanceCount= 1
 
@@ -58,7 +58,7 @@ const _VInputFileRS = (props) => {
   const {id, name, label, icon, inline, readOnly, 
          required, feedback, keepHeight, formGroupStyle, inputGroupStyle, 
          inputStyle, onLoad, onChange, onDownload, accept, iconMap,
-         innerValue, setValidity, valid, message, inputRef} = props
+         setValidity, valid, message, inputRef} = props
   
   const [progress  , setProgress ]= useState(undefined)
   const [status    , setStatus   ]= useState(undefined)
@@ -79,6 +79,9 @@ const _VInputFileRS = (props) => {
       }
     }
   })*/
+
+
+  const [innerValue, _valueProps]= useInnerValue(props)
 
   const hasValue = () => {
     return innerValue?.buffer || innerValue?.size>0
@@ -182,20 +185,19 @@ const _VInputFileRS = (props) => {
   }
   
   return (
-
-    <VInputAddon name        = {name}
-                label       = {label}
-                feedback    = {feedback==='no-feedback' ? undefined : feedback||message}
-                value       = {innerValue}
-                icon        = {getIcon(innerValue?.type, icon, iconMap)}
-                isValid     = {valid}
-                inline      = {inline}
-                keepHeight  = {keepHeight}
+    <VInputAddon name          = {name}
+                label          = {label}
+                feedback       = {feedback==='no-feedback' ? undefined : feedback||message}
+                value          = {innerValue}
+                icon           = {getIcon(innerValue?.type, icon, iconMap)}
+                isValid        = {valid}
+                inline         = {inline}
+                keepHeight     = {keepHeight}
                 formGroupStyle = {formGroupStyle}
                 inputGroupStyle= {inputGroupStyle}
                 middleElement  = {status!=undefined
-                                ? <ProgressBar progress={progress}/>
-                                : null}
+                                  ? <ProgressBar progress={progress}/>
+                                  : null}
                 >
       {/* Hidden file input*/}
       <input  style       = {{zIndex: "0", display: "inline", opacity: "0", visibility: "hidden"}}
@@ -214,12 +216,11 @@ const _VInputFileRS = (props) => {
               // TODO Would be better to use maybe another type of hidden input,
               // keeping the <file> just for the file upload.
               required    = {required && !hasValue()}
-
               valid       = {valid ? 'true' : 'false'}
               invalid     = {!valid ? 'true' : 'false'}
               accept      = {accept}
       />
-      <div  style       = {{opacity  : "1", 
+      <div  style       = {{opacity   : "1", 
                             zIndex    : "3", 
                             position  : "absolute", 
                             width     : valid ? "calc(100% - 75px)" : "calc(100% - 77px)", 
@@ -266,7 +267,7 @@ const _VInputFileRS = (props) => {
 }
 
 
-const VInputFileRS= withValue(withValium(_VInputFileRS, 'file'))
+const VInputFileRS= withValium(_VInputFileRS, 'file')
 
 
 VInputFileRS.propTypes = {

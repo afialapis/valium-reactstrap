@@ -2,14 +2,17 @@ import React   from 'react'
 import PropTypes   from 'prop-types'
 import {Input}     from 'reactstrap'
 import {vPropTypes, vDefaultProps} from './base/inputProps'
-import {withValue, withValium, withAddon} from './base'
+import {useInnerValue, useHandlers, withValium, withAddon} from './base'
 
 
 const _VInputNumberRS = (props) => {
   const {id, name, inputRef, placeholder, 
     readOnly, required, min, max, step,
-    pattern, innerValue, innerProps, valid, 
+    pattern, valid, 
     autocomplete, inputStyle}= props
+
+  const [innerValue, valueProps]= useInnerValue(props)
+  const handlers = useHandlers(innerValue, props)
 
   return (
     <Input  id          = {id}
@@ -27,7 +30,8 @@ const _VInputNumberRS = (props) => {
             invalid     = {! valid}
             autoComplete= {autocomplete}
             style       = {inputStyle} 
-            {...innerProps}
+            {...valueProps}
+            {...handlers}
     />
   )
 }
@@ -53,13 +57,12 @@ const transform= {
   }
 }*/
 
-const VInputNumberRS = withValue(withValium(withAddon(_VInputNumberRS), 'text') /*, transform*/)
+const VInputNumberRS = withValium(withAddon(_VInputNumberRS), 'text')
 
 
 VInputNumberRS.propTypes = {
   ...vPropTypes,
   defaultValue        : PropTypes.number,  
-  prematureValidation : PropTypes.bool,
   placeholder         : PropTypes.string,
   max                 : PropTypes.number,
   min                 : PropTypes.number,
@@ -71,7 +74,7 @@ VInputNumberRS.propTypes = {
 VInputNumberRS.defaultProps = {
   ...vDefaultProps,
   icon: 'dollar',
-  inputFilter: value => /^-?\d*[.,]?\d*$/.test(value)
+  inputFilter: 'float'
 }
 
 export default VInputNumberRS

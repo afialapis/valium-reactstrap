@@ -1,11 +1,11 @@
 import React, {useState, useEffect, useRef} from 'react'
 import PropTypes         from 'prop-types'
-import {VForm}           from 'valium'
+import {useForm}         from 'valium'
 import VIcon             from './icons'
 import { Button }        from 'reactstrap'
 
 
-const VFormRSButtons = ({onSave, onCancel, colors, icons, labels, autoDisable, disabled, valid, elements}) => {
+const VFormRSButtons = ({onSave, onCancel, colors, icons, labels, autoDisable, disabled, valid, readElements}) => {
   const [isSaving, setIsSaving]= useState(false)
   const isMounted= useRef(undefined)
 
@@ -13,7 +13,7 @@ const VFormRSButtons = ({onSave, onCancel, colors, icons, labels, autoDisable, d
     ? !valid
     : (
       typeof disabled=="function"
-        ? disabled(valid, elements)
+        ? disabled(valid, readElements)
         : disabled
     )
   
@@ -65,27 +65,32 @@ const VFormRSButtons = ({onSave, onCancel, colors, icons, labels, autoDisable, d
 }
 
 
-const VFormRS = ({renderInputs, className, onSave, onCancel, colors, icons, labels, autoDisable, disabled, renderButtons, inline}) => 
-   <VForm className    = {`valium-reactstrap ${className!=undefined ? className : ''} ${inline==true ? 'inline' : ''}`}
-          renderInputs = {renderInputs}
-          renderButtons= {(valid, elements) => 
-                          renderButtons!= undefined 
-                          ? renderButtons(valid, elements)
-                          : <VFormRSButtons onSave     = {onSave!=undefined ? (ev) => onSave(ev, valid, elements) : undefined}
-                                            onCancel   = {onCancel!=undefined ? (ev) => onCancel(ev, valid, elements) : undefined}
-                                            colors     = {colors}
-                                            icons      = {icons}
-                                            labels     = {labels}
-                                            autoDisable= {autoDisable}
-                                            disabled   = {disabled}
-                                            valid      = {valid}
-                                            elements   = {elements}/>
-                          }
-    />
+const VFormRS = ({children, className, onSave, onCancel, colors, icons, labels, autoDisable, disabled, renderButtons, inline}) => {
+  const [formRef, valid, readElements] = useForm()
+
+  return (
+    <form  ref          = {formRef}
+            className    = {`valium-reactstrap ${className!=undefined ? className : ''} ${inline==true ? 'inline' : ''}`}>
+      <>
+        {children}
+        {renderButtons==undefined
+         ? <VFormRSButtons  onSave     = {onSave!=undefined ? (ev) => onSave(ev, valid, readElements) : undefined}
+                            onCancel   = {onCancel!=undefined ? (ev) => onCancel(ev, valid, readElements) : undefined}
+                            colors     = {colors}
+                            icons      = {icons}
+                            labels     = {labels}
+                            autoDisable= {autoDisable}
+                            disabled   = {disabled}
+                            valid      = {valid}
+                            readElements= {readElements}/>
+         : null}
+      </>
+    </form>
+  )
+}
 
 VFormRS.propTypes = {
   className    : PropTypes.string,
-  renderInputs : PropTypes.func.isRequired,
   colors       : PropTypes.arrayOf(PropTypes.string),
   icons        : PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.element, PropTypes.func])),
   labels       : PropTypes.arrayOf(PropTypes.string),

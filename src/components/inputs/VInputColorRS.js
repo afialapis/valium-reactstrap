@@ -2,13 +2,16 @@ import React        from 'react'
 import PropTypes    from 'prop-types'
 import {Input}      from 'reactstrap'
 import {vPropTypes, vDefaultProps}  from './base/inputProps'
-import {withValue, withValium, withAddon} from './base'
+import {useInnerValue, useHandlers, withValium, withAddon} from './base'
 
 const _VInputColorRS = (props) => {
   const {id, name, inputRef, placeholder, 
-    readOnly, required, valid, innerValue, innerProps,
+    readOnly, required, valid,
     autocomplete, inputStyle}= props
-  
+
+  const [innerValue, valueProps]= useInnerValue(props)
+  const handlers = useHandlers(innerValue, props)
+
   return (
     <Input  id          = {id}
             name        = {name}
@@ -21,12 +24,13 @@ const _VInputColorRS = (props) => {
             invalid     = {! valid}
             autoComplete= {autocomplete}
             style       = {inputStyle} 
-            {...innerProps}
+            {...valueProps}
+            {...handlers}
     />
   )
 }
 
-const VInputColorRS = withValue(withValium(withAddon(_VInputColorRS), 'color'))
+const VInputColorRS = withValium(withAddon(_VInputColorRS), 'color')
 
 
 VInputColorRS.propTypes = {

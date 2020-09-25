@@ -15,7 +15,7 @@ import VInputEmailRS          from './components/inputs/derived/VInputEmailRS'
 import VInputUrlRS            from './components/inputs/derived/VInputUrlRS'
 import VInputPasswordRS       from './components/inputs/derived/VInputPasswordRS'
 import VInputTextAreaRS       from './components/inputs/derived/VInputTextAreaRS'
-import VInputFloatRS          from './components/inputs/derived/VInputFloatRS'
+import VInputIntRS          from './components/inputs/derived/VInputIntRS'
 import VInputUintRS           from './components/inputs/derived/VInputUintRS'
 
 import './assets/style.scss'
@@ -31,7 +31,7 @@ export {VFormRS as VForm,
         VInputSelectMultipleRS as VInputSelectMultiple,
         VInputSelectSearchRS as VInputSelectSearch,
         VInputFileRS as VInputFile,
-        VInputFloatRS as VInputFloat,
+        VInputIntRS as VInputInt,
         VInputEmailRS as VInputEmail,
         VInputUrlRS as VInputUrl,
         VInputPasswordRS as VInputPassword,

@@ -1,35 +1,28 @@
 import React, {useRef} from 'react'
-import {VInput} from 'valium'
+import {useValium} from 'valium'
 
-const withValium = (BaseComponent, inputType) => (props) => {
-
-  const {feedback, checkValue, allowedValues, disallowedValues, 
-         doRepeat, doNotRepeat, prematureValidation, stepRange, 
-         inputFilter, formActions} = props
+const withValium = (BaseComponent, inputType) => {
   
-  const setValidity= useRef(undefined)
-    
-  return (
-    <VInput type               = {inputType}
-            feedback           = {feedback} 
-            checkValue         = {checkValue}
-            allowedValues      = {allowedValues}
-            disallowedValues   = {disallowedValues}
-            doRepeat           = {doRepeat}
-            doNotRepeat        = {doNotRepeat}
-            prematureValidation= {prematureValidation}
-            stepRange          = {stepRange}
-            inputFilter        = {inputFilter}
-            bindSetValidity    = {(f) => {setValidity.current= f}}
-            formActions        = {formActions}
-            render             = {({valid, message}, inputRef) => 
-              <BaseComponent {...props}
-                             valid       = {valid}
-                             message     = {message}
-                             inputRef    = {inputRef}
-                             setValidity = {setValidity}/>
-            }/>  
-  )
+  const _withValium = (props) => {
+
+    const setValidity= useRef(undefined)
+
+    const [inputRef, valid, message]= useValium({
+      ...props,
+      type: inputType,
+      bindSetValidity: (f) => { setValidity.current= f }
+    })
+      
+    return (
+      <BaseComponent {...props}
+                    valid       = {valid}
+                    message     = {message}
+                    inputRef    = {inputRef}
+                    setValidity = {setValidity}/>
+    )
+  }
+
+  return _withValium
 }
 
 

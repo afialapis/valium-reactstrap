@@ -4,7 +4,7 @@ import VInputAddon   from './base/VInputAddon'
 import {Input, InputGroupAddon, InputGroupText}       from 'reactstrap'
 import {vPropTypes, vDefaultProps}   from './base/inputProps'
 import parseNumeric from './common/numeric'
-import {withValue, withValium} from './base'
+import {useInnerValue, useHandlers, withValium} from './base'
 
 /*
 function getPosition(el) {
@@ -47,9 +47,13 @@ const _VInputSelectSearchRS = (props) => {
          placeholder, readOnly, autocomplete, required,
          disallowedValues, keepHeight, formGroupStyle, inputGroupStyle,
          inputStyle, onChange, clearable, numeric, maxShownOptions,
-         innerValue, /*innerProps,*/ message, valid, inputRef, setValidity
+         message, valid, inputRef, setValidity
          } = props
   
+
+  const [innerValue, valueProps]= useInnerValue(props)
+  const handlers = useHandlers(innerValue, props)
+
   //console.log('----------------------- innerValue='+innerValue)
   const wrapperRef    = useRef(undefined)
   const filterRef     = useRef(undefined)
@@ -236,7 +240,7 @@ const _VInputSelectSearchRS = (props) => {
   )
 }
 
-const VInputSelectSearchRS = withValue(withValium(_VInputSelectSearchRS, 'select'))
+const VInputSelectSearchRS = withValium(_VInputSelectSearchRS, 'select')
 
 
 VInputSelectSearchRS.propTypes = {

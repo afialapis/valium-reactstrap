@@ -82,7 +82,7 @@
   "dependencies": {
     "@babel/runtime": "^7.11.2",
     "reactstrap-date-picker": "0.0.9",
-    "valium": "0.0.34"
+    "valium": "0.0.37"
   },
   "peerDependencies": {
     "react": ">=16.13.1",

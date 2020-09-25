@@ -3,12 +3,15 @@ import PropTypes    from 'prop-types'
 import {Input}      from 'reactstrap'
 import {vPropTypes, vDefaultProps}  from './base/inputProps'
 
-import {withValue, withValium, withAddon} from './base'
+import {useInnerValue, useHandlers, withValium, withAddon} from './base'
 
 const _VInputTimeRS = (props) => {
   const {id, name, inputRef, placeholder, 
-    readOnly, required, valid, innerValue, innerProps,
+    readOnly, required, valid,
     autocomplete, inputStyle}= props
+
+  const [innerValue, valueProps]= useInnerValue(props)
+  const handlers = useHandlers(innerValue, props)
 
   return (
       <Input  id          = {id}
@@ -22,12 +25,13 @@ const _VInputTimeRS = (props) => {
               invalid     = {! valid}
               autoComplete= {autocomplete}
               style       = {inputStyle} 
-              {...innerProps}
+              {...valueProps}
+              {...handlers}
     />
   )
 }
 
-const VInputTimeRS = withValue(withValium(withAddon(_VInputTimeRS), 'text'))
+const VInputTimeRS = withValium(withAddon(_VInputTimeRS), 'text')
 
 VInputTimeRS.propTypes = {
   ...vPropTypes,
