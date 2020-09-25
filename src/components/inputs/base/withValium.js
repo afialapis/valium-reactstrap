@@ -1,16 +1,12 @@
-import React, {useRef} from 'react'
-import {useValium} from 'valium'
+import React from 'react'
+import {useValiumInput} from 'valium'
 
 const withValium = (BaseComponent, inputType) => {
   
   const _withValium = (props) => {
-
-    const setValidity= useRef(undefined)
-
-    const [inputRef, valid, message]= useValium({
+    const [inputRef, valid, message, setValidity]= useValiumInput({
       ...props,
-      type: inputType,
-      bindSetValidity: (f) => { setValidity.current= f }
+      type: inputType
     })
       
     return (

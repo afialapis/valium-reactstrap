@@ -1,5 +1,5 @@
 import {useState, useEffect, useMemo} from 'react'
-import isControlled from './isControlled'
+import isControlled from '../helpers/isControlled'
 
 const uvl = (v) => {
   if (v===undefined) {

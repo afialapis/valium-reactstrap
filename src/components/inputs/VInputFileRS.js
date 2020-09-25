@@ -66,11 +66,11 @@ const _VInputFileRS = (props) => {
 
   /*
   useEffect(() => {
-    if (setValidity.current && innerValue) {
+    if (innerValue) {
       if (innerValue.buffer==undefined || innerValue.buffer.length==0) {
         if (innerValue.size>0) {
           //inputRef.current.value= 'not-empty'
-          //setValidity.current()
+          //setValidity()
           console.log(inputRef.current)
           inputRef.current.setCustomValidity(true)
           inputRef.current.removeAttribute('data-valium-validity')
@@ -165,7 +165,7 @@ const _VInputFileRS = (props) => {
 
   const clear = (inputRef) => {
     inputRef.current.value= ''
-    setValidity.current()
+    setValidity()
     setProgress(0)
     if (onChange!=undefined) {
       onChange({})

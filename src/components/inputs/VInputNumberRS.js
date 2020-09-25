@@ -1,18 +1,24 @@
-import React   from 'react'
+import React, {useCallback}   from 'react'
 import PropTypes   from 'prop-types'
 import {Input}     from 'reactstrap'
 import {vPropTypes, vDefaultProps} from './base/inputProps'
-import {useInnerValue, useHandlers, withValium, withAddon} from './base'
+import {useInnerValue, withValium, withAddon} from './base'
 
 
 const _VInputNumberRS = (props) => {
   const {id, name, inputRef, placeholder, 
     readOnly, required, min, max, step,
     pattern, valid, 
-    autocomplete, inputStyle}= props
+    autocomplete, inputStyle, onChange}= props
 
   const [innerValue, valueProps]= useInnerValue(props)
-  const handlers = useHandlers(innerValue, props)
+
+  const handleChange = useCallback((event) => {
+    const value= event.target.value
+    if (onChange!=undefined) {
+      onChange(value)
+    }
+  }, [onChange])
 
   return (
     <Input  id          = {id}
@@ -30,8 +36,8 @@ const _VInputNumberRS = (props) => {
             invalid     = {! valid}
             autoComplete= {autocomplete}
             style       = {inputStyle} 
+            onChange    = {handleChange}
             {...valueProps}
-            {...handlers}
     />
   )
 }

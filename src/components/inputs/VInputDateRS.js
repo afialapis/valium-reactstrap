@@ -35,16 +35,12 @@ const _VInputDateRS = (props) => {
   const [innerValue, valueProps]= useInnerValue(props, toISOString)
 
   useEffect(() => {
-    if (setValidity && setValidity.current) {
-      setValidity.current()
-    }
+    setValidity()
   }, [innerValue, setValidity])
 
 
   const handleChange = (value, formattedValue) => {
-    if (setValidity && setValidity.current) {
-      setValidity.current()
-    }
+    setValidity()
     onChange(formattedValue)
   }
 

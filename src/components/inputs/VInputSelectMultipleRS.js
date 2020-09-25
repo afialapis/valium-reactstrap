@@ -1,9 +1,9 @@
-import React        from 'react'
+import React, {useCallback} from 'react'
 import PropTypes    from 'prop-types'
 import {Input}      from 'reactstrap'
 import {vPropTypes, vDefaultProps}  from './base/inputProps'
-import parseNumeric from './common/numeric'
-import {useInnerValue, useHandlers, withValium, withAddon} from './base'
+import parseNumeric from './helpers/parseNumeric'
+import {useInnerValue, withValium, withAddon} from './base'
 
 const numOrArrayToString = (v) => {
   if (Array.isArray(v)) {
@@ -26,7 +26,7 @@ const _VInputSelectMultipleRS = (props) => {
   
 
   const [innerValue, valueProps]= useInnerValue(props)
-  const handlers = useHandlers(innerValue, props)
+  
 
   const sdisallowedValues= disallowedValues!=undefined ? disallowedValues.map((v) => v.toString()) : []
   let options_map= []
@@ -40,7 +40,7 @@ const _VInputSelectMultipleRS = (props) => {
   }
 
   const handleChange= (ev) => {
-    setValidity.current()
+    setValidity()
     if (onChange!=undefined) { 
       const value= Array.prototype.slice.call(ev.target.options)
         .filter((opt) => opt.selected)
@@ -63,7 +63,7 @@ const _VInputSelectMultipleRS = (props) => {
               invalid     = {! valid}
               autoComplete= {autocomplete}
               style       = {inputStyle} 
-              {...innerProps}
+              {...valueProps}
               onChange    = {(event) => handleChange(event)}
               >
       {options_map.map((opt) => 

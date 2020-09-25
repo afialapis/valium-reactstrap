@@ -3,8 +3,8 @@ import PropTypes     from 'prop-types'
 import VInputAddon   from './base/VInputAddon'
 import {Input, InputGroupAddon, InputGroupText}       from 'reactstrap'
 import {vPropTypes, vDefaultProps}   from './base/inputProps'
-import parseNumeric from './common/numeric'
-import {useInnerValue, useHandlers, withValium} from './base'
+import parseNumeric from './helpers/parseNumeric'
+import {useInnerValue, withValium} from './base'
 
 /*
 function getPosition(el) {
@@ -51,8 +51,7 @@ const _VInputSelectSearchRS = (props) => {
          } = props
   
 
-  const [innerValue, valueProps]= useInnerValue(props)
-  const handlers = useHandlers(innerValue, props)
+  const [innerValue, _valueProps]= useInnerValue(props) 
 
   //console.log('----------------------- innerValue='+innerValue)
   const wrapperRef    = useRef(undefined)
@@ -67,7 +66,7 @@ const _VInputSelectSearchRS = (props) => {
   const handleChange = (value) => {
     //console.log(`handleChange ${value}`)
     inputRef.current.value= value
-    setValidity.current()
+    setValidity()
         
     if (onChange!=undefined) { 
       onChange(parseNumeric(numeric, value))
@@ -134,7 +133,7 @@ const _VInputSelectSearchRS = (props) => {
     //console.log(`SETTING SHOWN ${options[innerValue] || ''}`)
     setShownText(options[innerValue] || '')
     // necessary?
-    // setValidity.current()
+    // setValidity()
   }, [options, innerValue])
 
 

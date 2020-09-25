@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react'
 import PropTypes         from 'prop-types'
-import {useForm}         from 'valium'
+import {useValiumForm}   from 'valium'
 import VIcon             from './icons'
 import { Button }        from 'reactstrap'
 
@@ -66,7 +66,7 @@ const VFormRSButtons = ({onSave, onCancel, colors, icons, labels, autoDisable, d
 
 
 const VFormRS = ({children, className, onSave, onCancel, colors, icons, labels, autoDisable, disabled, renderButtons, inline}) => {
-  const [formRef, valid, readElements] = useForm()
+  const [formRef, valid, readElements] = useValiumForm()
 
   return (
     <form  ref          = {formRef}

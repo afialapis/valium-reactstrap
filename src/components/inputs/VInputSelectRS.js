@@ -1,9 +1,9 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useCallback} from 'react'
 import PropTypes from 'prop-types'
 import {CustomInput, InputGroupAddon, InputGroupText}     from 'reactstrap'
 import {vPropTypes, vDefaultProps} from './base/inputProps'
-import parseNumeric from './common/numeric'
-import {useInnerValue, useHandlers, withValium, withAddon} from './base'
+import parseNumeric from './helpers/parseNumeric'
+import {useInnerValue, withValium, withAddon} from './base'
 
 let instanceCount= 1
 
@@ -31,7 +31,13 @@ const _VInputSelectRS = (props) => {
   console.log(`props value (${props.value})`)
 
   const [innerValue, valueProps]= useInnerValue(props, parseNumeric)
-  const handlers = useHandlers(innerValue, props, parseNumeric)
+
+  const handleChange = useCallback((event) => {
+    const value= event.target.value
+    if (onChange!=undefined) {
+      onChange(parseNumeric(value))
+    }
+  }, [onChange])
 
   const [optionsMap, setOptionsMap]= useState(makeOptionsMap(options, disallowedValues))
 
@@ -42,13 +48,13 @@ const _VInputSelectRS = (props) => {
 
   const clear = (inputRef) => {
     inputRef.current.value= ''
-    setValidity.current()
+    setValidity()
     if (onChange!=undefined) {
       onChange(parseNumeric(numeric, ''))
     }
   }    
 
-  console.log(`innerValue (${innerValue})`)
+  // console.log(`innerValue (${innerValue})`)
   
   return (
     <>
@@ -65,8 +71,8 @@ const _VInputSelectRS = (props) => {
                 invalid     = {! valid}
                 autoComplete= {autocomplete}
                 style       = {inputStyle} 
+                onChange    = {handleChange}
                 {...valueProps}
-                {...handlers}
                 >
         {optionsMap.map((opt) => 
           <option key       = {`${name}_option_${opt.value}`}
