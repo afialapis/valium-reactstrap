@@ -3,7 +3,8 @@ import PropTypes    from 'prop-types'
 import {Input}      from 'reactstrap'
 import {vPropTypes, vDefaultProps}  from './base/inputProps'
 import parseNumeric from './helpers/parseNumeric'
-import {useInnerValue, withValium, withAddon} from './base'
+import {withAddon} from './addon/withAddon'
+import {useInnerValue, withValium} from './base'
 
 const numOrArrayToString = (v) => {
   if (Array.isArray(v)) {

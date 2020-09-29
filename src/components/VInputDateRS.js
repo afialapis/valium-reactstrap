@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react'
 import PropTypes   from 'prop-types'
-import VInputAddon from './base/VInputAddon'
+import {VInputAddon} from './addon/VInputAddon'
 import DatePicker  from 'reactstrap-date-picker'
 import {vPropTypes, vDefaultProps} from './base/inputProps'
 import {useInnerValue,  withValium} from './base'

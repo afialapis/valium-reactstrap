@@ -260,8 +260,8 @@ const VFormReactstrap = () => {
                             '4': 'Four',
                             '5': 'Five'
                         }}
-                        disallowedValues = {[2,3]}
-                        allowedValues    = {[4]}
+                        /*disallowedValues = {[2,3]}
+                        allowedValues    = {[4]}*/
                         keepHeight       = {keepHeight}
                         clearable        = {true}
                         numeric          = {false}

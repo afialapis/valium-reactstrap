@@ -26,7 +26,7 @@ const useInnerValue = (props, transform) => {
     setInnerValue(nInnerValue)
 
     const nValueProps= controlled ? {value: uvl(t(props.value))} 
-                                    : {defaultValue: uvl(t(props.defaultValue))}
+                                  : {defaultValue: uvl(t(props.defaultValue))}
     setValueProps(nValueProps)
 
   }, [props.value, props.defaultValue, controlled, t])

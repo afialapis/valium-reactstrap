@@ -1,9 +1,10 @@
 import React, {useState, useEffect, useCallback} from 'react'
 import PropTypes from 'prop-types'
-import {CustomInput, InputGroupAddon, InputGroupText}     from 'reactstrap'
+import {CustomInput, Input, InputGroupAddon, InputGroupText}     from 'reactstrap'
 import {vPropTypes, vDefaultProps} from './base/inputProps'
 import parseNumeric from './helpers/parseNumeric'
-import {useInnerValue, withValium, withAddon} from './base'
+import {withAddon} from './addon/withAddon'
+import {useInnerValue, withValium} from './base'
 
 let instanceCount= 1
 
@@ -28,14 +29,18 @@ const _VInputSelectRS = (props) => {
           disallowedValues, onChange, options, numeric, 
           inputStyle, clearable, valid, setValidity} = props
 
-  console.log(`props value (${props.value})`)
+  console.log(`select props value (${props.value})`)
 
-  const [innerValue, valueProps]= useInnerValue(props, parseNumeric)
+  const [innerValue, valueProps]= useInnerValue(props)
+
+  console.log(`select innerValue (${innerValue})`)
 
   const handleChange = useCallback((event) => {
     const value= event.target.value
+    console.log(`select selected (${value})`)
+    console.log(event.target)
     if (onChange!=undefined) {
-      onChange(parseNumeric(value))
+      onChange(value)
     }
   }, [onChange])
 
@@ -58,7 +63,7 @@ const _VInputSelectRS = (props) => {
   
   return (
     <>
-      <CustomInput    
+      <Input    
                 id          = {id}
                 name        = {name}
                 type        = "select"
@@ -85,7 +90,7 @@ const _VInputSelectRS = (props) => {
         {clearable
           ? <option style={{display: "none"}} value=""></option>
           : null}
-      </CustomInput>
+      </Input>
       {clearable
         ?  <InputGroupAddon onClick  = {() => {readOnly ? null : clear(inputRef)}}
                           style    = {{cursor:(innerValue && !readOnly) ? 'pointer' : 'not-allowed'}}

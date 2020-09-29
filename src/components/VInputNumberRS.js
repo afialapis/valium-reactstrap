@@ -2,14 +2,15 @@ import React, {useCallback}   from 'react'
 import PropTypes   from 'prop-types'
 import {Input}     from 'reactstrap'
 import {vPropTypes, vDefaultProps} from './base/inputProps'
-import {useInnerValue, withValium, withAddon} from './base'
+import {withAddon} from './addon/withAddon'
+import {useInnerValue, withValium} from './base'
 
 
 const _VInputNumberRS = (props) => {
   const {id, name, inputRef, placeholder, 
-    readOnly, required, min, max, step,
-    pattern, valid, 
-    autocomplete, inputStyle, onChange}= props
+         readOnly, required, min, max, step,
+         pattern, valid, autocomplete, 
+         inputStyle, onChange}= props
 
   const [innerValue, valueProps]= useInnerValue(props)
 

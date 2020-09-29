@@ -68,6 +68,8 @@ const VFormRSButtons = ({onSave, onCancel, colors, icons, labels, autoDisable, d
 const VFormRS = ({children, className, onSave, onCancel, colors, icons, labels, autoDisable, disabled, renderButtons, inline}) => {
   const [formRef, valid, readElements] = useValiumForm()
 
+  console.log('rendering form')
+
   return (
     <form  ref          = {formRef}
             className    = {`valium-reactstrap ${className!=undefined ? className : ''} ${inline==true ? 'inline' : ''}`}>

@@ -17,10 +17,11 @@ export default {
     format: 'umd',
     name: 'ValiumReactstrap',
     globals: {
-      react: 'React',
+      'react': 'React',
       'react-dom': 'ReactDOM',
       'prop-types': 'PropTypes',
-      'reactstrap': 'Reactstrap'
+      'reactstrap': 'Reactstrap',
+      'valium': 'valium'
     }
   },
   plugins: [
@@ -30,10 +31,10 @@ export default {
     babel({
       exclude: 'node_modules/**',
       /*https://github.com/rollup/plugins/tree/master/packages/babel#babelhelpers*/
-      babelHelpers: 'runtime'
+      babelHelpers: 'bundled'
     }),
-    resolve(),
     //external([/@babel\/runtime/, 'react', 'react-dom', 'reactstrap', 'prop-types']),  
+    resolve(),
     commonjs(),
     postcss({
       extract: 'bundle.css'

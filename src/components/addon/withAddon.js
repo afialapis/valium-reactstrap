@@ -1,5 +1,5 @@
 import React from 'react'
-import VInputAddon  from './VInputAddon'
+import {VInputAddon}  from './VInputAddon'
 
 const withAddon = BaseComponent => {
   
@@ -32,4 +32,4 @@ const withAddon = BaseComponent => {
 }
 
 
-export default withAddon
+export {withAddon}

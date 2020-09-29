@@ -6,7 +6,7 @@ import {
   InputGroupText,
   Label
 } from 'reactstrap'
-import VIcon from '../../icons'
+import VIcon from '../icons'
 
 const VInputFeedback = ({isValid, feedback, keepHeight}) => {
   const show= keepHeight || (! isValid && feedback)
@@ -15,14 +15,13 @@ const VInputFeedback = ({isValid, feedback, keepHeight}) => {
 
   return (
     <div className={`valium-reactstrap-feedback ${isValid ? 'hidden' : ''}`}>
-      {feedback!=undefined
+      {feedback!=undefined && feedback!=""
        ? feedback
        : <>&nbsp;</>
       }
     </div>
   )
 }
-
 
 const VInputAddon = (
   {name, value, label, feedback, icon, isValid, children, inline, formClassName, 
@@ -74,6 +73,4 @@ const VInputAddon = (
   )
 }
 
-
-
-export default VInputAddon
+export {VInputAddon}

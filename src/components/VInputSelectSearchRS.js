@@ -1,6 +1,6 @@
 import React, {useRef, useState, useEffect}        from 'react'
 import PropTypes     from 'prop-types'
-import VInputAddon   from './base/VInputAddon'
+import {VInputAddon}   from './addon/VInputAddon'
 import {Input, InputGroupAddon, InputGroupText}       from 'reactstrap'
 import {vPropTypes, vDefaultProps}   from './base/inputProps'
 import parseNumeric from './helpers/parseNumeric'

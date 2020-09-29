@@ -26,9 +26,9 @@ const baseCfg= (output, withReplace, withTerser, withCss) => {
     babel({
       exclude: 'node_modules/**',
       /*https://github.com/rollup/plugins/tree/master/packages/babel#babelhelpers*/
-      babelHelpers: 'runtime'
+      babelHelpers: 'bundled'
     }),
-    external([/@babel\/runtime/, 'react', 'react-dom', 'reactstrap', 'prop-types']),
+    //external([/@babel\/runtime/, 'react', 'react-dom', 'reactstrap', 'prop-types']),
     resolve(),
     commonjs()
   ])

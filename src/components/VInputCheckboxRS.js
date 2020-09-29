@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes    from 'prop-types'
 import {vPropTypes, vDefaultProps}  from './base/inputProps'
-import {useInnerValue, withValium, withAddon} from './base'
+import {withAddon} from './addon/withAddon'
+import {useInnerValue, withValium} from './base'
 
 let instanceCount= 1
 

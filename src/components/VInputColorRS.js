@@ -2,7 +2,8 @@ import React, {useCallback} from 'react'
 import PropTypes    from 'prop-types'
 import {Input}      from 'reactstrap'
 import {vPropTypes, vDefaultProps}  from './base/inputProps'
-import {useInnerValue, withValium, withAddon} from './base'
+import {withAddon} from './addon/withAddon'
+import {useInnerValue, withValium} from './base'
 
 const _VInputColorRS = (props) => {
   const {id, name, inputRef, placeholder, 
