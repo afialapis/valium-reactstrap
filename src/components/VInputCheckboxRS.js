@@ -7,20 +7,22 @@ import {useInnerValue, withValium} from './base'
 let instanceCount= 1
 
 const _VInputCheckboxRS = (props) => {
-  const {id, name, inputRef, readOnly, required, 
-         valid, inputStyle,
-         onChange, description}= props
-
   const [innerValue, valueProps]= useInnerValue(props)
   const [innerChecked, setInnerChecked]= useState(innerValue)
+
+  useEffect(() => {
+    setInnerChecked(innerValue)
+  }, [innerValue])
+
+  const {id, name, inputRef, readOnly, required, 
+    valid, inputStyle,
+    onChange, description}= props
 
   const checkedProps= valueProps.defaultValue!=undefined
    ? {defaultChecked: innerValue}
    : {checked: innerValue || false} 
   
-  useEffect(() => {
-    setInnerChecked(innerValue)
-  }, [innerValue])
+
 
   const handleChange = (ev) => {
     ev.stopPropagation()

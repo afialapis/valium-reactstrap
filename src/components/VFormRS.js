@@ -8,14 +8,6 @@ import { Button }        from 'reactstrap'
 const VFormRSButtons = ({onSave, onCancel, colors, icons, labels, autoDisable, disabled, valid, readElements}) => {
   const [isSaving, setIsSaving]= useState(false)
   const isMounted= useRef(undefined)
-
-  const isDisabled= autoDisable
-    ? !valid
-    : (
-      typeof disabled=="function"
-        ? disabled(valid, readElements)
-        : disabled
-    )
   
   useEffect(() => {
     isMounted.current= true
@@ -24,7 +16,15 @@ const VFormRSButtons = ({onSave, onCancel, colors, icons, labels, autoDisable, d
       isMounted.current= false
     }
   }, [])
-  
+
+  const isDisabled= autoDisable
+    ? !valid
+    : (
+      typeof disabled=="function"
+        ? disabled(valid, readElements)
+        : disabled
+    )  
+
   const handleSave = (ev) => {
     setIsSaving(true)
 

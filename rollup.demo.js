@@ -2,8 +2,6 @@ import babel from '@rollup/plugin-babel'
 import commonjs from '@rollup/plugin-commonjs'
 import replace from '@rollup/plugin-replace'
 import resolve from '@rollup/plugin-node-resolve'
-//import external from 'rollup-plugin-peer-deps-external'
-//import scss from 'rollup-plugin-scss'
 import postcss from 'rollup-plugin-postcss'
 import serve from 'rollup-plugin-serve'
 import livereload from 'rollup-plugin-livereload'
@@ -19,11 +17,12 @@ export default {
     globals: {
       'react': 'React',
       'react-dom': 'ReactDOM',
-      'prop-types': 'PropTypes',
       'reactstrap': 'Reactstrap',
+      'reactstrap-date-picker': 'ReactstrapDatePicker',
       'valium': 'valium'
     }
   },
+  external: ['react', 'react-dom', 'reactstrap', 'reactstrap-date-picker'],
   plugins: [
     replace({
       'process.env.NODE_ENV': JSON.stringify(NODE_ENV)
@@ -33,7 +32,6 @@ export default {
       /*https://github.com/rollup/plugins/tree/master/packages/babel#babelhelpers*/
       babelHelpers: 'bundled'
     }),
-    //external([/@babel\/runtime/, 'react', 'react-dom', 'reactstrap', 'prop-types']),  
     resolve(),
     commonjs(),
     postcss({

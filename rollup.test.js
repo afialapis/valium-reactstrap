@@ -2,7 +2,6 @@ import babel from '@rollup/plugin-babel'
 import commonjs from '@rollup/plugin-commonjs'
 import replace from '@rollup/plugin-replace'
 import resolve from '@rollup/plugin-node-resolve'
-//import external from 'rollup-plugin-peer-deps-external'
 import nodePolyfills from 'rollup-plugin-node-polyfills'
 
 const NODE_ENV = 'development'
@@ -31,7 +30,6 @@ export default {
       /*https://github.com/rollup/plugins/tree/master/packages/babel#babelhelpers*/
       babelHelpers: 'bundled'
     }),
-    //external([/@babel\/runtime/, 'react', 'react-dom', 'reactstrap', 'prop-types', 'es6-promise']), 
     resolve(/*{
       browser: true,
       preferBuiltins: false

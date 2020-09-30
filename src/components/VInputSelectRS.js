@@ -29,11 +29,7 @@ const _VInputSelectRS = (props) => {
           disallowedValues, onChange, options, numeric, 
           inputStyle, clearable, valid, setValidity} = props
 
-  console.log(`select props value (${props.value})`)
-
   const [innerValue, valueProps]= useInnerValue(props)
-
-  console.log(`select innerValue (${innerValue})`)
 
   const handleChange = useCallback((event) => {
     const value= event.target.value

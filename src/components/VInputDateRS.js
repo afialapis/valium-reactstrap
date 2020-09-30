@@ -63,7 +63,7 @@ const _VInputDateRS = (props) => {
                  formGroupStyle = {formGroupStyle}
                  >
 
-      <DatePicker.default 
+      <DatePicker 
                   id          = {id}
                   weekStartsOn= {1} 
                   placeholder = {placeholder}

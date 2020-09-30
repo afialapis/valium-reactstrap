@@ -2,7 +2,6 @@ import babel from '@rollup/plugin-babel'
 import commonjs from '@rollup/plugin-commonjs'
 import replace from '@rollup/plugin-replace'
 import resolve from '@rollup/plugin-node-resolve'
-import external from 'rollup-plugin-peer-deps-external'
 import { terser } from 'rollup-plugin-terser'
 import scss from 'rollup-plugin-scss'
 
@@ -28,7 +27,6 @@ const baseCfg= (output, withReplace, withTerser, withCss) => {
       /*https://github.com/rollup/plugins/tree/master/packages/babel#babelhelpers*/
       babelHelpers: 'bundled'
     }),
-    //external([/@babel\/runtime/, 'react', 'react-dom', 'reactstrap', 'prop-types']),
     resolve(),
     commonjs()
   ])
@@ -64,6 +62,7 @@ const baseCfg= (output, withReplace, withTerser, withCss) => {
   return {
     input: input,
     output: output,
+    external: ['react', 'react-dom', 'prop-types', 'reactstrap', 'reactstrap-date-picker'],
     plugins: plugins  
   }
 }
@@ -73,11 +72,11 @@ module.exports = [
   // CommonJs
   //
   baseCfg({
-    file: packageJSON.main,
+    file: packageJSON.cjs,
     format: 'cjs'
   }, false, false),
   baseCfg({
-    file: minifyExtension(packageJSON.main),
+    file: minifyExtension(packageJSON.cjs),
     format: 'cjs'
   }, false, true),
   //
@@ -101,10 +100,11 @@ module.exports = [
     format: 'umd',
     name: 'ValiumReactstrap',
     globals: {
-      react: 'React',
+      'react': 'React',
       'react-dom': 'ReactDOM',
       'prop-types': 'PropTypes',
-      'reactstrap': 'Reactstrap'
+      'reactstrap': 'Reactstrap',
+      'reactstrap-date-picker': 'ReactstrapDatePicker'
     }
   }, true, false, true),
   baseCfg({
@@ -112,10 +112,11 @@ module.exports = [
     format: 'umd',
     name: 'ValiumReactstrap',
     globals: {
-      react: 'React',
+      'react': 'React',
       'react-dom': 'ReactDOM',
       'prop-types': 'PropTypes',
-      'reactstrap': 'Reactstrap'
+      'reactstrap': 'Reactstrap',
+      'reactstrap-date-picker': 'ReactstrapDatePicker'
     }
   }, true, true, true), 
   

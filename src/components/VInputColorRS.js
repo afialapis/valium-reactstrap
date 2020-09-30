@@ -6,11 +6,11 @@ import {withAddon} from './addon/withAddon'
 import {useInnerValue, withValium} from './base'
 
 const _VInputColorRS = (props) => {
+  const [innerValue, valueProps]= useInnerValue(props)
+
   const {id, name, inputRef, placeholder, 
     readOnly, required, valid,
-    autocomplete, inputStyle, onChange}= props
-
-  const [innerValue, valueProps]= useInnerValue(props)
+    autocomplete, inputStyle, onChange}= props  
 
   const handleChange = useCallback((event) => {
       const value= event.target.value
@@ -19,6 +19,7 @@ const _VInputColorRS = (props) => {
       }
     }, [onChange]
   )
+
 
 
   return (
