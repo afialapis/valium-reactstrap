@@ -1,38 +1,46 @@
 /**
  *  select search
  **/
-.valium-reactstrap-select-search .form-group {
-   margin-bottom: 0;
-}
+ 
+
 .valium-reactstrap-select-search {
   margin-bottom: $form-group-margin-bottom;
+  position: relative;
+
+  .form-group {
+    margin-bottom: 0;
+  }
+
+  .valium-reactstrap-select-search-list {
+    background-color: white;
+    list-style: none;
+    position: absolute;
+    left: calc(2.4rem);
+    width: calc(100% - (2rem + 2.4rem));
+    margin-bottom:1.5rem;
+    z-index: 6; /* VInputFile uses 0,3,5. This must be greater */
+  }
+
+  .valium-reactstrap-select-search-list-item {
+    cursor: pointer;
+    user-select: none;
+
+    &.list-group-item-action:hover,
+    &.list-group-item-action:focus {
+      color: $list-group-action-hover-color;
+      background-color: $list-group-hover-bg;
+    }
+
+
+    &.ellipsis {
+      height: 2em;
+      padding: 0rem 1.25rem;
+      text-align: center;
+    }
+
+    &.disabled {
+      color: #989fa5;
+    }
+  }
 }
 
-.valium-reactstrap-select-search .valium-reactstrap-select-search-list {
-  background-color: white;
-  list-style: none;
-  position: absolute;
-  left: calc(1.95rem + 1.5rem);
-  width: calc(100% - (1.95rem + 2.4rem));
-  margin-bottom:1.5rem;
-  z-index: 6; /* VInputFile uses 0,3,5. This must be greater */
-}
-
-.valium-reactstrap-select-search .valium-reactstrap-select-search-list-item {
-  cursor: pointer;
-  user-select: none;
-}
-
-
-.valium-reactstrap-select-search .valium-reactstrap-select-search-list-item.list-group-item-action:hover,
-.valium-reactstrap-select-search .valium-reactstrap-select-search-list-item.list-group-item-action:focus {
-  color: $list-group-action-hover-color;
-  background-color: $list-group-hover-bg;
-}
-
-
-.valium-reactstrap-select-search .valium-reactstrap-select-search-list-item.ellipsis {
-  height: 2em;
-  padding: 0rem 1.25rem;
-  text-align: center;
-}

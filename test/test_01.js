@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import co from "co"
 import ES6Promise from 'es6-promise'
 //import assert from 'assert'
-import VFormRS from '../src/components/VFormRS'
+import VForm from '../src/VForm'
 
 ES6Promise.polyfill()
 
@@ -26,7 +26,7 @@ describe('Valium Reactstrap', function() {
     const App = () => {
       return (
         <div>
-          <VFormRS/>
+          <VForm/>
         </div>
       )
     }

@@ -9,7 +9,7 @@ import livereload from 'rollup-plugin-livereload'
 const NODE_ENV = 'development'
 
 export default {
-  input: 'demo/src/Demo.js',
+  input: 'demo/index.js',
   output: {
     file: 'demo/dist/bundle.js',
     format: 'umd',

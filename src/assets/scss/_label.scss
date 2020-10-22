@@ -2,9 +2,30 @@
 /**
  * label
  **/
+/*
  .valium-reactstrap-form-group label.valium-reactstrap-label {
   color: #524f4f;
   font-style: italic;
   font-weight: bold;
   padding-left: $valium-label-padding;
+}
+*/
+
+.valium-reactstrap-form-group .valium-reactstrap-label-container {
+
+  display: flex;  
+  
+  label.valium-reactstrap-label {
+    display: block;
+    flex: 1 0 auto;
+    color: #524f4f;
+    font-style: italic;
+    font-weight: bold;
+    padding-left: $valium-label-padding;
+  }
+
+  .valium-reactstrap-description {
+    color: #473939;
+    font-size: 12px;
+  }  
 }

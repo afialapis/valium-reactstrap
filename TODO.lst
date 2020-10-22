@@ -1,3 +1,15 @@
+-- ver errores en el select,
+  y porque coño el click en el checkbox va al select
+
+-- en rdp estamos añadiendo hiddenInputRef, parece
+   que es lo que nos interesa linkar a valium, no?  ==> no parece funcionar
+
+  -- en rdp estamos viendo tb elonClikOutside(), igual esta lanzando validaciones
+    innecesarias, cuando los licks no tienen nada que ver con el RDP
+
+
+
+
 -- InputFloating
 
   ? commonize how it handles [un]controlled values
