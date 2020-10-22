@@ -7,6 +7,8 @@ const DemoInputNumber = ({showAddon, keepHeight}) => {
   const [weight, setWeight]= useState(105.876)
   const [size, setSize]= useState(1.44)
 
+  console.log(pills)
+
   return (
     <>
       <VInputNumber
