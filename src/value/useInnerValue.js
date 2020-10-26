@@ -9,7 +9,9 @@ const useInnerValue = (props) => {
   const [innerValue, setInnerValue]= useState(controlled ? value : defaultValue)
 
   useEffect(() => {
+    
     const nInnerValue= controlled ? value : defaultValue
+
     if (innerValue != nInnerValue) {
       setInnerValue(nInnerValue)
     }

@@ -1,4 +1,4 @@
-import React, {useState /*, useEffect*/} from 'react'
+import React, {useState, useEffect, useCallback} from 'react'
 import PropTypes from 'prop-types'
 import {VInputAddon} from './addon/VInputAddon'
 import {InputGroupAddon, InputGroupText}     from 'reactstrap'
@@ -6,6 +6,7 @@ import {inputPropTypes}  from './props/inputPropTypes'
 import {inputDefaultProps} from './props/inputDefaultProps'
 import {useInnerValue} from './value/useInnerValue'
 import {withValium} from './valium/withValium'
+import { useValidClassnames } from './helpers/useValidClassnames'
 
 
 const ProgressBar = ({progress}) => {
@@ -59,39 +60,31 @@ const getIcon = (mtype, icon, iconMap) => {
 }
 
 const _VInputFile = (props) => {
-  const {id, name, label, icon, inline, readOnly, 
+  const {id, name, label, description, icon, inline, readOnly, 
          required, feedback, keepHeight, formGroupStyle, inputGroupStyle, 
-         inputStyle, onLoad, onChange, onDownload, accept, iconMap,
-         setValidity, valid, message, inputRef} = props
+         inputStyle, onChange, onDownload, accept, iconMap,
+         setValidity, valid, message, inputRef, showAddon, showValidity} = props
   
-  const [innerValue, setInnerValue, _controlled] = useInnerValue(props)
-
   const [progress  , setProgress ]= useState(undefined)
   const [status    , setStatus   ]= useState(undefined)
-  // const [statusMsg , setStatusMsg]= useState(undefined)
+  const [statusMsg , setStatusMsg]= useState(undefined)
 
-  /*
+  const [innerValue, setInnerValue, _controlled] = useInnerValue(props)
+  
   useEffect(() => {
     if (innerValue) {
       if (innerValue.buffer==undefined || innerValue.buffer.length==0) {
         if (innerValue.size>0) {
-          //inputRef.current.value= 'not-empty'
-          //setValidity()
-          console.log(inputRef.current)
           inputRef.current.setCustomValidity(true)
           inputRef.current.removeAttribute('data-valium-validity')
-          console.log(inputRef.current)
         }
       }
     }
-  })*/
+  })
 
-  const hasValue = () => {
-    return innerValue?.buffer || innerValue?.size>0
-  }
-  
+  const [className]= useValidClassnames(valid, showValidity, () => hasValue() || !required)
 
-  const handleChange = (ev) => {
+  const handleChange = useCallback((ev) => {
     ev.persist()
 
     const file= ev.target.files[0]
@@ -99,8 +92,7 @@ const _VInputFile = (props) => {
     try {
       const reader = new FileReader()
 
-      reader.onerror = (_e) => {
-        /*
+      reader.onerror = (e) => {
         let st_msg=''
         
         switch (e.target.error.code) {
@@ -116,14 +108,12 @@ const _VInputFile = (props) => {
             st_msg = 'Error reading file'
         }
         setStatusMsg(st_msg)
-        */
-
         setStatus('error')
       };
 
       reader.onabort = (_e) => {
         setStatus('abort')
-        // setStatusMsg('Aborted')
+        setStatusMsg('Aborted')
         setProgress(undefined)
       }
 
@@ -137,17 +127,13 @@ const _VInputFile = (props) => {
       reader.onloadstart = (_e) => {
         setProgress(0)
         setStatus('uploading')
-        // setStatusMsg('Loading file')
+        setStatusMsg('Loading file')
       }
 
       reader.onload = (e) => {
         setProgress(100)
-        // setStatusMsg('File loaded')
+        setStatusMsg('File loaded')
 
-        if (onLoad!=undefined) {
-          onLoad(file, e.target.result)
-        }
-        
         const nfile= {
           name   : file.name,
           size   : file.size,
@@ -156,7 +142,7 @@ const _VInputFile = (props) => {
         }
         setInnerValue(nfile)
         if (onChange!=undefined) {
-          onChange(nfile)
+          onChange(nfile, e)
         }
       }
       
@@ -164,40 +150,49 @@ const _VInputFile = (props) => {
     } catch(e) {
       console.error(e)
       setStatus(undefined)
-      // setStatusMsg(undefined)
+      setStatusMsg(undefined)
     }
-  }
+  }, [setInnerValue, onChange])
 
-  const clear = (inputRef) => {
-    inputRef.current.value= ''
-    setValidity()
+  const handleClear = useCallback(() => {
     setProgress(0)
+    setStatus(undefined)
+    setStatusMsg(undefined)
     setInnerValue({})
     if (onChange!=undefined) {
       onChange({})
     }
-  }  
+    inputRef.current.value= ''
+    setValidity()    
+  }, [inputRef, setInnerValue, onChange, setValidity]) 
   
-  const browse = (inputRef) => {
+  const handleBrowse = useCallback(() => {
     let evt = document.createEvent("MouseEvents")
     evt.initEvent("click", true, false)
     inputRef.current.dispatchEvent(evt)    
-  }
+  }, [inputRef])
 
-  const download = (inputRef, ev) => {
+  const handleDownload = useCallback((ev) => {
     if (onDownload != undefined) {
-      onDownload(inputRef, ev)
+      onDownload(innerValue, ev)
     }
+  }, [innerValue, onDownload])
+
+  const hasValue = () => {
+    return innerValue?.buffer || innerValue?.size>0
   }
 
   const theIcon= getIcon(innerValue?.type, icon, iconMap)
-  
+ 
   return (
     <VInputAddon name          = {name}
                 label          = {label}
-                feedback       = {feedback==='no-feedback' ? undefined : feedback||message}
+                description    = {description}
+                feedback       = {feedback||message}
                 value          = {innerValue}
                 icon           = {theIcon}
+                showAddon      = {showAddon}
+                showValidity   = {showValidity}
                 isValid        = {valid}
                 inline         = {inline}
                 keepHeight     = {keepHeight}
@@ -241,10 +236,10 @@ const _VInputFile = (props) => {
                             userSelect: 'none',
                             ...inputStyle
                           }}
-            className   = {`form-control ${valid && hasValue() ? 'is-valid' : ''} ${!valid ? 'is-invalid' : ''}`}
+            className   = {`form-control ${className}`}
             onClick     ={hasValue() 
-                          ? (ev) => download(inputRef, ev) 
-                          : (_)  => browse(inputRef)}>
+                          ? (ev) => handleDownload(ev) 
+                          : (_)  => handleBrowse()}>
             {hasValue()
               ? <div style={{display: "flex", width: "100%", alignItems: "stretch"}}>
                   <div style={{whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis"}}>
@@ -258,11 +253,13 @@ const _VInputFile = (props) => {
                 </div>
               : inputRef.current && inputRef.current.files.length
                 ? inputRef.current.files[0].name
-                : '...'
+                : statusMsg!=undefined
+                  ? statusMsg
+                  : '...'
             }
       </div>
       <InputGroupAddon onClick   = {hasValue() 
-                                    ? () => clear(inputRef) 
+                                    ? () => handleClear() 
                                     : () => {}
                                     }
                       style     = {{cursor: hasValue() ? 'pointer' : 'not-allowed', zIndex: "2"}}
@@ -283,7 +280,6 @@ const VInputFile= withValium(_VInputFile)
 
 VInputFile.propTypes = {
   ...inputPropTypes,
-  onLoad: PropTypes.func,
   onDownload: PropTypes.func,
   accept: PropTypes.string,
   iconMap: PropTypes.object

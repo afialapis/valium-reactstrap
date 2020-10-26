@@ -8,12 +8,11 @@ const useValueProps = (props) => {
 
   const handleChange = useCallback((event) => {
     const value= event.target.value
-
+    
     setInnerValue(value)
 
-
     if (onChange!=undefined) {
-      onChange(value)
+      onChange(value, event)
     }
 
   }, [setInnerValue, onChange])

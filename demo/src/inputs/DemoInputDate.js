@@ -9,7 +9,7 @@ const getToday = (add= 0) => {
   return `${pad(n.getDate() + add)}/${pad(n.getMonth()+1)}/${n.getFullYear()}`
 }
 
-const DemoInputDate = ({showAddon, keepHeight}) => {
+const DemoInputDate = (options) => {
   const [when, setWhen]= useState(getToday(1))
 
   return (
@@ -21,8 +21,7 @@ const DemoInputDate = ({showAddon, keepHeight}) => {
              label            = {"When will you take your next Valium?"}
              description      = "Why would you wait till tomorrow"
              required         = {true}
-             keepHeight       = {keepHeight}
-             {... !showAddon && {icon: null}} 
+             {...options}
              />
   )
 }

@@ -1,56 +1,65 @@
 import React, {useState} from 'react'
-import {VInputNumber} from '../../../src'
+import {VInputFloat, VInputInt, VInputUInt, VInputFloatSum} from '../../../src'
 
-const DemoInputNumber = ({showAddon, keepHeight}) => {
+const DemoInputNumber = (options) => {
 
   const [pills, setPills]= useState(2.5)
-  const [weight, setWeight]= useState(105.876)
+  const [weight, setWeight]= useState(105)
   const [size, setSize]= useState(1.44)
-  
+  const [km, setKm]= useState([0.1000, 1.453])
+
   return (
     <>
-      <VInputNumber
+      <VInputUInt
               name        = {'pills'}
               value       = {pills}
               onChange    = {(v) => setPills(v)}
               required    = {false}
-              decimals    = {1}
               step        = {2}
               checkValue  = {(v) => v>=6}
               label       = {"How many pills per dose would you like?"}
-              description = {"Some >=6 integer. Decimals allowed but invalid (decimals=1)."}
+              description = {"Some >=6 unsigned integer (step = 2)."}
               feedback    = {'Hey folk, give yourself a bit of fun!'}
-              keepHeight  = {keepHeight}
-              {... !showAddon && {icon: null}} 
+              {...options}
               >
-      </VInputNumber>        
+      </VInputUInt>        
 
-      <VInputNumber
+      <VInputInt
               name        = {'weight'}
               value       = {weight}
               onChange    = {(v) => setWeight(v)}
               required    = {true}
-              decimals    = {3}
-              step        = {1.111}
               label       = {"Hmm... sounds like too much pills. How much do you weight?"}
-              description = {"Some float (max 3 decimals, decimals = 3)."}
-              keepHeight  = {keepHeight}
-              {... !showAddon && {icon: null}} 
+              description = {"Some int (step = 1, default)."}
+              {...options}
               >
-      </VInputNumber>                
+      </VInputInt>                
 
-      <VInputNumber
+      <VInputFloat
               name        = {'size'}
               value       = {size}
               onChange    = {(v) => setSize(v)}
               label       = {"Still not sure... Your size?"}
-              description = {"Some float (max 2 decimals, native step = 0.01)."}
+              description = {"Some float (max 2 decimals, step = 0.01)."}
               step        = {0.01}
+              decimalSign = {','}
               required    = {true}
-              keepHeight  = {keepHeight}
-              {... !showAddon && {icon: null}} 
+              {...options}
               >
-      </VInputNumber>
+      </VInputFloat>
+
+      <VInputFloatSum
+              name        = {'km'}
+              value       = {km}
+              onChange    = {(v) => setKm(v)}
+              label       = {"You are not a sporty guy, right? How far did your last walks took?"}
+              description = {"Some float (max 2 decimals, step = 0.01)."}
+              step        = {0.01}
+              decimalSign = {','}
+              required    = {true}
+              {...options}
+              >
+      </VInputFloatSum>      
     </>
   )
 }

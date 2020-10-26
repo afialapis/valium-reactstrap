@@ -31,8 +31,9 @@ const INPUT_TYPES= [
 
 const Demo = () => {
   const [options, setOptions]= useState({
-    keepHeight: true,
-    showAddon : true
+    keepHeight  : true,
+    showAddon   : true,
+    showValidity: 2
   })
 
   const [resume, setResume]= useState([{msg: "Save form to see a resume here!"}])
@@ -65,22 +66,13 @@ const Demo = () => {
     })
     return items
   }
-
+  
   return (  
 
       <Base logoSrc = "assets/img/valium-reactstrap.png"
             menuTitle   = "Input Types"
             menuItems   = {getMenuItems()}
-            options = {[{
-              name: 'keepHeight',
-              value: options.keepHeight,
-              label: 'Keep Height'
-            },
-            {
-              name: 'showAddon',
-              value: options.showAddon,
-              label: 'Show Addon'
-            }]}
+            options     = {options}
             onChangeOption = {(name, value) => {
               setOptions({
                 ...options,
@@ -106,8 +98,8 @@ const Demo = () => {
                 <section key={`section_${inputType.type}`}
                       id={inputType.type}>
                   <h2>{inputType.type}</h2>
-                    <inputType.comp keepHeight={options.keepHeight}
-                                    showAddon = {options.showAddon}/>
+                    <inputType.comp {...options}
+                                    />
                 </section>
               )
             }

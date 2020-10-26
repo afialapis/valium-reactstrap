@@ -7,9 +7,7 @@ const inputPropTypes = {
   allowedValues       : PropTypes.arrayOf(PropTypes.any),
   disallowedValues    : PropTypes.arrayOf(PropTypes.any),
   doRepeat            : PropTypes.string,
-  doNotRepeat         : PropTypes.string,
-  decimals            : PropTypes.number,
-  inputFilter         : PropTypes.oneOfType([PropTypes.func, PropTypes.instanceOf(RegExp), PropTypes.string]),
+  doNotRepeat         : PropTypes.string, 
   
   id                  : PropTypes.string,
   name                : PropTypes.string.isRequired,
@@ -27,6 +25,8 @@ const inputPropTypes = {
   required            : PropTypes.bool,
   onChange            : PropTypes.func,
   keepHeight          : PropTypes.bool,
+  showAddon           : PropTypes.bool,
+  showValidity        : PropTypes.oneOf([0, 1, 2]),
   formGroupStyle      : PropTypes.object,
   inputGroupStyle     : PropTypes.object,
   inputStyle          : PropTypes.object

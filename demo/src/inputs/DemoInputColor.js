@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {VInputColor} from '../../../src'
 
-const DemoInputColor = ({showAddon, keepHeight}) => {
+const DemoInputColor = (options) => {
   const [color, setColor]= useState('#FF00FF')
   
   return (
@@ -13,8 +13,7 @@ const DemoInputColor = ({showAddon, keepHeight}) => {
               feedback         = {'Neither black nor white'}
               label            = {"What color has your world now?"}
               description      = "Neither black nor white!"
-              keepHeight       = {keepHeight}
-              {... !showAddon && {icon: null}} 
+              {...options}
               />     
   )
 }

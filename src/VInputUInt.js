@@ -3,9 +3,9 @@ import { useIntProps } from './helpers/useNumberProps'
 import VInputNumber from './_VInputNumber'
 
 
-const VInputInt = (props) => {
+const VInputUInt = (props) => {
  
-  const [inputFilter, t]= useIntProps(false)
+  const [inputFilter, t]= useIntProps(true)
 
   return (
 
@@ -18,11 +18,11 @@ const VInputInt = (props) => {
   )
 }
 
-VInputInt.propTypes = VInputNumber.propTypes
+VInputUInt.propTypes = VInputNumber.propTypes
 
-VInputInt.defaultProps = {
+VInputUInt.defaultProps = {
   ...VInputNumber.defaultProps,
   icon: 'dice'
 }
 
-export default VInputInt
+export default VInputUInt

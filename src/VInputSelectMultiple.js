@@ -1,4 +1,4 @@
-import React        from 'react'
+import React, {useCallback} from 'react'
 import PropTypes    from 'prop-types'
 import {Input}      from 'reactstrap'
 import {inputPropTypes}  from './props/inputPropTypes'
@@ -6,7 +6,7 @@ import {inputDefaultProps} from './props/inputDefaultProps'
 import {withAddon} from './addon/withAddon'
 import {useInnerValue} from './value/useInnerValue'
 import {withValium} from './valium/withValium'
-import {useEnabledOptions} from './helpers/useEnabledOptions'
+import {getEnabledOptions} from './helpers/getEnabledOptions'
 
 const numOrArrayToString = (v) => {
   if (Array.isArray(v)) {
@@ -17,26 +17,26 @@ const numOrArrayToString = (v) => {
       
 
 const _VInputSelectMultiple = (props) => {
-  const {id, name, inputRef, valid, setValidity,
+  const {id, name, inputRef, showValidProps, setValidity,
          placeholder, readOnly, autocomplete, required,
          allowedValues, disallowedValues, onChange, options, 
          inputStyle} = props
 
   const [innerValue, setInnerValue, _controlled] = useInnerValue(props)
 
-  const [enabledOptions]= useEnabledOptions(options, allowedValues, disallowedValues)
-
-  const handleChange= (ev) => {
+  const handleChange= useCallback((ev) => {
     const value= Array.prototype.slice.call(ev.target.options)
         .filter((opt) => opt.selected)
         .map((opt) => opt.value)
 
     setInnerValue(numOrArrayToString(value))
     if (onChange!=undefined) { 
-      onChange(value)
+      onChange(value, ev)
     }
     setValidity()
-  }
+  }, [setInnerValue, onChange, setValidity])
+
+  const enabledOptions= getEnabledOptions(options, allowedValues, disallowedValues)
 
   return (
     <Input    id          = {id}
@@ -48,12 +48,11 @@ const _VInputSelectMultiple = (props) => {
               placeholder = {placeholder || ""}
               readOnly    = {readOnly!=undefined ? readOnly  : false}
               required    = {required}
-              valid       = {innerValue!=undefined && innerValue!='' && valid}
-              invalid     = {! valid}
               autoComplete= {autocomplete}
               style       = {inputStyle} 
               value       = {innerValue}
               onChange    = {(event) => handleChange(event)}
+              {...showValidProps}
               >
       {enabledOptions.map((opt) => 
         <option key={`${name}_option_${opt.value}`}

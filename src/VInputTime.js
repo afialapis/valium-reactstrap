@@ -9,7 +9,7 @@ import {withValium} from './valium/withValium'
 
 const _VInputTime = (props) => {
   const {id, name, inputRef, placeholder, 
-    readOnly, required, valid,
+    readOnly, required, showValidProps,
     autocomplete, inputStyle}= props
 
   const [valueProps]= useValueProps(props)
@@ -23,11 +23,10 @@ const _VInputTime = (props) => {
               placeholder = {placeholder || ""}
               readOnly    = {readOnly!=undefined ? readOnly  : false}
               required    = {required}
-              valid       = {valid}
-              invalid     = {! valid}
               autoComplete= {autocomplete}
               style       = {inputStyle} 
               {...valueProps}
+              {...showValidProps}
     />
   )
 }

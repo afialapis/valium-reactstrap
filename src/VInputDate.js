@@ -30,9 +30,9 @@ const toISOString = (value) => {
 
 const _VInputDate = (props) => {
   const {id, placeholder, readOnly, autocomplete, inline,
-         label, feedback, message, icon, keepHeight, inputGroupStyle, formGroupStyle,
+         label, description, feedback, message, icon, keepHeight, inputGroupStyle, formGroupStyle,
          required, inputStyle, onChange, 
-         inputRef, valid, setValidity} = props
+         inputRef, valid, setValidity, showAddon, showValidity} = props
 
   const [innerValue, setInnerValue, controlled] = useInnerValueWithTransform(props, toISOString)
 
@@ -43,7 +43,12 @@ const _VInputDate = (props) => {
   
   const handleChange = (value, formattedValue) => {
     setInnerValue(toISOString(formattedValue))
-    onChange(formattedValue)
+    if (onChange!=undefined) {
+      // TODO Ask RDP to expose event as a onChange() parameter,
+      // so we can expose it here too
+      onChange(formattedValue, undefined)
+    }
+    inputRef.current.value= toISOString(formattedValue)
     setValidity()
   }
 
@@ -52,13 +57,15 @@ const _VInputDate = (props) => {
     flexWrap: "unset"
   }
 
-
   return (
     <VInputAddon name           = {name}
                  label          = {label}
-                 feedback       = {feedback==='no-feedback' ? undefined : feedback||message}
+                 description    = {description}
+                 feedback       = {feedback||message}
                  value          = {innerValue}
                  icon           = {icon}
+                 showAddon      = {showAddon}
+                 showValidity   = {showValidity}                 
                  isValid        = {valid}
                  inline         = {inline}
                  keepHeight     = {keepHeight}
@@ -75,7 +82,7 @@ const _VInputDate = (props) => {
                   readOnly    = {readOnly}
                   required    = {required}
                   autocomplete= {autocomplete}
-                  className   = {valid ? 'is-valid' : 'is-invalid'}
+                  className   = {showValidity>=2 ? valid ? 'is-valid' : 'is-invalid' : ''}
                   style       = {inputStyle} 
                   onChange    = {(v,f) => handleChange(v, f)}
                   {...valueProps} 

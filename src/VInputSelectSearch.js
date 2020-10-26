@@ -1,78 +1,36 @@
-import React, {useRef, useState, useEffect}        from 'react'
-import PropTypes     from 'prop-types'
-import {VInputAddon}   from './addon/VInputAddon'
-import {Input, InputGroupAddon, InputGroupText}       from 'reactstrap'
+import React, {useRef, useState, useEffect, useCallback} from 'react'
+import PropTypes from 'prop-types'
+import {VInputAddon} from './addon/VInputAddon'
+import {Input, InputGroupAddon, InputGroupText} from 'reactstrap'
 import {inputPropTypes}  from './props/inputPropTypes'
 import {inputDefaultProps} from './props/inputDefaultProps'
 import {useInnerValue} from './value/useInnerValue'
 import {withValium} from './valium/withValium'
-import {useEnabledOptions} from './helpers/useEnabledOptions'
-
-/*
-function getPosition(el) {
-  var xPos = 0;
-  var yPos = 0;
- 
-  while (el) {
-    if (el.tagName == "BODY") {
-      // deal with browser quirks with body/window/document and page scroll
-      var xScroll = el.scrollLeft || document.documentElement.scrollLeft;
-      var yScroll = el.scrollTop || document.documentElement.scrollTop;
- 
-      xPos += (el.offsetLeft - xScroll + el.clientLeft);
-      yPos += (el.offsetTop - yScroll + el.clientTop);
-
-      console.log('++ ' + (el.offsetLeft - xScroll + el.clientLeft))
-      console.log(el)      
-    } else {
-      // for all other non-BODY elements
-      xPos += (el.offsetLeft - el.scrollLeft + el.clientLeft);
-      yPos += (el.offsetTop - el.scrollTop + el.clientTop);
-
-      console.log('++ ' + (el.offsetLeft - el.scrollLeft + el.clientLeft))
-      console.log(el)
-    }
- 
-    el = el.offsetParent;
-  }
-  return {
-    x: xPos,
-    y: yPos
-  };
-}
-*/
-
-
+import {getEnabledOptions} from './helpers/getEnabledOptions'
 
 const _VInputSelectSearch = (props) => {
-  const {id, name, options, label, feedback, icon, inline, 
+  const {id, name, options, label, description, feedback, icon, inline, 
          placeholder, readOnly, autocomplete, required,
          allowedValues, disallowedValues, keepHeight, formGroupStyle, inputGroupStyle,
          inputStyle, onChange, clearable, maxShownOptions,
-         message, valid, inputRef, setValidity
+         message, valid, inputRef, setValidity, showAddon, showValidity
          } = props
   
-
-  const [innerValue, setInnerValue, _controlled]= useInnerValue(props) 
-  const [enabledOptions]= useEnabledOptions(options, allowedValues, disallowedValues)
-
-  //console.log('----------------------- innerValue='+innerValue)
   const wrapperRef    = useRef(undefined)
   const filterRef     = useRef(undefined)
   const listRef       = useRef(undefined)
 
   const [isOpen, setIsOpen]= useState(false)
   const [shownText, setShownText]= useState('')
-  const [optionsMap, setOptionsMap]= useState([])
-
-
+  
+  const [innerValue, setInnerValue, _controlled]= useInnerValue(props) 
+  
 
   useEffect(() => {
     const onClickOutside = (event) => {
       if (wrapperRef && wrapperRef.current && !wrapperRef.current.contains(event.target)) {
         if (listRef && listRef.current && !listRef.current.contains(event.target)) {
-          //console.log('CLICK OUTSIDE, ABORT')
-          onSearchAbort()
+          handleSearchAbort(event)
         }
       }    
     }    
@@ -96,54 +54,49 @@ const _VInputSelectSearch = (props) => {
   }, [options, innerValue])
 
 
-  useEffect(() => {
-    // make options Map
-    const sfilter= shownText ? shownText.toLowerCase() : ''
-    const nOptionsMap= enabledOptions
-          .filter((opt) => sfilter.length>0 ? opt.label.toLowerCase().includes(sfilter) : true)
-    setOptionsMap(nOptionsMap)
-  }, [enabledOptions, shownText])  
-
-
-
-  const handleChange = (value) => {
-    //console.log(`handleChange ${value}`)
-    
+  const handleChange = useCallback((value, event) => {
     setInnerValue(value)
     inputRef.current.value= value
     
         
     if (onChange!=undefined) { 
-      onChange(value)
+      onChange(value, event)
     }
     
     setValidity()
-  }
+  }, [inputRef, setInnerValue, onChange, setValidity])
 
-  const onSearchStart = () => {
+  const handleSearchStart = useCallback((_event) => {
     if (! isOpen) {
       setIsOpen(true)
     }
-  }
+  }, [isOpen])
 
-  const onSearchType = (ev) => {
-    //console.log('SEARCH TYPE')
-    setShownText(ev.target.value)
-    onSearchStart()
-  }
+  const handleSearchType = useCallback((event) => {
+    setShownText(event.target.value)
+    handleSearchStart(event)
+  }, [handleSearchStart])
 
-  const onSearchAbort = () => {
+  const handleSearchAbort = useCallback((event) => {
     setIsOpen(false)
     if (shownText=='') {
-      handleChange('')
+      handleChange('', event)
     }
-  }
+  }, [shownText, handleChange])
 
-  const onSelect = (newValue) => {
+  const handleSelect = useCallback((newValue, event) => {
     setIsOpen(false)
-    //setShownText(options[newValue])
-    handleChange(newValue)
-  }
+    handleChange(newValue, event)
+  }, [handleChange])
+
+  const getOptionsMap = useCallback(() => {
+    const enabledOptions= getEnabledOptions(options, allowedValues, disallowedValues)
+    const sfilter= shownText ? shownText.toLowerCase() : ''
+    const optionsMap= enabledOptions
+          .filter((opt) => sfilter.length>0 ? opt.label.toLowerCase().includes(sfilter) : true)
+    return optionsMap
+  }, [options, allowedValues, disallowedValues, shownText])
+
 
   const getListStyle= () => {
     // TODO
@@ -166,12 +119,15 @@ const _VInputSelectSearch = (props) => {
         <div>
           <VInputAddon name        = {name}
                       label       = {label}
-                      feedback    = {isOpen ? undefined : (feedback==='no-feedback' ? undefined : feedback||message)}
+                      description = {description}
+                      feedback    = {isOpen ? undefined : feedback||message}
                       value       = {innerValue}
                       icon        = {icon}
                       isValid     = {valid}
                       inline      = {inline}
                       keepHeight  = {isOpen ? false : keepHeight}
+                      showAddon   = {showAddon}
+                      showValidity= {showValidity}                       
                   formGroupStyle  = {formGroupStyle}
                   inputGroupStyle = {inputGroupStyle}>
             <Input    id          = {id}
@@ -191,16 +147,17 @@ const _VInputSelectSearch = (props) => {
                       placeholder = {placeholder}
                       readOnly    = {readOnly}
                       required    = {required}
-                      valid       = {/*innerValue!=undefined && innerValue!='' &&*/ valid}
-                      invalid     = {! valid}
-                      onClick     = {(_ev) => onSearchStart()}
-                      onChange    = {(ev) => onSearchType(ev)}
+                      onClick     = {(ev) => handleSearchStart(ev)}
+                      onChange    = {(ev) => handleSearchType(ev)}
                       autoComplete= {autocomplete}
                       style       = {inputStyle} 
+                      {... showValidity>=2
+                       ? {valid: valid, invalid: ! valid}
+                       : {}}
                       />
 
             {clearable
-            ?  <InputGroupAddon onClick  = {() => {readOnly ? null : onSelect('')}}
+            ?  <InputGroupAddon onClick  = {(ev) => {readOnly ? null : handleSelect('', ev)}}
                                 style    = {{cursor:(innerValue && !readOnly) ? 'pointer' : 'not-allowed'}}
                                 addonType= "append">
                   <InputGroupText
@@ -217,20 +174,20 @@ const _VInputSelectSearch = (props) => {
           ? <div className="valium-reactstrap-select-search-list list-group shadow-lg"
                   ref = {listRef}
                   style={getListStyle()}>
-              {optionsMap.map((opt, idx) =>  {
+              {getOptionsMap().map((opt, idx) =>  {
                 if (idx<=(maxShownOptions-1)) {
                   return (
                     <div key     = {`${name}_option_${opt.value}`}
                           value   = {opt.value}
                           className={`valium-reactstrap-select-search-list-item list-group-item list-group-item-action ${opt.disabled ? 'disabled' : ''}`}
-                          onClick = {(_ev) => !opt.disabled && onSelect(opt.value)}
+                          onClick = {(ev) => !opt.disabled && handleSelect(opt.value, ev)}
                           >
-                      {opt.label}
+                      {opt.label || <>&nbsp;</>}
                     </div>)
                 }
               }
               )}
-              {optionsMap.length>maxShownOptions
+              {getOptionsMap().length>maxShownOptions
                 ? <div key     = {`${name}_option_ellipsis`}
                       className={`valium-reactstrap-select-search-list-item list-group-item list-group-item-action disabled ellipsis`}>
                   ...

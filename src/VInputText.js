@@ -11,11 +11,11 @@ import {withValium} from './valium/withValium'
 const _VInputText = (props) => {
   const {id, name, inputRef, inputType, placeholder, 
          readOnly, required, maxLength, minLength, 
-         pattern, valid,
+         showValidProps,
          autocomplete, inputStyle}= props
   
   const [valueProps]= useValueProps(props)
-
+  
   return (
     <Input  id          = {id}
             name        = {name}
@@ -26,12 +26,10 @@ const _VInputText = (props) => {
             required    = {required}
             maxLength   = {maxLength}
             minLength   = {minLength}
-            pattern     = {pattern}
-            valid       = {valid}
-            invalid     = {! valid}
             autoComplete= {autocomplete}
             style       = {inputStyle} 
-            {...valueProps}/>
+            {...valueProps}
+            {...showValidProps}/>
    )
 }
 
@@ -46,7 +44,7 @@ VInputText.propTypes = {
   placeholder  : PropTypes.string,
   maxLength    : PropTypes.number,
   minLength    : PropTypes.number,
-  pattern      : PropTypes.string,
+  inputFilter  : PropTypes.oneOfType([PropTypes.func, PropTypes.instanceOf(RegExp), PropTypes.string]),
   autocomplete : PropTypes.oneOf(["on", "off"]),
 }
 

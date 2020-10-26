@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {VInputText} from '../../../src'
 
-const DemoInputText = ({showAddon, keepHeight}) => {
+const DemoInputText = (options) => {
   const [name, setName]= useState('John Not Doe')
   const [age, _setAge]= useState('33') 
   const [words, setWords]= useState('another dimension man!')
@@ -17,8 +17,7 @@ const DemoInputText = ({showAddon, keepHeight}) => {
               inputFilter         = "latin"
               label               = {"Your name here"}
               description         = {"Controlled. Required. 'John Doe' is disallowed. Latin chars."}
-              keepHeight          = {keepHeight}
-              {... !showAddon && {icon: null}}                  
+              {...options}                
       />
 
       <VInputText
@@ -29,8 +28,7 @@ const DemoInputText = ({showAddon, keepHeight}) => {
               inputFilter = "int"
               label       = {"Your age here"}
               description = {"Uncontrolled. Required. Some >18 integer (through inputFilter)"}
-              keepHeight  = {keepHeight}
-              {... !showAddon && {icon: null}}                  
+              {...options}                 
       />
 
       <VInputText
@@ -40,8 +38,7 @@ const DemoInputText = ({showAddon, keepHeight}) => {
               maxLength    = {20}
               label        = {"Your experience with Valium in two words"}
               description  = {`Controlled. Not required. Max length 20 (currently ${words.length})`}
-              keepHeight   = {keepHeight}
-              {... !showAddon && {icon: null}}                  
+              {...options}               
       />
     </>
   )

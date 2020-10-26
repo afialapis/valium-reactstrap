@@ -23,9 +23,10 @@ const VInputFeedback = ({isValid, feedback, keepHeight}) => {
   )
 }
 
-const VInputAddon = (
-  {name, value, label, description, feedback, icon, isValid, children, inline, formClassName, 
-    keepHeight, formGroupStyle, inputGroupStyle, middleElement}) => {
+const VInputAddon = (props) => {
+  const {name, value, label, description, feedback, icon, isValid, children, inline, formClassName, 
+    showAddon, showValidity, keepHeight, formGroupStyle, inputGroupStyle, middleElement}= props
+
   const originalValue = useRef(value)
   
   const [loaded, setLoaded]= useState(false)
@@ -57,12 +58,15 @@ const VInputAddon = (
         </div>
       : null}
       <InputGroup style={inputGroupStyle}>
-        {icon==undefined || icon=='no-icon'
+        {showAddon==false
           ? null
           : 
           <InputGroupAddon addonType="prepend" className="input-group-addon">
             <InputGroupText>
-              <VIcon icon={icon}/>
+              {icon==undefined
+               ? ''
+               : <VIcon icon={icon}/>
+              }
             </InputGroupText>
           </InputGroupAddon>
         }
@@ -72,7 +76,7 @@ const VInputAddon = (
        ? middleElement
        : null
       }
-      {(keepHeight===true || feedback!=undefined) 
+      {((keepHeight===true || feedback!=undefined) && showValidity>=1)
         ? <VInputFeedback isValid={isValid}
                           feedback={feedback}
                           keepHeight={keepHeight}

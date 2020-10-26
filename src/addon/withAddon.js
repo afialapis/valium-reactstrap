@@ -5,17 +5,25 @@ const withAddon = BaseComponent => {
   
   const _withAddon = (props) => {
 
-    let {name, label, description, feedback, message, icon, 
-        valid, inline, keepHeight, formGroupStyle, 
+    let {name, 
+         label, description, feedback, message, icon, 
+         keepHeight, showAddon, showValidity,
+        valid, inline,  formGroupStyle, 
         inputGroupStyle, middleElement, value, defaultValue} = props
     
+    const showValidProps = showValidity>=2 
+      ? {valid: valid, invalid: ! valid}
+      : {}
+
     return (
       <VInputAddon name           = {name}
                    label          = {label}
                    description    = {description}
-                   feedback       = {feedback==='no-feedback' ? undefined : feedback||message}
+                   feedback       = {feedback||message}
                    value          = {value===undefined ? defaultValue : value}
                    icon           = {icon}
+                   showAddon      = {showAddon}
+                   showValidity   = {showValidity}
                    isValid        = {valid}
                    inline         = {inline}
                    keepHeight     = {keepHeight}
@@ -23,7 +31,8 @@ const withAddon = BaseComponent => {
                    inputGroupStyle= {inputGroupStyle}
                    middleElement  = {middleElement}>
 
-        <BaseComponent {...props}/>
+        <BaseComponent {...props}
+                   showValidProps = {showValidProps}/>
         
       </VInputAddon>
     )

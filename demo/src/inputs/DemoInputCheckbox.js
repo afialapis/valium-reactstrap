@@ -1,11 +1,11 @@
 import React, {useState} from 'react'
-import {VInputCheckbox} from '../../../src'
+import {VInputCheckbox2} from '../../../src'
 
-const DemoInputCheckbox = ({showAddon, keepHeight}) => {
+const DemoInputCheckbox = (options) => {
   const [effects, setEffects]= useState(true)
 
   return (
-      <VInputCheckbox
+      <VInputCheckbox2
              name             = {'effects'}
              value            = {effects}
              onChange         = {(v) => setEffects(v)}
@@ -13,8 +13,7 @@ const DemoInputCheckbox = ({showAddon, keepHeight}) => {
              label            = {""}
              checkboxLabel    = "Did you notice side effects?"
              description      = ""
-             keepHeight       = {keepHeight}
-             {... !showAddon && {icon: null}} 
+             {...options}
              />
   )
 }

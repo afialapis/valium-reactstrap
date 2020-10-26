@@ -12,7 +12,7 @@ const useCheckedProps = (props) => {
     setInnerValue(value)
 
     if (onChange!=undefined) {
-      onChange(value)
+      onChange(value, event)
     }
 
   }, [setInnerValue, onChange])

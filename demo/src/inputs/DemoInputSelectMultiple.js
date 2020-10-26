@@ -12,7 +12,7 @@ const LISTM_OPTIONS= [
   ['8', "15:00"],
 ]
 
-const DemoInputSelectMultiple = ({showAddon, keepHeight}) => {
+const DemoInputSelectMultiple = (options) => {
   const [times, setTimes]= useState(['3', '5', '7'])
 
   return (
@@ -24,8 +24,7 @@ const DemoInputSelectMultiple = ({showAddon, keepHeight}) => {
             disallowedValues= {[['1', '3', '5', '7']]}
             label           = {"What times you prefer to take a Valium?"}
             description     = "All even hours required"
-            keepHeight      = {keepHeight}
-            {... !showAddon && {icon: null}} 
+            {...options}
             />      
   )
 }
