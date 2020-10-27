@@ -25,6 +25,7 @@ const _VInputSelectSearch = (props) => {
   
   const [innerValue, setInnerValue, _controlled]= useInnerValue(props) 
   
+  const enabledOptions= getEnabledOptions(options, allowedValues, disallowedValues)
 
   useEffect(() => {
     const onClickOutside = (event) => {
@@ -46,12 +47,12 @@ const _VInputSelectSearch = (props) => {
     let nShownText= ''
     if (innerValue!=undefined) {
       try {
-        const elOpt= options.find((opt) => opt[0]==innerValue)
-        nShownText= elOpt[1] || ''
+        const elOpt= enabledOptions.find((opt) => opt.value==innerValue)
+        nShownText= elOpt.label || ''
       } catch(_) {}
     }
     setShownText(nShownText)
-  }, [options, innerValue])
+  }, [enabledOptions, innerValue])
 
 
   const handleChange = useCallback((value, event) => {
@@ -90,12 +91,11 @@ const _VInputSelectSearch = (props) => {
   }, [handleChange])
 
   const getOptionsMap = useCallback(() => {
-    const enabledOptions= getEnabledOptions(options, allowedValues, disallowedValues)
     const sfilter= shownText ? shownText.toLowerCase() : ''
     const optionsMap= enabledOptions
           .filter((opt) => sfilter.length>0 ? opt.label.toLowerCase().includes(sfilter) : true)
     return optionsMap
-  }, [options, allowedValues, disallowedValues, shownText])
+  }, [enabledOptions, shownText])
 
 
   const getListStyle= () => {
@@ -208,7 +208,7 @@ VInputSelectSearch.propTypes = {
   ...inputPropTypes,
 
   placeholder  : PropTypes.string,
-  options      : PropTypes.arrayOf(PropTypes.array),
+  options     : PropTypes.oneOfType([PropTypes.object, PropTypes.arrayOf(PropTypes.array)]),
   autocomplete : PropTypes.oneOf(["on", "off"]),
   clearable    : PropTypes.bool,
   maxShownOptions: PropTypes.number

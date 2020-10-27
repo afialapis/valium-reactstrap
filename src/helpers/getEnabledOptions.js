@@ -1,7 +1,11 @@
 const getEnabledOptions = (options, allowedValues, disallowedValues) => {
 
+  const optionsList= Object.prototype.toString.call( options ) === '[object Array]'
+    ? options
+    : Object.entries(options)
+
   const enabledOptions= []
-  options.map((opt) => {
+  optionsList.map((opt) => {
     const optValue= opt[0] 
     const optLabel= opt[1] || optValue
     const optDisabled= opt.length>=3 ? opt[2] : false

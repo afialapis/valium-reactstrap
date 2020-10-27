@@ -72,7 +72,7 @@ VInputSelectMultiple.propTypes = {
   ...inputPropTypes,
 
   placeholder : PropTypes.string,
-  options     : PropTypes.arrayOf(PropTypes.array),
+  options     : PropTypes.oneOfType([PropTypes.object, PropTypes.arrayOf(PropTypes.array)]),
   autocomplete: PropTypes.oneOf(["on", "off"])
 }
 
