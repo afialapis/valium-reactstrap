@@ -12,7 +12,7 @@ const minifyExtension = pathToFile => pathToFile.replace(/\.js$/, '.min.js');
 
 const input = './src/index.js';
 
-const baseCfg= (output, withReplace, withTerser, withCss) => {
+const baseCfg= (output, withReplace, withTerser) => {
   let plugins= []
   if (withReplace) {
     plugins.push(
@@ -35,29 +35,11 @@ const baseCfg= (output, withReplace, withTerser, withCss) => {
       terser()
     )
   }
-  if (withCss) {
-    if (withTerser) {
-      plugins.push(
-        scss({
-          output: 'dist/styles.min.css',
-          outputStyle: 'compressed'
-        })
-      )
-    } else {
-      plugins.push(
-        scss({
-          output: 'dist/styles.css',
-        })
-      )
-    }
-
-  } else {
-    plugins.push(
-      scss({
-        output: false
-      })
-    )    
-  }
+  plugins.push(
+    scss({
+      output: false
+    })
+  )
 
   return {
     input: input,
@@ -106,7 +88,7 @@ module.exports = [
       'reactstrap': 'Reactstrap',
       'reactstrap-date-picker': 'ReactstrapDatePicker'
     }
-  }, true, false, true),
+  }, true, false),
   baseCfg({
     file: minifyExtension(packageJSON.browser),
     format: 'umd',
@@ -118,6 +100,26 @@ module.exports = [
       'reactstrap': 'Reactstrap',
       'reactstrap-date-picker': 'ReactstrapDatePicker'
     }
-  }, true, true, true), 
-  
+  }, true, true), 
+  // CSS
+  {
+    input: './src/assets/index.js',
+    output: false,
+    plugins: [
+      scss({
+        output: 'dist/styles.css'
+      })
+    ]
+  },
+  {
+    input: './src/assets/index.js',
+    output: false,
+    plugins: [
+      terser(),
+      scss({
+        output: 'dist/styles.min.css',
+        outputStyle: 'compressed'
+      })
+    ]
+  },  
 ];
