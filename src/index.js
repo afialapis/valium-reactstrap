@@ -19,9 +19,6 @@ import VInputUrl            from './VInputUrl'
 import VInputPassword       from './VInputPassword'
 import VInputTextArea       from './VInputTextArea'
 
-
-import './assets/style.scss'
-
 export {VForm,
         VInputText,
         VInputFloat,
