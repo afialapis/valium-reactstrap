@@ -1,18 +1,22 @@
 import React, {useState} from 'react'
-import {VInputDate} from '../../../src'
+import {VInputDate, VInputUnixSecs} from '../../../src'
 
-const pad = (n) => 
-  n.toString().padStart(2, '0')
 
 const getToday = (add= 0) => {
   const n= new Date()
-  return `${pad(n.getDate() + add)}/${pad(n.getMonth()+1)}/${n.getFullYear()}`
+  n.setUTCHours(0,0,0,0);
+  if (add) {
+    n.setDate(n.getDate() + add);
+  }
+  return n.toISOString()
 }
 
 const DemoInputDate = (options) => {
   const [when, setWhen]= useState(getToday(1))
+  const [whon, setWhon]= useState(1603839600)
 
   return (
+    <>
       <VInputDate
              name             = {'when'}
              value            = {when}
@@ -21,8 +25,21 @@ const DemoInputDate = (options) => {
              label            = {"When will you take your next Valium?"}
              description      = "Why would you wait till tomorrow"
              required         = {true}
+             //checkValue       = {(v) => {console.log(`checking date ${v} against ${getToday()}`); return true}}
              {...options}
              />
+      <VInputUnixSecs
+             name             = {'whon'}
+             value            = {whon}
+             onChange         = {(v) => setWhon(v)}
+             disallowedValues = {[1603753200]}
+             label            = {"When will you take your next Valium?"}
+             description      = "Why would you wait till tomorrow"
+             required         = {true}
+             {...options}
+      />
+      
+    </>          
   )
 }
 

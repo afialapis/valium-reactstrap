@@ -18,6 +18,7 @@ import VInputEmail          from './VInputEmail'
 import VInputUrl            from './VInputUrl'
 import VInputPassword       from './VInputPassword'
 import VInputTextArea       from './VInputTextArea'
+import VInputUnixSecs       from './VInputUnixSecs'
 
 export {VForm,
         VInputText,
@@ -38,8 +39,7 @@ export {VForm,
         VInputUrl,
         VInputPassword,
         VInputTextArea,
-
-        
+        VInputUnixSecs
        }
 
        

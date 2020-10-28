@@ -1,5 +1,4 @@
 
-
 [ ] Expose event parameter on RDP onChange()
     so VAR api is consistent for all components => onChange(value, event)
 
