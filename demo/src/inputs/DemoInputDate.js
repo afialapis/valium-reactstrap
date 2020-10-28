@@ -34,7 +34,9 @@ const getTodayISO = (add= 0) => {
 const DemoInputDate = (options) => {
   const [when, setWhen]= useState(getTodayISO(1))
   const [whin, setWhin]= useState(getToday(1))
-  const [whon, setWhon]= useState(getTodayUnix(1))
+  const [whon, setWhon]= useState(1404424800 /*getTodayUnix(1)*/)
+
+  console.log([when, whin, whon])
 
   return (
     <>
@@ -62,7 +64,7 @@ const DemoInputDate = (options) => {
              name             = {'whon'}
              value            = {whon}
              onChange         = {(v) => setWhon(v)}
-             disallowedValues = {[getTodayUnix()]}
+             disallowedValues = {[1404165600 /*getTodayUnix()*/]}
              label            = {"When will you take your next Valium?"}
              description      = "Why would you wait till tomorrow"
              required         = {true}

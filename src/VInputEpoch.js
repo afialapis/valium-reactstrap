@@ -3,8 +3,8 @@ import PropTypes   from 'prop-types'
 import _VInputDate from './_VInputDate'
 import {isoToDate} from './helpers/isoToDate'
 
-const dateAdjustOffset = (d) => {
-  const offs= d.getTimezoneOffset() * -1
+const dateAdjustOffset = (d, f) => {
+  const offs= d.getTimezoneOffset() * f
   const msecs= offs * 60 * 1000
   d.setTime(d.getTime() + msecs)
   return d
@@ -17,7 +17,7 @@ const unixToISO = (value) => {
   }
 
   let date = new Date(value * 1000)
-  date= dateAdjustOffset(date)
+  date= dateAdjustOffset(date, -1)
   return date.toISOString()
 }
 
@@ -25,8 +25,8 @@ const unixFromISO = (value) => {
   if (! value) {
     return undefined
   }
-  const date= isoToDate(value)
-  const usecs= Math.floor(date.getTime()/1000)   
+  const date= dateAdjustOffset(isoToDate(value), 1)
+  const usecs= Math.floor(date.getTime()/1000)
   return usecs
 }
 
