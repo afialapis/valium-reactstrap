@@ -45,7 +45,18 @@ const _VInputWithFilter = ({className, inputFilter, placeholder, readOnly, valid
 }
 
 
-const getInnerSumRepr = (innerSum, innerValue, decimalSign) => {
+const getInnerSum = (summed, innerValue) => {
+  if (summed==undefined) {
+    return ''
+  }
+  // Round sum to the max number of decimals
+  const decs= innerValue.map((f) => countDecimals(f))
+  const maxd= Math.max(...decs)
+  return summed.toFixed(maxd)
+}
+
+const getInnerSumRepr = (innerSum, decimalSign) => {
+  /*
   if (innerSum==undefined) {
     return ''
   }
@@ -53,6 +64,8 @@ const getInnerSumRepr = (innerSum, innerValue, decimalSign) => {
   const decs= innerValue.map((f) => countDecimals(f))
   const maxd= Math.max(...decs)
   return innerSum.toFixed(maxd).toString().replace('.', decimalSign)
+  */
+ return innerSum.toString().replace('.', decimalSign)
 }
 
 const _VInputFloatSum = (props) => {
@@ -68,8 +81,8 @@ const _VInputFloatSum = (props) => {
   const controlled= isControlled(props)
 
   const [innerValue, setInnerValue]= useState(controlled ? value : defaultValue)
-  const [innerSum, setInnerSum]    = useState(t.sum(innerValue))
-  const [innerSumRepr, setInnerSumRepr]= useState(getInnerSumRepr(innerSum, innerValue, decimalSign))
+  const [innerSum, setInnerSum]    = useState(getInnerSum(t.sum(innerValue), innerValue))
+  const [innerSumRepr, setInnerSumRepr]= useState(getInnerSumRepr(innerSum, decimalSign))
   const [innerRepr, setInnerRepr]  = useState(t.from(innerValue))
   
   const [inputWithFocus, setInputWithFocus]= useState(0)
@@ -88,11 +101,11 @@ const _VInputFloatSum = (props) => {
   const updInnerValue = useCallback((nInnerValue, propagate) => {
     setInnerValue(nInnerValue)
 
-    const nInnerSum= t.sum(nInnerValue)
+    const nInnerSum= getInnerSum(t.sum(nInnerValue), nInnerValue)
     setInnerSum(nInnerSum)
     
     setInnerSumRepr(
-      getInnerSumRepr(nInnerSum, nInnerValue, decimalSign)
+      getInnerSumRepr(nInnerSum, decimalSign)
     )
 
     inputRef.current.value= nInnerSum

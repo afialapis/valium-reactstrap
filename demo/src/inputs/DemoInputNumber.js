@@ -43,6 +43,7 @@ const DemoInputNumber = (options) => {
               label       = {"Still not sure... Your size?"}
               description = {"Some float (max 2 decimals, step = 0.01, greater than zero -trough gt-)."}
               step        = {0.01}
+              decimals    = {2}
               decimalSign = {','}
               required    = {true}
               gt          = {0}
@@ -55,8 +56,9 @@ const DemoInputNumber = (options) => {
               value       = {km}
               onChange    = {(v) => setKm(v)}
               label       = {"You are not a sporty guy, right? How far did your last walks took?"}
-              description = {"Some float (max 2 decimals, step = 0.01)."}
+              description = {"Some float (max 4 decimals, step = 0.01)."}
               step        = {0.01}
+              decimals    = {4}
               decimalSign = {','}
               required    = {true}
               {...options}
