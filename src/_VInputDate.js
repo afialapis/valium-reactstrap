@@ -19,6 +19,7 @@ const _VInputDate = (props) => {
 
   const [inputRef, valid, message, _setValidity]= useInput({
     ...props,
+    transformValue: transform.fromISO,
     checkValue: props.checkValue!=undefined 
                 ? (v) => props.checkValue(transform.fromISO(v))
                 : undefined

@@ -1,8 +1,27 @@
 import React, {useState} from 'react'
 import {VInputDate, VInputUnixSecs} from '../../../src'
 
+const dateAdjustOffset = (d) => {
+  const offs= d.getTimezoneOffset() * -1
+  const msecs= offs * 60 * 1000
+  d.setTime(d.getTime() + msecs)
+  return d
+}
 
-const getToday = (add= 0) => {
+
+
+
+const getTodayUnix = (add= 0) => {
+  const n= new Date()
+  n.setUTCHours(0,0,0,0);
+  if (add) {
+    n.setDate(n.getDate() + add);
+  }
+  return n.getTime() / 1000
+}
+
+
+const getTodayISO = (add= 0) => {
   const n= new Date()
   n.setUTCHours(0,0,0,0);
   if (add) {
@@ -12,8 +31,8 @@ const getToday = (add= 0) => {
 }
 
 const DemoInputDate = (options) => {
-  const [when, setWhen]= useState(getToday(1))
-  const [whon, setWhon]= useState(1603839600)
+  const [when, setWhen]= useState(getTodayISO(1))
+  const [whon, setWhon]= useState(getTodayUnix(1))
 
   return (
     <>
@@ -21,18 +40,17 @@ const DemoInputDate = (options) => {
              name             = {'when'}
              value            = {when}
              onChange         = {(v) => setWhen(v)}
-             disallowedValues = {[getToday()]}
+             disallowedValues = {[getTodayISO()]}
              label            = {"When will you take your next Valium?"}
              description      = "Why would you wait till tomorrow"
              required         = {true}
-             //checkValue       = {(v) => {console.log(`checking date ${v} against ${getToday()}`); return true}}
              {...options}
              />
       <VInputUnixSecs
              name             = {'whon'}
              value            = {whon}
              onChange         = {(v) => setWhon(v)}
-             disallowedValues = {[1603753200]}
+             disallowedValues = {[getTodayUnix()]}
              label            = {"When will you take your next Valium?"}
              description      = "Why would you wait till tomorrow"
              required         = {true}

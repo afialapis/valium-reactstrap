@@ -19,10 +19,10 @@ export default {
       'react-dom': 'ReactDOM',
       'reactstrap': 'Reactstrap',
       'reactstrap-date-picker': 'ReactstrapDatePicker',
-      'valium': 'Valium'
+      /*'valium': 'Valium'*/
     }
   },
-  external: ['react', 'react-dom', 'reactstrap', 'reactstrap-date-picker', 'valium'],
+  external: ['react', 'react-dom', 'reactstrap', 'reactstrap-date-picker'/*, 'valium'*/],
   plugins: [
     replace({
       'process.env.NODE_ENV': JSON.stringify(NODE_ENV)
