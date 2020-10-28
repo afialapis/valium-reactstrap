@@ -9,6 +9,26 @@ import {inputDefaultProps} from './props/inputDefaultProps'
 import isControlled from './helpers/isControlled'
 import {useInputFilter} from 'valium'
 
+const wrappedCheckValue = (props, value) => {
+  if (props.checkValue!=undefined) {
+    if (!props.checkValue(value)) {
+      return false
+    }
+  }
+  if (props.gt!=undefined) {
+    if (value<= props.gt) {
+      return false
+    }
+  }
+  if (props.lt!=undefined) {
+    if (value>= props.lt) {
+      return false
+    }
+  }
+  return true
+}
+
+
 const VInputNumber = (props) => {
   const {id, name, placeholder, label, description, feedback,
          icon, inline, keepHeight, showAddon, formGroupStyle,
@@ -19,9 +39,7 @@ const VInputNumber = (props) => {
   
   const [inputRef, valid, message, setValidity]= useInput({
     ...props,
-    checkValue: props.checkValue!=undefined 
-                ? (v) => props.checkValue(t.to(v))
-                : undefined
+    checkValue: (v) => wrappedCheckValue(props, t.to(v))
   })
 
   const reprRef = useRef(undefined)
@@ -152,6 +170,8 @@ VInputNumber.propTypes = {
   max                 : PropTypes.number,
   min                 : PropTypes.number,
   step                : PropTypes.number,
+  gt                  : PropTypes.number,
+  lt                  : PropTypes.number,
   autocomplete        : PropTypes.oneOf(["on", "off"]),
   showArrows          : PropTypes.bool,
 }

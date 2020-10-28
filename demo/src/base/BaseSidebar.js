@@ -27,7 +27,7 @@ const BaseSidebar = ({options, resume, onChangeOption}) => {
               <VInputSelect
                             name         = {'showValidity'}
                             value        = {options.showValidity}
-                            onChange     = {(v) => {console.log(v); onChangeOption('showValidity', v)}}
+                            onChange     = {(v) => onChangeOption('showValidity', v)}
                             icon         = {'Show Validity'}
                             options = {[
                               [0, 'Nothing'],

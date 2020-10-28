@@ -30,7 +30,7 @@ const DemoInputNumber = (options) => {
               onChange    = {(v) => setWeight(v)}
               required    = {true}
               label       = {"Hmm... sounds like too much pills. How much do you weight?"}
-              description = {"Some int (step = 1, default). Greater than zero."}
+              description = {"Some int (step = 1, default). Greater than zero -trough checkValue-."}
               checkValue  = {(v) => v>0}
               {...options}
               >
@@ -41,11 +41,11 @@ const DemoInputNumber = (options) => {
               value       = {size}
               onChange    = {(v) => setSize(v)}
               label       = {"Still not sure... Your size?"}
-              description = {"Some float (max 2 decimals, step = 0.01, greater than zero)."}
+              description = {"Some float (max 2 decimals, step = 0.01, greater than zero -trough gt-)."}
               step        = {0.01}
               decimalSign = {','}
               required    = {true}
-              checkValue  = {(v) => v>0}
+              gt          = {0}
               {...options}
               >
       </VInputFloat>
