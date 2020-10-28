@@ -64,15 +64,16 @@ const VInputNumber = (props) => {
 
 
   const updValue = useCallback((value, repr) => {
-    inputRef.current.value= value
+    
     setInnerValue(value)
     setInnerRepr(repr)
 
     if (onChange!=undefined) {
       onChange(value)
     }
+
     setValidity()
-  }, [inputRef, setInnerValue, onChange, setValidity])
+  }, [setInnerValue, onChange, setValidity])
 
   const incrValue = useCallback((factor) => {
       const curValue = innerValue || 0.0
@@ -130,7 +131,8 @@ const VInputNumber = (props) => {
               max          = {max}
               min          = {min}
               decimals     = {decimals}
-              defaultValue = {innerValue||''}/>
+              value        = {innerValue}
+              onChange     = {() => {}}/>
 
       <Input  
               type         = {"text"}
