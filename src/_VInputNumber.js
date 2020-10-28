@@ -37,11 +37,6 @@ const VInputNumber = (props) => {
          autocomplete, onChange, t, inputFilter,
          inputStyle, showArrows, showValidity}= props
   
-  const [inputRef, valid, message, setValidity]= useInput({
-    ...props,
-    checkValue: (v) => wrappedCheckValue(props, t.to(v))
-  })
-
   const reprRef = useRef(undefined)
 
   const controlled= isControlled(props)
@@ -50,6 +45,11 @@ const VInputNumber = (props) => {
 
   const [innerValue, setInnerValue]= useState(controlled ? value : defaultValue)
   const [innerRepr, setInnerRepr]= useState(t.from(innerValue))
+
+  const [inputRef, valid, message, setValidity]= useInput({
+    ...props,
+    checkValue: (v) => wrappedCheckValue(props, t.to(v))
+  })
 
   useInputFilter(reprRef, inputFilter)
 
@@ -108,7 +108,7 @@ const VInputNumber = (props) => {
                   label          = {label}
                   description    = {description}
                   feedback       = {feedback||message}
-                  value          = {value===undefined ? defaultValue : value}
+                  value          = {innerValue}
                   icon           = {icon}
                   showAddon      = {showAddon}
                   showValidity   = {showValidity}

@@ -3,9 +3,6 @@
 [ ] Expose event parameter on RDP onChange()
     so VAR api is consistent for all components => onChange(value, event)
 
-[ ] _InputNumber
-    Add props like 'gt' (greater than), 'lt' (lesser than)?
-
 [ ] SelectMultiple
     - Review the usage of 'showValidity' prop
     - Maybe it is better to just customize the entire component
