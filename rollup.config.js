@@ -44,7 +44,7 @@ const baseCfg= (output, withReplace, withTerser) => {
   return {
     input: input,
     output: output,
-    external: ['react', 'react-dom', 'prop-types', 'reactstrap', 'reactstrap-date-picker'],
+    external: ['react', 'react-dom', 'prop-types', 'reactstrap', 'reactstrap-date-picker', 'valium'],
     plugins: plugins  
   }
 }
@@ -86,7 +86,8 @@ module.exports = [
       'react-dom': 'ReactDOM',
       'prop-types': 'PropTypes',
       'reactstrap': 'Reactstrap',
-      'reactstrap-date-picker': 'ReactstrapDatePicker'
+      'reactstrap-date-picker': 'ReactstrapDatePicker',
+      'valium': 'Valium'
     }
   }, true, false),
   baseCfg({
@@ -98,7 +99,8 @@ module.exports = [
       'react-dom': 'ReactDOM',
       'prop-types': 'PropTypes',
       'reactstrap': 'Reactstrap',
-      'reactstrap-date-picker': 'ReactstrapDatePicker'
+      'reactstrap-date-picker': 'ReactstrapDatePicker',
+      'valium': 'Valium'
     }
   }, true, true), 
   // CSS
