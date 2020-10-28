@@ -285,7 +285,7 @@ VInputFloatSum.propTypes = {
 VInputFloatSum.defaultProps = {
   ...inputDefaultProps,
   icon: "sigma",
-  decimals: 99,
+  decimals: undefined,
   decimalSign: '.'
 }
 

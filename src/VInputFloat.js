@@ -26,7 +26,7 @@ VInputFloat.propTypes = {
 VInputFloat.defaultProps = {
   ...VInputNumber.defaultProps,
   icon: 'dollar',
-  decimals: 2,
+  decimals: undefined,
   decimalSign: '.'
 }
 
