@@ -1,51 +1,48 @@
 import React, {useCallback} from 'react'
 import PropTypes from 'prop-types'
+import {useInput} from 'valium'
 import {InputGroupAddon, InputGroupText}     from 'reactstrap'
 import {inputPropTypes}  from './props/inputPropTypes'
 import {inputDefaultProps} from './props/inputDefaultProps'
-import {withAddon} from './addon/withAddon'
-import {withValium} from './valium/withValium'
+import {VInputAddon} from './addon/VInputAddon'
 import {useInnerValue} from './value/useInnerValue'
 import {getEnabledOptions} from './helpers/getEnabledOptions'
+import {parseValueDependOnOptions} from './helpers/parseValueDependOnOptions'
 import { useValidClassnames } from './helpers/useValidClassnames'
 
-const getShowValidPropsForSelect = (showValidProps) => {
-  if (Object.keys(showValidProps).length==0) {
+const getShowValidPropsForSelect = (showValidity, valid) => {
+  if (showValidity>=2 ) {
     return {}
   }
   return {
-    'aria-invalid': showValidProps.invalid.toString()
+    'aria-invalid': (! valid).toString()
   }
 }
 
 
-const _VInputSelect = (props) => {
+const VInputSelect = (props) => {
 
-  const { id, name,  inputRef, 
+  const { id, name,  label, description, feedback, icon, showAddon, keepHeight,
           placeholder, readOnly, autocomplete, required, 
           allowedValues, disallowedValues, onChange, options, 
-          inputStyle, clearable, valid, showValidity, showValidProps, setValidity} = props
-  
-  const [innerValue, setInnerValue, _controlled] = useInnerValue(props)
+          inputStyle, clearable, showValidity, 
+        inline, inputGroupStyle, formGroupStyle} = props
 
+  const [innerValue, setInnerValue, _controlled] = useInnerValue(props)
+  const enabledOptions= getEnabledOptions(options, allowedValues, disallowedValues)
+
+  const [inputRef, valid, message, setValidity]= useInput({
+    ...props,
+    checkValue: props.checkValue!=undefined 
+                ? (v) => props.checkValue(parseValueDependOnOptions(v, enabledOptions))
+                : undefined    
+  })
   const [className]= useValidClassnames(valid, showValidity)
 
+  
   const updValue = useCallback((nValue, event) => {
-    let iValue= nValue
-
-    // check if is Numeric and convert
-    if (! isNaN(iValue)) {
-      const optVals= options.map((o) => o[0])
-      if (optVals.indexOf(iValue)<0) {
-
-        if (optVals.indexOf(parseFloat(iValue))>=0) {
-          iValue= parseFloat(iValue)
-        } else if (optVals.indexOf(parseInt(iValue))>=0) {
-          iValue= parseInt(iValue)
-        } 
-      }
-    }
-    
+    const iValue= parseValueDependOnOptions(nValue, enabledOptions)
+   
     setInnerValue(iValue)
 
     if (onChange!=undefined) {
@@ -54,7 +51,7 @@ const _VInputSelect = (props) => {
     inputRef.current.value= iValue
     setValidity()
 
-  }, [inputRef, setInnerValue, onChange, options, setValidity])
+  }, [inputRef, enabledOptions, setInnerValue, onChange, setValidity])
 
   const handleChange = useCallback((event) => {
     updValue(event.target.value, event)
@@ -67,10 +64,23 @@ const _VInputSelect = (props) => {
   }, [updValue])
 
 
-  const enabledOptions= getEnabledOptions(options, allowedValues, disallowedValues)
+  
   
   return (
-    <>
+    <VInputAddon name           = {name}
+                 label          = {label}
+                 description    = {description}
+                 feedback       = {feedback||message}
+                 value          = {innerValue}
+                 icon           = {icon}
+                 showAddon      = {showAddon}
+                 showValidity   = {showValidity}                 
+                 isValid        = {valid}
+                 inline         = {inline}
+                 keepHeight     = {keepHeight}
+                 inputGroupStyle= {inputGroupStyle}
+                 formGroupStyle = {formGroupStyle}
+                 >
       <select    
                 id          = {id}
                 name        = {name}
@@ -87,13 +97,12 @@ const _VInputSelect = (props) => {
                 
                 /*valid={valid}
                 invalid={!valid}*/
-                {...getShowValidPropsForSelect(showValidProps)}
+                {...getShowValidPropsForSelect(showValidity, valid)}
                 >
         {enabledOptions.map((opt) => 
           <option key       = {`${name}_option_${opt.value}`}
                   value     = {opt.value}
-                  disabled  = {opt.disabled}
-                  /*selected  = {opt.value==innerValue}*/
+                  {...opt.disabled ? {disabled: true} : {}}
                   >
             {opt.label}
           </option>
@@ -113,11 +122,10 @@ const _VInputSelect = (props) => {
           </InputGroupAddon>  
         : null
       }
-    </>
+    </VInputAddon>
   )
 }
 
-const VInputSelect= withValium(withAddon(_VInputSelect))
 
 VInputSelect.propTypes = {
   ...inputPropTypes,

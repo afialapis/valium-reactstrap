@@ -1,20 +1,29 @@
 import React, {useRef, useCallback, useState, useEffect}  from 'react'
 import PropTypes   from 'prop-types'
+import {useInput} from 'valium'
 import {Input, InputGroupAddon, InputGroupText}     from 'reactstrap'
+import {VInputAddon}  from './addon/VInputAddon'
 import Icon from './icons'
 import {inputPropTypes}  from './props/inputPropTypes'
 import {inputDefaultProps} from './props/inputDefaultProps'
-import {withAddon} from './addon/withAddon'
 import isControlled from './helpers/isControlled'
-import {withValium} from './valium/withValium'
 import {useInputFilter} from 'valium'
 
-const _VInputNumber = (props) => {
-  const {id, name, inputRef, setValidity, placeholder, 
+const VInputNumber = (props) => {
+  const {id, name, placeholder, label, description, feedback,
+         icon, inline, keepHeight, showAddon, formGroupStyle,
+        inputGroupStyle, middleElement, 
          readOnly, required, min, max, step, decimals,
          autocomplete, onChange, t, inputFilter,
-         inputStyle, showArrows, showValidProps}= props
+         inputStyle, showArrows, showValidity}= props
   
+  const [inputRef, valid, message, setValidity]= useInput({
+    ...props,
+    checkValue: props.checkValue!=undefined 
+                ? (v) => props.checkValue(t.to(v))
+                : undefined
+  })
+
   const reprRef = useRef(undefined)
 
   const controlled= isControlled(props)
@@ -71,10 +80,29 @@ const _VInputNumber = (props) => {
     }
   }, [incrValue])
 
-    
+  const showValidProps = showValidity>=2 
+  ? {valid: valid, invalid: ! valid}
+  : {}
+
 
   return (
-    <>
+    <VInputAddon name           = {name}
+                  label          = {label}
+                  description    = {description}
+                  feedback       = {feedback||message}
+                  value          = {value===undefined ? defaultValue : value}
+                  icon           = {icon}
+                  showAddon      = {showAddon}
+                  showValidity   = {showValidity}
+                  isValid        = {valid}
+                  inline         = {inline}
+                  keepHeight     = {keepHeight}
+                  formGroupStyle = {formGroupStyle}
+                  inputGroupStyle= {inputGroupStyle}
+                  middleElement  = {middleElement}>    
+
+
+
       <input  type         = "number"
               id           = {id}
               name         = {name}
@@ -112,11 +140,9 @@ const _VInputNumber = (props) => {
           </InputGroupAddon>  
         : null
       }      
-    </>
+    </VInputAddon>
   )
 }
-
-const VInputNumber = withValium(withAddon(_VInputNumber))
 
 
 VInputNumber.propTypes = {

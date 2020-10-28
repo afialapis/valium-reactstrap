@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes   from 'prop-types'
+import {useInput} from 'valium'
 import {VInputAddon} from './addon/VInputAddon'
 import DatePicker  from 'reactstrap-date-picker'
 import {inputPropTypes}  from './props/inputPropTypes'
 import {inputDefaultProps} from './props/inputDefaultProps'
 import {useInnerValueWithTransform} from './value/useInnerValueWithTransform'
-import {withValium} from './valium/withValium'
 
 const toISOString = (value) => {
   if (typeof value == 'string' && value.length>0) {
@@ -16,12 +16,29 @@ const toISOString = (value) => {
       return date.toISOString()
     }
 
-    const parts= value.split('/')
-    const year= parseInt(parts[2])
-    const month= parseInt(parts[1])-1
-    const day= parseInt(parts[0])
-    const date= new Date(Date.UTC(year, month, day))
-    return date.toISOString()
+    const getDateFromEu = (s) => {
+      const parts= s.split('/')
+      const year= parseInt(parts[2])
+      const month= parseInt(parts[1])-1
+      const day= parseInt(parts[0])
+      const date= new Date(Date.UTC(year, month, day))
+      return date.toISOString()      
+    }
+    
+    const getDateFromIso = (s) => {
+      const parts= s.split('-')
+      const year= parseInt(parts[0])
+      const month= parseInt(parts[1])-1
+      const day= parseInt(parts[2])
+      const date= new Date(Date.UTC(year, month, day))
+      return date.toISOString()      
+    }
+
+    try {
+      return getDateFromEu(value)
+    } catch(_) {
+      return getDateFromIso(value)
+    }
   }
   return undefined
 }
@@ -30,9 +47,17 @@ const toISOString = (value) => {
 
 const _VInputDate = (props) => {
   const {id, placeholder, readOnly, autocomplete, inline,
-         label, description, feedback, message, icon, keepHeight, inputGroupStyle, formGroupStyle,
+         label, description, feedback, icon, keepHeight, inputGroupStyle, formGroupStyle,
          required, inputStyle, onChange, 
-         inputRef, valid, setValidity, showAddon, showValidity} = props
+         showAddon, showValidity} = props
+
+  const [inputRef, valid, message, _setValidity]= useInput({
+    ...props,
+    checkValue: props.checkValue!=undefined 
+                ? (v) => props.checkValue(toISOString(v))
+                : undefined
+  })
+      
 
   const [innerValue, setInnerValue, controlled] = useInnerValueWithTransform(props, toISOString)
 
@@ -42,14 +67,13 @@ const _VInputDate = (props) => {
 
   
   const handleChange = (value, formattedValue) => {
-    setInnerValue(toISOString(formattedValue))
+    const isoValue= toISOString(formattedValue)
+    setInnerValue(isoValue)
     if (onChange!=undefined) {
       // TODO Ask RDP to expose event as a onChange() parameter,
       // so we can expose it here too
-      onChange(formattedValue, undefined)
+      onChange(isoValue, undefined)
     }
-    inputRef.current.value= toISOString(formattedValue)
-    setValidity()
   }
 
   const nInputGroupStyle ={
@@ -92,7 +116,7 @@ const _VInputDate = (props) => {
 }
 
 
-const VInputDate= withValium(_VInputDate)
+const VInputDate= _VInputDate
   
 
 VInputDate.propTypes = {

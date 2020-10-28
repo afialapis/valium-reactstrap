@@ -3,10 +3,26 @@
 [ ] Expose event parameter on RDP onChange()
     so VAR api is consistent for all components => onChange(value, event)
 
+[ ] checkValue
+    Transform passed values: 
+      _InputNumber => int or float
+      SelectMultiple => array
+      Date => ISO string
+
+[ ] _InputNumber
+    Add props like 'gt' (greater than), 'lt' (lesser than)?
+
+[ ] SelectMultiple
+    - Review the usage of 'showValidity' prop
+    - Maybe it is better to just customize the entire component
+
+[ ] showValidity
+    - Add option to start as hidden (not showing green ticks at the beginning)
 
 
 
-  -- en rdp estamos viendo tb elonClikOutside(), igual esta lanzando validaciones
-    innecesarias, cuando los licks no tienen nada que ver con el RDP
+[ ] RDP
+    -- en rdp estamos viendo tb el onClickOutside(), igual esta lanzando validaciones
+       innecesarias, cuando los licks no tienen nada que ver con el RDP
 
 

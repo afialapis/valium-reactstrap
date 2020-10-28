@@ -1,19 +1,20 @@
 import React, {useRef, useState, useEffect, useCallback} from 'react'
 import PropTypes from 'prop-types'
+import {useInput} from 'valium'
 import {VInputAddon} from './addon/VInputAddon'
 import {Input, InputGroupAddon, InputGroupText} from 'reactstrap'
 import {inputPropTypes}  from './props/inputPropTypes'
 import {inputDefaultProps} from './props/inputDefaultProps'
 import {useInnerValue} from './value/useInnerValue'
-import {withValium} from './valium/withValium'
 import {getEnabledOptions} from './helpers/getEnabledOptions'
+import {parseValueDependOnOptions} from './helpers/parseValueDependOnOptions'
 
-const _VInputSelectSearch = (props) => {
+const VInputSelectSearch = (props) => {
   const {id, name, options, label, description, feedback, icon, inline, 
          placeholder, readOnly, autocomplete, required,
          allowedValues, disallowedValues, keepHeight, formGroupStyle, inputGroupStyle,
          inputStyle, onChange, clearable, maxShownOptions,
-         message, valid, inputRef, setValidity, showAddon, showValidity
+         showAddon, showValidity
          } = props
   
   const wrapperRef    = useRef(undefined)
@@ -26,6 +27,13 @@ const _VInputSelectSearch = (props) => {
   const [innerValue, setInnerValue, _controlled]= useInnerValue(props) 
   
   const enabledOptions= getEnabledOptions(options, allowedValues, disallowedValues)
+
+  const [inputRef, valid, message, setValidity]= useInput({
+    ...props,
+    checkValue: props.checkValue!=undefined 
+                ? (v) => props.checkValue(parseValueDependOnOptions(v, enabledOptions))
+                : undefined    
+  })
 
   useEffect(() => {
     const onClickOutside = (event) => {
@@ -55,7 +63,8 @@ const _VInputSelectSearch = (props) => {
   }, [enabledOptions, innerValue])
 
 
-  const handleChange = useCallback((value, event) => {
+  const handleChange = useCallback((nValue, event) => {
+    const value= parseValueDependOnOptions(nValue, enabledOptions)
     setInnerValue(value)
     inputRef.current.value= value
     
@@ -65,7 +74,7 @@ const _VInputSelectSearch = (props) => {
     }
     
     setValidity()
-  }, [inputRef, setInnerValue, onChange, setValidity])
+  }, [inputRef, setInnerValue, onChange, setValidity, enabledOptions])
 
   const handleSearchStart = useCallback((_event) => {
     if (! isOpen) {
@@ -200,8 +209,6 @@ const _VInputSelectSearch = (props) => {
       </div>
   )
 }
-
-const VInputSelectSearch = withValium(_VInputSelectSearch)
 
 
 VInputSelectSearch.propTypes = {
