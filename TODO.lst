@@ -3,12 +3,6 @@
 [ ] Expose event parameter on RDP onChange()
     so VAR api is consistent for all components => onChange(value, event)
 
-[ ] checkValue
-    Transform passed values: 
-      _InputNumber => int or float
-      SelectMultiple => array
-      Date => ISO string
-
 [ ] _InputNumber
     Add props like 'gt' (greater than), 'lt' (lesser than)?
 

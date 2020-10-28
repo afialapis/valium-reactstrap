@@ -1,3 +1,13 @@
+/*
+
+  NOTE
+
+  If provided options is a simple object, remember that keys will be always treated as strings.
+  This Note should be on the Select component docs!
+
+*/
+
+
 const getEnabledOptions = (options, allowedValues, disallowedValues) => {
 
   const getFromArrayOfArray = (a) => {
