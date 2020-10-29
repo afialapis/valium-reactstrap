@@ -36,8 +36,6 @@ const DemoInputDate = (options) => {
   const [whin, setWhin]= useState(getToday(1))
   const [whon, setWhon]= useState(1404424800 /*getTodayUnix(1)*/)
 
-  console.log([when, whin, whon])
-
   return (
     <>
       <VInputDateIso

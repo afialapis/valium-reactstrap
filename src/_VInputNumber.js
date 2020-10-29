@@ -131,7 +131,7 @@ const VInputNumber = (props) => {
               max          = {max}
               min          = {min}
               decimals     = {decimals}
-              value        = {innerValue}
+              value        = {innerValue||''}
               onChange     = {() => {}}/>
 
       <Input  
@@ -142,7 +142,7 @@ const VInputNumber = (props) => {
               autoComplete = {autocomplete}
               style        = {inputStyle} 
               onKeyDown    = {(ev) => handleKeyDown(ev)}
-              value        = {innerRepr}
+              value        = {innerRepr || ''}
               onChange     = {handleChange}
               {...showValidProps}
       />

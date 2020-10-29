@@ -22,7 +22,7 @@ const useFloatProps = (decimalSign) => {
 
   const checkFloat = (s) => {
     let n= s.replace(',', '.')
-    if (isNaN(n)) {
+    if (n=='' || isNaN(n)) {
       return false
     }
     return true
@@ -36,7 +36,7 @@ const useFloatProps = (decimalSign) => {
   }
 
   const fromFloat = (f) => {
-    if (isNaN(f)) {
+    if (f=='' || isNaN(f)) {
       return ''
     } 
     const s= parseFloat(f)
@@ -65,7 +65,7 @@ const useFloatSumProps = (decimalSign) => {
     let valid= true
     for (const s of l) {
       let n= s.toString().replace(',', '.')
-      if (isNaN(n)) {
+      if (n=='' || isNaN(n)) {
         valid= false
         break
       }
@@ -82,14 +82,14 @@ const useFloatSumProps = (decimalSign) => {
   
   const sumFloatList = (l) => {
     const fls= l.map((s) => parseFloat(s.toString().replace(',', '.')))
-                .filter((f) => ! isNaN(f))
+                .filter((f) => ! isNaN(f) && f!='')
     const sum= fls.reduce((a,b) => a+b, 0) 
     return sum
   }
 
   const fromFloatList = (l) => {
     const fromFloat = (f) => {
-      if (isNaN(f)) {
+      if (f=='' || isNaN(f)) {
         return ''
       } 
       const s= parseFloat(f)
@@ -121,7 +121,7 @@ const useIntProps = (unsigned= false) => {
 
   const checkInt = (s) => {
     let n= s.replace(',', '.')
-    if (isNaN(n)) {
+    if (n=='' || isNaN(n)) {
       return false
     }
     return true
@@ -129,14 +129,14 @@ const useIntProps = (unsigned= false) => {
   
   
   const toInt = (s) => {
-    if (isNaN(s)) {
+    if (s=='' || isNaN(s)) {
       return undefined
     }
     return parseInt(s)
   }
   
   const fromInt = (f) => {
-    if (isNaN(f)) {
+    if (s=='' || isNaN(f)) {
       return ''
     } 
     const s= parseInt(f).toString() 
