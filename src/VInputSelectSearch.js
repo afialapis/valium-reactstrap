@@ -172,6 +172,7 @@ const VInputSelectSearch = (props) => {
     return {}
   }
 
+  const is_clearable= (innerValue!='' && innerValue!=undefined && !readOnly) 
 
   return (
 
@@ -219,11 +220,11 @@ const VInputSelectSearch = (props) => {
                       />
 
             {clearable
-            ?  <InputGroupAddon onClick  = {(ev) => {readOnly ? null : handleClear(ev)}}
-                                style    = {{cursor:(innerValue && !readOnly) ? 'pointer' : 'not-allowed'}}
+            ?  <InputGroupAddon onClick  = {(ev) => {is_clearable ? handleClear(ev) : null}}
+                                style    = {{cursor:is_clearable ? 'pointer' : 'not-allowed'}}
                                 addonType= "append">
                   <InputGroupText
-                              style={{opacity: (innerValue && !readOnly) ? 1 : 0.5}}>
+                              style={{opacity: is_clearable ? 1 : 0.5}}>
                     {"x"}
                   </InputGroupText>
                 </InputGroupAddon>  
