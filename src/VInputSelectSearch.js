@@ -19,7 +19,7 @@ const VInputSelectSearch = (props) => {
          placeholder, readOnly, autocomplete, required,
          allowedValues, disallowedValues, keepHeight, formGroupStyle, inputGroupStyle,
          inputStyle, onChange, clearable, maxShownOptions,
-         showAddon, showValidity
+         showValidity
          } = props
   
   const wrapperRef    = useRef(undefined)
@@ -188,7 +188,6 @@ const VInputSelectSearch = (props) => {
                       isValid     = {valid}
                       inline      = {inline}
                       keepHeight  = {isOpen ? false : keepHeight}
-                      showAddon   = {showAddon}
                       showValidity= {showValidity}                       
                   formGroupStyle  = {formGroupStyle}
                   inputGroupStyle = {inputGroupStyle}>
@@ -214,7 +213,7 @@ const VInputSelectSearch = (props) => {
                       onKeyDown   = {(ev) => handleKeyDown(ev)}
                       autoComplete= {autocomplete}
                       style       = {inputStyle} 
-                      {... showValidity>=2
+                      {... (showValidity==1 || showValidity==4)
                        ? {valid: valid, invalid: ! valid}
                        : {}}
                       />

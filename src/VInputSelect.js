@@ -11,7 +11,7 @@ import {parseValueDependOnOptions} from './helpers/parseValueDependOnOptions'
 import { useValidClassnames } from './helpers/useValidClassnames'
 
 const getShowValidPropsForSelect = (showValidity, valid) => {
-  if (showValidity>=2 ) {
+  if (showValidity!=1 && showValidity!=4) {
     return {}
   }
   return {
@@ -22,7 +22,7 @@ const getShowValidPropsForSelect = (showValidity, valid) => {
 
 const VInputSelect = (props) => {
 
-  const { id, name,  label, description, feedback, icon, showAddon, keepHeight,
+  const { id, name,  label, description, feedback, icon, keepHeight,
           placeholder, readOnly, autocomplete, required, 
           allowedValues, disallowedValues, onChange, options, 
           inputStyle, clearable, showValidity, 
@@ -73,7 +73,6 @@ const VInputSelect = (props) => {
                  feedback       = {feedback||message}
                  value          = {innerValue}
                  icon           = {icon}
-                 showAddon      = {showAddon}
                  showValidity   = {showValidity}                 
                  isValid        = {valid}
                  inline         = {inline}

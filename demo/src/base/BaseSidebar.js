@@ -19,10 +19,10 @@ const BaseSidebar = ({options, resume, onChangeOption}) => {
                             checkboxLabel= {'Keep Height'}
                             />
               <VInputCheckbox2
-                            name         = {'showAddon'}
-                            value        = {options.showAddon}
-                            onChange     = {(v) => onChangeOption('showAddon', v)}
-                            checkboxLabel= {'Show Addon'}
+                            name         = {'icon'}
+                            value        = {options.icon}
+                            onChange     = {(v) => onChangeOption('icon', v)}
+                            checkboxLabel= {'Show Icon'}
                             />
               <VInputSelect
                             name         = {'showValidity'}
@@ -31,8 +31,9 @@ const BaseSidebar = ({options, resume, onChangeOption}) => {
                             icon         = {'Show Validity'}
                             options = {[
                               [0, 'Nothing'],
-                              [1, 'Only feedback when invalid'],
-                              [2, 'Feedback and input colors']
+                              [1, 'Only input colors when invalid'],
+                              [2, 'Only feedback when invalid'],
+                              [4, 'Feedback and input colors']
                             ]}
                             />                                                                
           </div>

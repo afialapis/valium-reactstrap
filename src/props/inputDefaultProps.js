@@ -1,7 +1,7 @@
 
 const inputDefaultProps = {
   keepHeight: false,
-  showValidity: 2,
+  showValidity: 4,
   inline: false
 }
 

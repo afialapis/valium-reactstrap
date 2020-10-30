@@ -31,7 +31,7 @@ const wrappedCheckValue = (props, value) => {
 
 const VInputNumber = (props) => {
   const {id, name, placeholder, label, description, feedback,
-         icon, inline, keepHeight, showAddon, formGroupStyle,
+         icon, inline, keepHeight, formGroupStyle,
         inputGroupStyle, middleElement, 
          readOnly, required, min, max, step, decimals,
          autocomplete, onChange, t, inputFilter,
@@ -99,7 +99,7 @@ const VInputNumber = (props) => {
     }
   }, [incrValue])
 
-  const showValidProps = showValidity>=2 
+  const showValidProps = (showValidity==1 || showValidity==4)
   ? {valid: valid, invalid: ! valid}
   : {}
 
@@ -111,7 +111,6 @@ const VInputNumber = (props) => {
                   feedback       = {feedback||message}
                   value          = {innerValue}
                   icon           = {icon}
-                  showAddon      = {showAddon}
                   showValidity   = {showValidity}
                   isValid        = {valid}
                   inline         = {inline}

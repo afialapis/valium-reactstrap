@@ -22,7 +22,7 @@ const VInputSelectMultiple = (props) => {
          placeholder, readOnly, autocomplete, required,
          allowedValues, disallowedValues, onChange, options, 
          inputStyle, icon,
-         showAddon, showValidity, inline, keepHeight, inputGroupStyle, formGroupStyle} = props
+         showValidity, inline, keepHeight, inputGroupStyle, formGroupStyle} = props
 
 
   const [innerValue, setInnerValue] = useInnerValue(props)
@@ -50,7 +50,7 @@ const VInputSelectMultiple = (props) => {
     setValidity()
   }, [setInnerValue, onChange, setValidity, enabledOptions])
 
-  const showValidProps = showValidity>=2 
+  const showValidProps = (showValidity==1 || showValidity==4)
   ? {valid: valid, invalid: ! valid}
   : {}
 
@@ -62,7 +62,6 @@ const VInputSelectMultiple = (props) => {
                  feedback       = {feedback||message}
                  value          = {innerValue}
                  icon           = {icon}
-                 showAddon      = {showAddon}
                  showValidity   = {showValidity}                 
                  isValid        = {valid}
                  inline         = {inline}

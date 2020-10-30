@@ -7,7 +7,7 @@ const useValidClassnames = (valid, showValidity, customCheck) => {
 
   useEffect(() => {
     let nCname= ''
-    if (showValidity>=2) {
+    if (showValidity==1 || showValidity==4) {
       let custom= true
       if (customCheck!=undefined) {
         custom= customCheck()

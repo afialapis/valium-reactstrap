@@ -28,7 +28,7 @@ const _VInputCheckbox = (props) => {
           <input type     = "checkbox" 
                  id       = {makeId()} 
                  name     = {name} 
-                 className= {`custom-control-input ${showValidity ? valid ? 'is-valid' : 'is-invalid' : ''}`}
+                 className= {`custom-control-input ${(showValidity==1 || showValidity==4) ? valid ? 'is-valid' : 'is-invalid' : ''}`}
                  ref      = {inputRef}
                  readOnly = {readOnly!=undefined ? readOnly  : false}
                  required = {required}

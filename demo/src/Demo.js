@@ -32,7 +32,7 @@ const INPUT_TYPES= [
 const Demo = () => {
   const [options, setOptions]= useState({
     keepHeight  : true,
-    showAddon   : true,
+    icon        : true,
     showValidity: 2
   })
 
@@ -98,7 +98,9 @@ const Demo = () => {
                 <section key={`section_${inputType.type}`}
                       id={inputType.type}>
                   <h2>{inputType.type}</h2>
-                    <inputType.comp {...options}
+                    <inputType.comp keepHeight= {options.keepHeight}
+                                    icon= {options.icon===false ? false : undefined}
+                                    showValidity= {options.showValidity}
                                     />
                 </section>
               )

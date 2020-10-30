@@ -11,7 +11,7 @@ const _VInputDate = (props) => {
   const {id, placeholder, readOnly, autocomplete, inline,
          label, description, feedback, icon, keepHeight, inputGroupStyle, formGroupStyle,
          required, inputStyle, onChange, transform,
-         showAddon, showValidity} = props
+         showValidity} = props
 
   const controlled= isControlled(props)
   const {value, defaultValue}= props
@@ -55,7 +55,6 @@ const _VInputDate = (props) => {
                  feedback       = {feedback||message}
                  value          = {innerValue}
                  icon           = {icon}
-                 showAddon      = {showAddon}
                  showValidity   = {showValidity}                 
                  isValid        = {valid}
                  inline         = {inline}
@@ -73,7 +72,7 @@ const _VInputDate = (props) => {
                   readOnly    = {readOnly}
                   required    = {required}
                   autocomplete= {autocomplete}
-                  className   = {showValidity>=2 ? valid ? 'is-valid' : 'is-invalid' : ''}
+                  className   = {(showValidity==1 || showValidity==4) ? valid ? 'is-valid' : 'is-invalid' : ''}
                   style       = {inputStyle} 
                   value       = {innerValue}
                   onChange    = {(v,f) => handleChange(v, f)}

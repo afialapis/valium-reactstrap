@@ -7,11 +7,11 @@ const withAddon = BaseComponent => {
 
     let {name, 
          label, description, feedback, message, icon, 
-         keepHeight, showAddon, showValidity,
+         keepHeight, showValidity,
         valid, inline,  formGroupStyle, 
         inputGroupStyle, middleElement, value, defaultValue} = props
     
-    const showValidProps = showValidity>=2 
+    const showValidProps = (showValidity==1 || showValidity==4)
       ? {valid: valid, invalid: ! valid}
       : {}
 
@@ -22,7 +22,6 @@ const withAddon = BaseComponent => {
                    feedback       = {feedback||message}
                    value          = {value===undefined ? defaultValue : value}
                    icon           = {icon}
-                   showAddon      = {showAddon}
                    showValidity   = {showValidity}
                    isValid        = {valid}
                    inline         = {inline}

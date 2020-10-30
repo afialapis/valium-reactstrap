@@ -46,8 +46,8 @@ const formatBytes = (bytes, decimals = 2) => {
 }
 
 const getIcon = (mtype, icon, iconMap) => {
-  if (icon==undefined) {
-    return undefined
+  if (icon==undefined || icon===false) {
+    return icon
   }
   if (iconMap) {
     const i1= iconMap[mtype]
@@ -63,7 +63,7 @@ const _VInputFile = (props) => {
   const {id, name, label, description, icon, inline, readOnly, 
          required, feedback, keepHeight, formGroupStyle, inputGroupStyle, 
          inputStyle, onChange, onDownload, accept, iconMap,
-         setValidity, valid, message, inputRef, showAddon, showValidity} = props
+         setValidity, valid, message, inputRef, showValidity} = props
   
   const [progress  , setProgress ]= useState(undefined)
   const [status    , setStatus   ]= useState(undefined)
@@ -191,7 +191,6 @@ const _VInputFile = (props) => {
                 feedback       = {feedback||message}
                 value          = {innerValue}
                 icon           = {theIcon}
-                showAddon      = {showAddon}
                 showValidity   = {showValidity}
                 isValid        = {valid}
                 inline         = {inline}

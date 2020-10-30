@@ -21,7 +21,7 @@ const _VInputWithFilter = ({className, inputFilter, placeholder, readOnly, valid
     }
   }, [focusIt])
 
-  const showValidProps = showValidity>=2 
+  const showValidProps = (showValidity==1 || showValidity==4)
   ? {valid: valid, invalid: ! valid}
   : {}
 
