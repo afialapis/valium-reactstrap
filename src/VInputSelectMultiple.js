@@ -81,7 +81,7 @@ const VInputSelectMultiple = (props) => {
                 required    = {required}
                 autoComplete= {autocomplete}
                 style       = {inputStyle} 
-                value       = {innerValue}
+                value       = {innerValue || ''}
                 onChange    = {(event) => handleChange(event)}
                 {...showValidProps}
                 >

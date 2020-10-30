@@ -91,7 +91,7 @@ const VInputSelect = (props) => {
                 required    = {required}
                 autoComplete= {autocomplete}
                 style       = {inputStyle} 
-                value       = {innerValue}
+                value       = {innerValue || ''}
                 onChange    = {(ev) => handleChange(ev)}
                 
                 /*valid={valid}

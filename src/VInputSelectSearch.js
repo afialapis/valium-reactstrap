@@ -197,7 +197,7 @@ const VInputSelectSearch = (props) => {
                       type        = "hidden"
                       innerRef    = {inputRef}
                       required    = {required}
-                      defaultValue= {innerValue}
+                      defaultValue= {innerValue || ''}
                       /*onChange    = {(ev) => handleChange(ev.target.value)}*/
                       />
             <Input    name        = {`input_select_search_${name}_text`}

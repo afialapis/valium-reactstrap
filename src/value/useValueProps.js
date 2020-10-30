@@ -19,7 +19,7 @@ const useValueProps = (props) => {
 
 
   const valueProps= 
-    {value   : innerValue,
+    {value   : innerValue || '',
      onChange: handleChange
     }
   
