@@ -12,7 +12,7 @@ const LIST_OPTIONS= [
 ]
 
 const DemoInputSelectSearch = (options) => {
-  const [aword, setAWord]= useState(1)
+  const [aword, setAWord]= useState(undefined /*1*/)
 
   return (
     <VInputSelectSearch

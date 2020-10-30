@@ -6,8 +6,13 @@ import {Input, InputGroupAddon, InputGroupText} from 'reactstrap'
 import {inputPropTypes}  from './props/inputPropTypes'
 import {inputDefaultProps} from './props/inputDefaultProps'
 import {useInnerValue} from './value/useInnerValue'
-import {getEnabledOptions} from './helpers/getEnabledOptions'
+import {useEnabledOptions} from './helpers/useEnabledOptions'
 import {parseValueDependOnOptions} from './helpers/parseValueDependOnOptions'
+
+const getOptionsLabel = (options, value) => {
+  const elOpt= options.find((opt) => opt.value==value)
+  return elOpt?.label || ''
+}
 
 const VInputSelectSearch = (props) => {
   const {id, name, options, label, description, feedback, icon, inline, 
@@ -22,11 +27,15 @@ const VInputSelectSearch = (props) => {
   const listRef       = useRef(undefined)
 
   const [isOpen, setIsOpen]= useState(false)
-  const [shownText, setShownText]= useState('')
+  const [optionsMap, setOptionsMap]= useState([])
+  const [optActive, setOptActive]= useState(undefined)
+  
   
   const [innerValue, setInnerValue, _controlled]= useInnerValue(props) 
-  
-  const enabledOptions= getEnabledOptions(options, allowedValues, disallowedValues)
+  const [enabledOptions]= useEnabledOptions(options, allowedValues, disallowedValues)
+
+  const [shownText, setShownText]= useState('')
+
 
   const [inputRef, valid, message, setValidity]= useInput({
     ...props,
@@ -51,16 +60,21 @@ const VInputSelectSearch = (props) => {
     }
   })
 
+  
   useEffect(() => {
-    let nShownText= ''
-    if (innerValue!=undefined) {
-      try {
-        const elOpt= enabledOptions.find((opt) => opt.value==innerValue)
-        nShownText= elOpt.label || ''
-      } catch(_) {}
-    }
-    setShownText(nShownText)
-  }, [enabledOptions, innerValue])
+    setShownText(
+      getOptionsLabel(enabledOptions, innerValue)
+    )
+  }, [innerValue, enabledOptions])
+
+  useEffect(() => {
+    const sfilter= shownText ? shownText.toLowerCase() : ''
+    const nOptionsMap= enabledOptions
+          .filter((opt) => sfilter.length>0 ? opt.label.toLowerCase().includes(sfilter) : true)
+    setOptionsMap(nOptionsMap)
+  }, [shownText, enabledOptions])
+
+
 
 
   const handleChange = useCallback((nValue, event) => {
@@ -68,6 +82,8 @@ const VInputSelectSearch = (props) => {
     setInnerValue(value)
     inputRef.current.value= value
     
+    const nShownText= getOptionsLabel(enabledOptions, value)
+    setShownText(nShownText)
         
     if (onChange!=undefined) { 
       onChange(value, event)
@@ -80,6 +96,7 @@ const VInputSelectSearch = (props) => {
     if (! isOpen) {
       setIsOpen(true)
     }
+    setOptActive(undefined)
   }, [isOpen])
 
   const handleSearchType = useCallback((event) => {
@@ -89,6 +106,7 @@ const VInputSelectSearch = (props) => {
 
   const handleSearchAbort = useCallback((event) => {
     setIsOpen(false)
+    setOptActive(undefined)
     if (shownText=='') {
       handleChange('', event)
     }
@@ -96,15 +114,49 @@ const VInputSelectSearch = (props) => {
 
   const handleSelect = useCallback((newValue, event) => {
     setIsOpen(false)
+    setOptActive(undefined)
     handleChange(newValue, event)
   }, [handleChange])
 
-  const getOptionsMap = useCallback(() => {
-    const sfilter= shownText ? shownText.toLowerCase() : ''
-    const optionsMap= enabledOptions
-          .filter((opt) => sfilter.length>0 ? opt.label.toLowerCase().includes(sfilter) : true)
-    return optionsMap
-  }, [enabledOptions, shownText])
+  const handleClear = useCallback((event) => {
+    setIsOpen(true)
+    setOptActive(undefined)
+    handleChange('', event)
+  }, [handleChange])
+
+
+  const handleKeyDown = useCallback((event) => {
+    if (event.key=='ArrowUp' || event.key=='ArrowDown') {
+      event.preventDefault()
+      
+      if (isOpen) {
+        if (optionsMap.length>0) {
+          const factor = event.key=='ArrowUp' ? -1 : 1
+          const nOptActive= optActive==undefined
+                ? 0
+                : optActive + factor
+
+          setOptActive(nOptActive)
+        }
+      }
+    }
+    if (event.key=='Enter') {
+      event.preventDefault()
+      if (isOpen) {
+        if (optionsMap.length>0) {
+          if (optActive!=undefined) {
+            const opt= optionsMap[optActive]
+            if (opt?.disabled!==true) {
+              const nValue= opt.value
+              handleSelect(nValue, event)
+            }
+          }
+        }
+      }
+    }
+  }, [isOpen, optActive, optionsMap, handleSelect])
+
+
 
 
   const getListStyle= () => {
@@ -158,6 +210,7 @@ const VInputSelectSearch = (props) => {
                       required    = {required}
                       onClick     = {(ev) => handleSearchStart(ev)}
                       onChange    = {(ev) => handleSearchType(ev)}
+                      onKeyDown   = {(ev) => handleKeyDown(ev)}
                       autoComplete= {autocomplete}
                       style       = {inputStyle} 
                       {... showValidity>=2
@@ -166,7 +219,7 @@ const VInputSelectSearch = (props) => {
                       />
 
             {clearable
-            ?  <InputGroupAddon onClick  = {(ev) => {readOnly ? null : handleSelect('', ev)}}
+            ?  <InputGroupAddon onClick  = {(ev) => {readOnly ? null : handleClear(ev)}}
                                 style    = {{cursor:(innerValue && !readOnly) ? 'pointer' : 'not-allowed'}}
                                 addonType= "append">
                   <InputGroupText
@@ -183,12 +236,12 @@ const VInputSelectSearch = (props) => {
           ? <div className="valium-reactstrap-select-search-list list-group shadow-lg"
                   ref = {listRef}
                   style={getListStyle()}>
-              {getOptionsMap().map((opt, idx) =>  {
+              {optionsMap.map((opt, idx) =>  {
                 if (idx<=(maxShownOptions-1)) {
                   return (
                     <div key     = {`${name}_option_${opt.value}`}
                           value   = {opt.value}
-                          className={`valium-reactstrap-select-search-list-item list-group-item list-group-item-action ${opt.disabled ? 'disabled' : ''}`}
+                          className={`valium-reactstrap-select-search-list-item list-group-item list-group-item-action ${opt.disabled ? 'disabled' : ''} ${optActive==idx ? 'active': ''}`}
                           onClick = {(ev) => !opt.disabled && handleSelect(opt.value, ev)}
                           >
                       {opt.label || <>&nbsp;</>}
@@ -196,7 +249,7 @@ const VInputSelectSearch = (props) => {
                 }
               }
               )}
-              {getOptionsMap().length>maxShownOptions
+              {optionsMap.length>maxShownOptions
                 ? <div key     = {`${name}_option_ellipsis`}
                       className={`valium-reactstrap-select-search-list-item list-group-item list-group-item-action disabled ellipsis`}>
                   ...
