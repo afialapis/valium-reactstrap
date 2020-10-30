@@ -18,7 +18,7 @@ const useInnerValue = (props) => {
   }, [innerValue, value, defaultValue, controlled])
 
   
-  return [innerValue, setInnerValue, controlled]
+  return [innerValue, setInnerValue]
 }
 
 

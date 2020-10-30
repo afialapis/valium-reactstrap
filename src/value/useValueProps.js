@@ -4,7 +4,7 @@ import {useInnerValue} from './useInnerValue'
 const useValueProps = (props) => {
   const {onChange}= props
   
-  const [innerValue, setInnerValue, controlled] = useInnerValue(props)
+  const [innerValue, setInnerValue] = useInnerValue(props)
 
   const handleChange = useCallback((event) => {
     const value= event.target.value
@@ -18,11 +18,10 @@ const useValueProps = (props) => {
   }, [setInnerValue, onChange])
 
 
-  const valueProps= controlled 
-    ? {value   : innerValue,
-       onChange: handleChange
-      } 
-    : {defaultValue: innerValue}
+  const valueProps= 
+    {value   : innerValue,
+     onChange: handleChange
+    }
   
   return [valueProps]
 }  

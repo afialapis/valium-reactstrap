@@ -69,7 +69,7 @@ const _VInputFile = (props) => {
   const [status    , setStatus   ]= useState(undefined)
   const [statusMsg , setStatusMsg]= useState(undefined)
 
-  const [innerValue, setInnerValue, _controlled] = useInnerValue(props)
+  const [innerValue, setInnerValue] = useInnerValue(props)
   
   useEffect(() => {
     if (innerValue) {

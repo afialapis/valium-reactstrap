@@ -31,7 +31,7 @@ const VInputSelectSearch = (props) => {
   const [optActive, setOptActive]= useState(undefined)
   
   
-  const [innerValue, setInnerValue, _controlled]= useInnerValue(props) 
+  const [innerValue, setInnerValue]= useInnerValue(props) 
   const [enabledOptions]= useEnabledOptions(options, allowedValues, disallowedValues)
 
   const [shownText, setShownText]= useState('')
