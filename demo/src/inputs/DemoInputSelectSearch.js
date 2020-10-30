@@ -2,7 +2,6 @@ import React, {useState} from 'react'
 import {VInputSelectSearch} from '../../../src'
 
 const LIST_OPTIONS= [
-  ['', ''],
   [1, "Fascination"],
   [2, "Slowliness"],
   [3, "Happyness"],

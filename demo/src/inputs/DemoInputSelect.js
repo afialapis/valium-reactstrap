@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {VInputSelect} from '../../../src'
 
 const LIST_OPTIONS= [
-  ['' , '---'],
+  //['' , '---'],
   [1, "It's fascinating"],
   [2, "It's cool"],
   [3, "Well... beh!"],

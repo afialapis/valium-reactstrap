@@ -99,6 +99,12 @@ const VInputSelect = (props) => {
                 invalid={!valid}*/
                 {...getShowValidPropsForSelect(showValidity, valid)}
                 >
+        {clearable && enabledOptions.filter((opt) => opt.value=='').length==0
+         ?  <option key       = {`${name}_option_empty`}
+                    value     = {''}>
+            {''}
+          </option>
+         : null}
         {enabledOptions.map((opt) => 
           <option key       = {`${name}_option_${opt.value}`}
                   value     = {opt.value}
