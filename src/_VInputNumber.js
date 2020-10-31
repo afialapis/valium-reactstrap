@@ -42,7 +42,7 @@ const VInputNumber = (props) => {
   const controlled= isControlled(props)
 
   const {value, defaultValue}= props
-
+  const initialValue = useRef(controlled ? value : defaultValue)
   const [innerValue, setInnerValue]= useState(controlled ? value : defaultValue)
   const [innerRepr, setInnerRepr]= useState(t.from(innerValue))
 
@@ -63,31 +63,31 @@ const VInputNumber = (props) => {
   }, [innerValue, value, defaultValue, controlled, t])
 
 
-  const updValue = useCallback((value, repr) => {
+  const updValue = useCallback((value, repr, confirmed) => {
     
     setInnerValue(value)
     setInnerRepr(repr)
 
     if (onChange!=undefined) {
-      onChange(value)
+      onChange(value, confirmed)
     }
 
     setValidity()
   }, [setInnerValue, onChange, setValidity])
 
-  const incrValue = useCallback((factor) => {
+  const incrValue = useCallback((factor, confirmed) => {
       const curValue = innerValue || 0.0
       const incr= step!=undefined
                   ? step
                   : 1.00
       let nValue= curValue + (factor*incr)
-      updValue(nValue, t.from(nValue))
+      updValue(nValue, t.from(nValue), confirmed)
   }, [updValue, innerValue, step, t])
 
 
   const handleChange = useCallback((event) => {
     const value= event.target.value
-    updValue(t.to(value), value)
+    updValue(t.to(value), value, false)
   }, [updValue, t])
 
 
@@ -95,9 +95,18 @@ const VInputNumber = (props) => {
     if (event.key=='ArrowUp' || event.key=='ArrowDown') {
       event.preventDefault()
       const factor = event.key=='ArrowUp' ? 1 : -1
-      incrValue(factor)
+      incrValue(factor, false)
     }
   }, [incrValue])
+
+  const handleBlur = useCallback((event) => {
+    if (innerValue!=initialValue.current) {
+      if (onChange!=undefined) {
+        onChange(innerValue, true, event)
+      }
+    }
+    
+  }, [initialValue, innerValue, onChange])
 
   const showValidProps = (showValidity==1 || showValidity==4)
   ? {valid: valid, invalid: ! valid}
@@ -143,6 +152,7 @@ const VInputNumber = (props) => {
               onKeyDown    = {(ev) => handleKeyDown(ev)}
               value        = {innerRepr || ''}
               onChange     = {handleChange}
+              onBlur       = {handleBlur}
               bsSize       = {bsSize}
               {...showValidProps}
       />
@@ -150,11 +160,11 @@ const VInputNumber = (props) => {
         ?  <InputGroupAddon className={`valium-reactstrap-input-number-addon ${readOnly ? 'read-only' : ''}`}
                             addonType= "append">
             <InputGroupText className="valium-reactstrap-input-number-incr"
-                            onClick = {() => incrValue(-1)}>
+                            onClick = {() => incrValue(-1, true)}>
               <Icon icon="minus"></Icon>
             </InputGroupText>
             <InputGroupText className="valium-reactstrap-input-number-incr"
-                            onClick  = {() => incrValue(1)}>
+                            onClick  = {() => incrValue(1, true)}>
               <Icon icon="plus"></Icon>
             </InputGroupText>
           </InputGroupAddon>  

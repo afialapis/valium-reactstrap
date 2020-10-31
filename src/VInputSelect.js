@@ -19,7 +19,7 @@ const VInputSelect = (props) => {
           inputStyle, clearable, showValidity, showValidProps,
         inline, inputGroupStyle, formGroupStyle, bsSize} = props
 
-  const [innerValue, setInnerValue] = useInnerValue(props)
+  const [_initialValue, innerValue, setInnerValue] = useInnerValue(props)
   const enabledOptions= getEnabledOptions(options, allowedValues, disallowedValues)
 
   const [inputRef, valid, message, setValidity]= useInput({
@@ -37,7 +37,7 @@ const VInputSelect = (props) => {
     setInnerValue(iValue)
 
     if (onChange!=undefined) {
-      onChange(iValue, event)
+      onChange(iValue, true, event)
     }
     inputRef.current.value= iValue
     setValidity()

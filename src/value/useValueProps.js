@@ -1,10 +1,10 @@
 import {useCallback} from 'react'
 import {useInnerValue} from './useInnerValue'
 
-const useValueProps = (props) => {
+const useValueProps = (props, eventName= 'onBlur') => {
   const {onChange}= props
   
-  const [innerValue, setInnerValue] = useInnerValue(props)
+  const [initialValue, innerValue, setInnerValue] = useInnerValue(props)
 
   const handleChange = useCallback((event) => {
     const value= event.target.value
@@ -12,15 +12,26 @@ const useValueProps = (props) => {
     setInnerValue(value)
 
     if (onChange!=undefined) {
-      onChange(value, event)
+      onChange(value, false, event)
     }
 
   }, [setInnerValue, onChange])
 
+  const handleBlur = useCallback((event) => {
+    const value= event.target.value
+    
+    if (value!=initialValue.current) {
+      if (onChange!=undefined) {
+        onChange(value, true, event)
+      }      
+    }
+  }, [initialValue, onChange])
 
-  const valueProps= 
-    {value   : innerValue || '',
-     onChange: handleChange
+
+  let valueProps= 
+    {value      : innerValue || '',
+     onChange   : handleChange,
+     [eventName]: handleBlur
     }
   
   return [valueProps]

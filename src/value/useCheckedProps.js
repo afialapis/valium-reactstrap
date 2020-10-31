@@ -4,7 +4,7 @@ import {useInnerValue} from './useInnerValue'
 const useCheckedProps = (props) => {
   const {onChange}= props
   
-  const [innerValue, setInnerValue] = useInnerValue(props)
+  const [_initialValue, innerValue, setInnerValue] = useInnerValue(props)
 
   const handleChange = useCallback((event) => {
     const value= event.target.checked
@@ -12,7 +12,7 @@ const useCheckedProps = (props) => {
     setInnerValue(value)
 
     if (onChange!=undefined) {
-      onChange(value, event)
+      onChange(value, true, event)
     }
 
   }, [setInnerValue, onChange])

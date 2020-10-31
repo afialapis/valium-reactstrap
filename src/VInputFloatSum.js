@@ -11,7 +11,7 @@ import {countDecimals, useFloatSumProps } from './helpers/useNumberProps'
 
 
 
-const _VInputWithFilter = ({className, inputFilter, placeholder, readOnly, valid, autocomplete, inputStyle, value, onChange, onKeyDown, focusIt, showValidity, bsSize}) => {
+const _VInputWithFilter = ({className, inputFilter, placeholder, readOnly, valid, autocomplete, inputStyle, value, onChange, onKeyDown, onBlur, focusIt, showValidity, bsSize}) => {
   const reprRef = useRef(undefined)
   useInputFilter(reprRef, inputFilter)
 
@@ -39,6 +39,7 @@ const _VInputWithFilter = ({className, inputFilter, placeholder, readOnly, valid
         value        = {value}
         onChange     = {(ev) => onChange(ev)}
         onKeyDown    = {(ev) => onKeyDown(ev)}
+        onBlur     = {(ev) => onBlur(ev)}
         bsSize       = {bsSize}
         {...showValidProps}
     />    
@@ -80,7 +81,7 @@ const _VInputFloatSum = (props) => {
   const [inputFilter, t]= useFloatSumProps(decimalSign)
 
   const controlled= isControlled(props)
-
+  const initialValue= useRef(controlled ? value : defaultValue)
   const [innerValue, setInnerValue]= useState(controlled ? value : defaultValue)
   const [innerSum, setInnerSum]    = useState(getInnerSum(t.sum(innerValue), innerValue))
   const [innerSumRepr, setInnerSumRepr]= useState(getInnerSumRepr(innerSum, decimalSign))
@@ -114,7 +115,7 @@ const _VInputFloatSum = (props) => {
     if (propagate) {
       if (onChange!=undefined) {
         // TODO Expose some event? Makes sense?
-        onChange(nInnerValue, undefined)
+        onChange(nInnerValue, false, undefined)
       }
     }
     setValidity()  
@@ -230,7 +231,14 @@ const _VInputFloatSum = (props) => {
   }, [innerValue.length, innerRepr, incrValue, addValue, remValue])
 
   
-
+  const handleBlur = useCallback((event) => {
+    if (innerValue!=initialValue.current) {
+      if (onChange!=undefined) {
+        onChange(innerValue, true, event)
+      }
+    }
+    
+  }, [initialValue, innerValue, onChange])
 
   return (
     <div className  = "valium-reactstrap-float-sum">
@@ -261,6 +269,7 @@ const _VInputFloatSum = (props) => {
                     inputStyle   = {inputStyle} 
                     value        = {reprValue}
                     onChange     = {(ev) => handleChange(ev, reprIdx)}
+                    onBlur       = {(ev) => handleBlur(ev)}
                     onKeyDown    = {(ev) => handleKeyDown(ev, reprIdx)}
                     focusIt      = {inputWithFocus==reprIdx}
                     bsSize       = {bsSize}

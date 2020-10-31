@@ -15,4 +15,7 @@
     -- en rdp estamos viendo tb el onClickOutside(), igual esta lanzando validaciones
        innecesarias, cuando los licks no tienen nada que ver con el RDP
 
-    -- usar mismo SVG para el clearable
+onChange+ confirm:
+
+  -- Input Color: se lanza siempre
+  -- Input Number : falta

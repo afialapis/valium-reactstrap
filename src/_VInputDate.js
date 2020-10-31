@@ -40,7 +40,7 @@ const _VInputDate = (props) => {
     if (onChange!=undefined) {
       // TODO Ask RDP to expose event as a onChange() parameter,
       // so we can expose it here too
-      onChange(transform.fromISO(value), undefined)
+      onChange(transform.fromISO(value), true, undefined)
     }
   }
 

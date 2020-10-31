@@ -32,7 +32,7 @@ const VInputSelectSearch = (props) => {
   const [optActive, setOptActive]= useState(undefined)
   
   
-  const [innerValue, setInnerValue]= useInnerValue(props) 
+  const [_initialValue, innerValue, setInnerValue]= useInnerValue(props) 
   const [enabledOptions]= useEnabledOptions(options, allowedValues, disallowedValues)
 
   const [shownText, setShownText]= useState('')
@@ -87,7 +87,7 @@ const VInputSelectSearch = (props) => {
     setShownText(nShownText)
         
     if (onChange!=undefined) { 
-      onChange(value, event)
+      onChange(value, true, event)
     }
     
     setValidity()
@@ -199,7 +199,6 @@ const VInputSelectSearch = (props) => {
                       innerRef    = {inputRef}
                       required    = {required}
                       defaultValue= {innerValue || ''}
-                      /*onChange    = {(ev) => handleChange(ev.target.value)}*/
                       />
             <Input    name        = {`input_select_search_${name}_text`}
                       className   = {`valium-reactstrap-select-search-text custom-select ${bsSize == 'sm' ? 'custom-select-sm' : ''}`}

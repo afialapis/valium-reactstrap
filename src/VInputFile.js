@@ -69,7 +69,7 @@ const _VInputFile = (props) => {
   const [status    , setStatus   ]= useState(undefined)
   const [statusMsg , setStatusMsg]= useState(undefined)
 
-  const [innerValue, setInnerValue] = useInnerValue(props)
+  const [_initialValue, innerValue, setInnerValue] = useInnerValue(props)
   
   useEffect(() => {
     if (innerValue) {
@@ -142,7 +142,7 @@ const _VInputFile = (props) => {
         }
         setInnerValue(nfile)
         if (onChange!=undefined) {
-          onChange(nfile, e)
+          onChange(nfile, true, e)
         }
       }
       
@@ -154,13 +154,13 @@ const _VInputFile = (props) => {
     }
   }, [setInnerValue, onChange])
 
-  const handleClear = useCallback(() => {
+  const handleClear = useCallback((event) => {
     setProgress(0)
     setStatus(undefined)
     setStatusMsg(undefined)
     setInnerValue({})
     if (onChange!=undefined) {
-      onChange({})
+      onChange({}, true, event)
     }
     inputRef.current.value= ''
     setValidity()    
@@ -258,7 +258,7 @@ const _VInputFile = (props) => {
             }
       </div>
       <InputGroupAddon onClick   = {hasValue() 
-                                    ? () => handleClear() 
+                                    ? (ev) => handleClear(ev) 
                                     : () => {}
                                     }
                       style     = {{cursor: hasValue() ? 'pointer' : 'not-allowed', zIndex: "2"}}

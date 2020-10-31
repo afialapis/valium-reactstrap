@@ -12,7 +12,7 @@ const _VInputColor = (props) => {
     readOnly, required,
     autocomplete, inputStyle, showValidProps, bsSize}= props  
   
-  const [valueProps]= useValueProps(props)
+  const [valueProps]= useValueProps(props, 'onInput')
 
   return (
     <Input  id          = {id}

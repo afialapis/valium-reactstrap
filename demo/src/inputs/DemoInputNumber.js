@@ -39,7 +39,7 @@ const DemoInputNumber = (options) => {
       <VInputFloat
               name        = {'size'}
               value       = {size}
-              onChange    = {(v) => setSize(v)}
+              onChange    = {(v, c) => {console.log(`changing size to ${v} ${c}`); setSize(v)}}
               label       = {"Still not sure... Your size?"}
               description = {"Some float (max 2 decimals, step = 0.01, greater than zero -trough gt-)."}
               step        = {0.01}
@@ -54,7 +54,7 @@ const DemoInputNumber = (options) => {
       <VInputFloatSum
               name        = {'km'}
               value       = {km}
-              onChange    = {(v) => setKm(v)}
+              onChange    = {(v, c) => {console.log(`changing sum to ${v} ${c}`); setKm(v)}}
               label       = {"You are not a sporty guy, right? How far did your last walks took?"}
               description = {"Some float (max 4 decimals, step = 0.01)."}
               step        = {0.01}

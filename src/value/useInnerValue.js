@@ -1,11 +1,12 @@
-import {useState, useEffect} from 'react'
+import {useRef, useState, useEffect} from 'react'
 import isControlled from '../helpers/isControlled'
 
 const useInnerValue = (props) => {
   const controlled= isControlled(props)
-
   const {value, defaultValue}= props
 
+  const initialValue = useRef(controlled ? value : defaultValue)
+  
   const [innerValue, setInnerValue]= useState(controlled ? value : defaultValue)
 
   useEffect(() => {
@@ -18,7 +19,7 @@ const useInnerValue = (props) => {
   }, [innerValue, value, defaultValue, controlled])
 
   
-  return [innerValue, setInnerValue]
+  return [initialValue, innerValue, setInnerValue]
 }
 
 

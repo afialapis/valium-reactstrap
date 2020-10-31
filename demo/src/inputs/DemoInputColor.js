@@ -8,7 +8,7 @@ const DemoInputColor = (options) => {
       <VInputColor
               name             = {'color'}
               value            = {color}
-              onChange         = {(v) => setColor(v)}
+              onChange         = {(v, c) => {console.log(`color changes to ${v} ${c}`); setColor(v)}}
               disallowedValues = {['#000000', '#FFFFFF', '#ffffff']}
               feedback         = {'Neither black nor white'}
               label            = {"What color has your world now?"}

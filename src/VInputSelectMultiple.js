@@ -25,7 +25,7 @@ const VInputSelectMultiple = (props) => {
          showValidity, inline, keepHeight, inputGroupStyle, formGroupStyle, bsSize} = props
 
 
-  const [innerValue, setInnerValue] = useInnerValue(props)
+  const [_initialValue, innerValue, setInnerValue] = useInnerValue(props)
   const enabledOptions= getEnabledOptions(options, allowedValues, disallowedValues)
 
   const [inputRef, valid, message, setValidity]= useInput({
@@ -45,7 +45,7 @@ const VInputSelectMultiple = (props) => {
 
     setInnerValue(numOrArrayToString(value))
     if (onChange!=undefined) { 
-      onChange(value, ev)
+      onChange(value, true, ev)
     }
     setValidity()
   }, [setInnerValue, onChange, setValidity, enabledOptions])
