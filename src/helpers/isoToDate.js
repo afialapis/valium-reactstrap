@@ -1,4 +1,8 @@
 const isoToDate = (value) => {
+  if (value===undefined || value==='') {
+    return value
+  }
+  
   const getDateFromEu = (s) => {
     const parts= s.split('/')
     const year= parseInt(parts[2])

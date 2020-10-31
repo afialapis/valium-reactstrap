@@ -11,7 +11,7 @@ const _VInputCheckbox = (props) => {
   const [checkedProps]= useCheckedProps(props)
 
   const {id, name, inputRef, readOnly, required, 
-         inputStyle, checkboxLabel, valid, showValidity}= props
+         inputStyle, checkboxLabel, valid, showValidity, bsSize}= props
 
   const makeId = () => {
     return id!=undefined 
@@ -22,13 +22,13 @@ const _VInputCheckbox = (props) => {
   }
 
   return (    
-    <div className    = "custom-switch custom-control"
+    <div className    = {`custom-switch custom-control `}
           /* better styling on the div, it is not very useful on the input here */
           style        = {inputStyle} > 
           <input type     = "checkbox" 
                  id       = {makeId()} 
                  name     = {name} 
-                 className= {`custom-control-input ${(showValidity==1 || showValidity==4) ? valid ? 'is-valid' : 'is-invalid' : ''}`}
+                 className= {`custom-control ${bsSize=='sm' ? 'custom-control-sm' : ''} custom-control-input ${(showValidity==1 || showValidity==4) ? valid ? 'is-valid' : 'is-invalid' : ''}`}
                  ref      = {inputRef}
                  readOnly = {readOnly!=undefined ? readOnly  : false}
                  required = {required}
@@ -55,3 +55,21 @@ VInputCheckbox.defaultProps = {
 
 export default VInputCheckbox
 
+/*
+
+  return (
+          <CustomInput type     = "switch" 
+                 id       = {makeId()} 
+                 name     = {name} 
+                 //className= {`custom-control-input ${(showValidity==1 || showValidity==4) ? valid ? 'is-valid' : 'is-invalid' : ''}`}
+                 innerRef      = {inputRef}
+                 readOnly = {readOnly!=undefined ? readOnly  : false}
+                 required = {required}
+                 bsSize   = {bsSize}
+                 style    = {inputStyle}
+                 label    = {checkboxLabel}
+                 {...checkedProps}
+                 {...showValidProps}
+          />    
+  )
+  */

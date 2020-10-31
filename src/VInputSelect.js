@@ -1,7 +1,8 @@
 import React, {useCallback} from 'react'
 import PropTypes from 'prop-types'
 import {useInput} from 'valium'
-import {InputGroupAddon, InputGroupText}     from 'reactstrap'
+import {CustomInput, InputGroupAddon, InputGroupText}     from 'reactstrap'
+import VIcon from './icons'
 import {inputPropTypes}  from './props/inputPropTypes'
 import {inputDefaultProps} from './props/inputDefaultProps'
 import {VInputAddon} from './addon/VInputAddon'
@@ -10,23 +11,13 @@ import {getEnabledOptions} from './helpers/getEnabledOptions'
 import {parseValueDependOnOptions} from './helpers/parseValueDependOnOptions'
 import { useValidClassnames } from './helpers/useValidClassnames'
 
-const getShowValidPropsForSelect = (showValidity, valid) => {
-  if (showValidity!=1 && showValidity!=4) {
-    return {}
-  }
-  return {
-    'aria-invalid': (! valid).toString()
-  }
-}
-
-
 const VInputSelect = (props) => {
 
   const { id, name,  label, description, feedback, icon, keepHeight,
           placeholder, readOnly, autocomplete, required, 
           allowedValues, disallowedValues, onChange, options, 
-          inputStyle, clearable, showValidity, 
-        inline, inputGroupStyle, formGroupStyle} = props
+          inputStyle, clearable, showValidity, showValidProps,
+        inline, inputGroupStyle, formGroupStyle, bsSize} = props
 
   const [innerValue, setInnerValue] = useInnerValue(props)
   const enabledOptions= getEnabledOptions(options, allowedValues, disallowedValues)
@@ -80,23 +71,21 @@ const VInputSelect = (props) => {
                  inputGroupStyle= {inputGroupStyle}
                  formGroupStyle = {formGroupStyle}
                  >
-      <select    
+      <CustomInput    
                 id          = {id}
                 name        = {name}
                 type        = "select"
-                className   = {`custom-select ${className}`}
-                ref         = {inputRef}
+                className   = {className}
+                innerRef     = {inputRef}
                 placeholder = {placeholder || ""}
                 readOnly    = {readOnly!=undefined ? readOnly  : false}
                 required    = {required}
                 autoComplete= {autocomplete}
                 style       = {inputStyle} 
                 value       = {innerValue || ''}
+                bsSize      = {bsSize}
                 onChange    = {(ev) => handleChange(ev)}
-                
-                /*valid={valid}
-                invalid={!valid}*/
-                {...getShowValidPropsForSelect(showValidity, valid)}
+                {...showValidProps}
                 >
         {clearable && enabledOptions.filter((opt) => opt.value=='').length==0
          ?  <option key       = {`${name}_option_empty`}
@@ -115,14 +104,14 @@ const VInputSelect = (props) => {
         {clearable
           ? <option style={{display: "none"}} value=""></option>
           : null}
-      </select>
+      </CustomInput>
       {clearable
         ?  <InputGroupAddon onClick  = {(ev) => {is_clearable ? handleClear(ev) : null}}
                           style    = {{cursor:is_clearable ? 'pointer' : 'not-allowed'}}
                           addonType= "append">
             <InputGroupText
                         style={{opacity: is_clearable ? 1 : 0.5}}>
-              {"x"}
+              <VIcon icon="cross"/>
             </InputGroupText>
           </InputGroupAddon>  
         : null

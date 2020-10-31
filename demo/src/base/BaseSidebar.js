@@ -35,7 +35,17 @@ const BaseSidebar = ({options, resume, onChangeOption}) => {
                               [2, 'Only feedback when invalid'],
                               [4, 'Feedback and input colors']
                             ]}
-                            />                                                                
+                            />    
+              <VInputSelect
+                            name         = {'bsSize'}
+                            value        = {options.bsSize}
+                            onChange     = {(v) => onChangeOption('bsSize', v)}
+                            icon         = {'Size'}
+                            options = {[
+                              ['lg', 'Large'],
+                              ['sm', 'Small']
+                            ]}
+                            />                                                                                           
           </div>
         </form>
       </div>

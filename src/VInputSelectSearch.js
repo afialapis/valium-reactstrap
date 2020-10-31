@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {useInput} from 'valium'
 import {VInputAddon} from './addon/VInputAddon'
 import {Input, InputGroupAddon, InputGroupText} from 'reactstrap'
+import VIcon from './icons'
 import {inputPropTypes}  from './props/inputPropTypes'
 import {inputDefaultProps} from './props/inputDefaultProps'
 import {useInnerValue} from './value/useInnerValue'
@@ -19,7 +20,7 @@ const VInputSelectSearch = (props) => {
          placeholder, readOnly, autocomplete, required,
          allowedValues, disallowedValues, keepHeight, formGroupStyle, inputGroupStyle,
          inputStyle, onChange, clearable, maxShownOptions,
-         showValidity
+         showValidity, bsSize
          } = props
   
   const wrapperRef    = useRef(undefined)
@@ -201,7 +202,7 @@ const VInputSelectSearch = (props) => {
                       /*onChange    = {(ev) => handleChange(ev.target.value)}*/
                       />
             <Input    name        = {`input_select_search_${name}_text`}
-                      className   = "valium-reactstrap-select-search-text custom-select"
+                      className   = {`valium-reactstrap-select-search-text custom-select ${bsSize == 'sm' ? 'custom-select-sm' : ''}`}
                       type        = "text"
                       innerRef    = {filterRef}
                       value       = {shownText}
@@ -213,6 +214,7 @@ const VInputSelectSearch = (props) => {
                       onKeyDown   = {(ev) => handleKeyDown(ev)}
                       autoComplete= {autocomplete}
                       style       = {inputStyle} 
+                      bsSize      = {bsSize}
                       {... (showValidity==1 || showValidity==4)
                        ? {valid: valid, invalid: ! valid}
                        : {}}
@@ -224,7 +226,7 @@ const VInputSelectSearch = (props) => {
                                 addonType= "append">
                   <InputGroupText
                               style={{opacity: is_clearable ? 1 : 0.5}}>
-                    {"x"}
+                    <VIcon icon="cross"/>
                   </InputGroupText>
                 </InputGroupAddon>  
               : null

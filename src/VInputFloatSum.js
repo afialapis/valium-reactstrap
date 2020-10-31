@@ -11,7 +11,7 @@ import {countDecimals, useFloatSumProps } from './helpers/useNumberProps'
 
 
 
-const _VInputWithFilter = ({className, inputFilter, placeholder, readOnly, valid, autocomplete, inputStyle, value, onChange, onKeyDown, focusIt, showValidity}) => {
+const _VInputWithFilter = ({className, inputFilter, placeholder, readOnly, valid, autocomplete, inputStyle, value, onChange, onKeyDown, focusIt, showValidity, bsSize}) => {
   const reprRef = useRef(undefined)
   useInputFilter(reprRef, inputFilter)
 
@@ -39,6 +39,7 @@ const _VInputWithFilter = ({className, inputFilter, placeholder, readOnly, valid
         value        = {value}
         onChange     = {(ev) => onChange(ev)}
         onKeyDown    = {(ev) => onKeyDown(ev)}
+        bsSize       = {bsSize}
         {...showValidProps}
     />    
   )
@@ -73,7 +74,7 @@ const _VInputFloatSum = (props) => {
          value, defaultValue, onChange,
          placeholder, readOnly, 
          required, min, max, step, decimals, decimalSign,
-         autocomplete, inputStyle, showValidity}= props
+         autocomplete, inputStyle, showValidity, bsSize}= props
   
   
   const [inputFilter, t]= useFloatSumProps(decimalSign)
@@ -262,6 +263,7 @@ const _VInputFloatSum = (props) => {
                     onChange     = {(ev) => handleChange(ev, reprIdx)}
                     onKeyDown    = {(ev) => handleKeyDown(ev, reprIdx)}
                     focusIt      = {inputWithFocus==reprIdx}
+                    bsSize       = {bsSize}
                     />
           </div>
         )

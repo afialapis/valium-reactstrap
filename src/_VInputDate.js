@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import PropTypes   from 'prop-types'
 import {useInput} from 'valium'
+import VIcon from './icons'
 import {VInputAddon} from './addon/VInputAddon'
 import DatePicker  from 'reactstrap-date-picker'
 import {inputPropTypes}  from './props/inputPropTypes'
@@ -11,7 +12,7 @@ const _VInputDate = (props) => {
   const {id, placeholder, readOnly, autocomplete, inline,
          label, description, feedback, icon, keepHeight, inputGroupStyle, formGroupStyle,
          required, inputStyle, onChange, transform,
-         showValidity} = props
+         showValidity, bsSize} = props
 
   const controlled= isControlled(props)
   const {value, defaultValue}= props
@@ -75,7 +76,9 @@ const _VInputDate = (props) => {
                   className   = {(showValidity==1 || showValidity==4) ? valid ? 'is-valid' : 'is-invalid' : ''}
                   style       = {inputStyle} 
                   value       = {innerValue}
-                  onChange    = {(v,f) => handleChange(v, f)}
+                  onChange    = {(v,f) => handleChange(v || undefined, f)}
+                  size        = {bsSize}
+                  clearButtonElement={<VIcon icon="cross"/>}
       />
     </VInputAddon>
   )

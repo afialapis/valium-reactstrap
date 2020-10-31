@@ -15,6 +15,11 @@ const strToISO = (value) => {
     */
 
     const date= isoToDate(value)
+
+    if (date==undefined || date=='') {
+      return ''
+    }
+        
     return date.toISOString()
   }
   return undefined
@@ -24,6 +29,11 @@ const strFromISO = (value) => {
   //const pad = (n) => n.toString().padStart(2, '0')
 
   const date= isoToDate(value)
+
+  if (date==undefined || date=='') {
+    return ''
+  }
+
   return date.toISOString()
 
   //  const day= date.getDate()

@@ -12,7 +12,7 @@ const _VInputText = (props) => {
   const {id, name, inputRef, inputType, placeholder, 
          readOnly, required, maxLength, minLength, 
          showValidProps,
-         autocomplete, inputStyle}= props
+         autocomplete, inputStyle, bsSize}= props
   
   const [valueProps]= useValueProps(props)
   
@@ -28,6 +28,7 @@ const _VInputText = (props) => {
             minLength   = {minLength}
             autoComplete= {autocomplete}
             style       = {inputStyle} 
+            bsSize      = {bsSize}
             {...valueProps}
             {...showValidProps}/>
    )

@@ -63,7 +63,7 @@ const _VInputFile = (props) => {
   const {id, name, label, description, icon, inline, readOnly, 
          required, feedback, keepHeight, formGroupStyle, inputGroupStyle, 
          inputStyle, onChange, onDownload, accept, iconMap,
-         setValidity, valid, message, inputRef, showValidity} = props
+         setValidity, valid, message, inputRef, showValidity, bsSize} = props
   
   const [progress  , setProgress ]= useState(undefined)
   const [status    , setStatus   ]= useState(undefined)
@@ -207,7 +207,7 @@ const _VInputFile = (props) => {
               name        = {name}
               // Do not lose the form-control class
               // TODO maybe open PR on reactstrap?
-              className   = "form-control"
+              className   = {`form-control ${bsSize=='sm' ? 'form-control-sm' : ''}`}
               ref         = {inputRef}
               type        = {"file"}
               value       = {undefined}

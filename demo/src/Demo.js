@@ -33,7 +33,8 @@ const Demo = () => {
   const [options, setOptions]= useState({
     keepHeight  : true,
     icon        : true,
-    showValidity: 2
+    showValidity: 2,
+    bsSize      : 'sm'
   })
 
   const [resume, setResume]= useState([{msg: "Save form to see a resume here!"}])
@@ -101,6 +102,7 @@ const Demo = () => {
                     <inputType.comp keepHeight= {options.keepHeight}
                                     icon= {options.icon===false ? false : undefined}
                                     showValidity= {options.showValidity}
+                                    bsSize= {options.bsSize}
                                     />
                 </section>
               )

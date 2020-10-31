@@ -35,7 +35,7 @@ const VInputNumber = (props) => {
         inputGroupStyle, middleElement, 
          readOnly, required, min, max, step, decimals,
          autocomplete, onChange, t, inputFilter,
-         inputStyle, showArrows, showValidity}= props
+         inputStyle, showArrows, showValidity, bsSize}= props
   
   const reprRef = useRef(undefined)
 
@@ -143,6 +143,7 @@ const VInputNumber = (props) => {
               onKeyDown    = {(ev) => handleKeyDown(ev)}
               value        = {innerRepr || ''}
               onChange     = {handleChange}
+              bsSize       = {bsSize}
               {...showValidProps}
       />
       {showArrows

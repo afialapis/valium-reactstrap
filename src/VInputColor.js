@@ -10,7 +10,7 @@ import {withValium} from './valium/withValium'
 const _VInputColor = (props) => {
   const {id, name, inputRef, placeholder, 
     readOnly, required,
-    autocomplete, inputStyle, showValidProps}= props  
+    autocomplete, inputStyle, showValidProps, bsSize}= props  
   
   const [valueProps]= useValueProps(props)
 
@@ -24,6 +24,7 @@ const _VInputColor = (props) => {
             required    = {required}
             autoComplete= {autocomplete}
             style       = {inputStyle} 
+            bsSize      = {bsSize}
             {...valueProps}
             {...showValidProps}
     />

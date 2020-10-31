@@ -22,7 +22,7 @@ const VInputSelectMultiple = (props) => {
          placeholder, readOnly, autocomplete, required,
          allowedValues, disallowedValues, onChange, options, 
          inputStyle, icon,
-         showValidity, inline, keepHeight, inputGroupStyle, formGroupStyle} = props
+         showValidity, inline, keepHeight, inputGroupStyle, formGroupStyle, bsSize} = props
 
 
   const [innerValue, setInnerValue] = useInnerValue(props)
@@ -73,7 +73,7 @@ const VInputSelectMultiple = (props) => {
       <Input    id          = {id}
                 name        = {name}
                 type        = "select"
-                className   = "custom-select"
+                className   = {`custom-select ${bsSize=='sm' ? 'custom-select-sm' : ''}`}
                 multiple
                 innerRef    = {inputRef}
                 placeholder = {placeholder || ""}
@@ -81,6 +81,7 @@ const VInputSelectMultiple = (props) => {
                 required    = {required}
                 autoComplete= {autocomplete}
                 style       = {inputStyle} 
+                bsSize      = {bsSize}
                 value       = {innerValue || ''}
                 onChange    = {(event) => handleChange(event)}
                 {...showValidProps}
