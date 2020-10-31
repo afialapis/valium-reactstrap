@@ -3,7 +3,7 @@ const inputDefaultProps = {
   keepHeight: false,
   showValidity: 4,
   inline: false,
-  bsSize: 'sm'
+  bsSize: 'lg'
 }
 
 export {inputDefaultProps}
