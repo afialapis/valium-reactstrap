@@ -43,6 +43,7 @@ const BaseSidebar = ({options, resume, onChangeOption}) => {
                             icon         = {'Size'}
                             options = {[
                               ['lg', 'Large'],
+                              [''  , 'Normal'],
                               ['sm', 'Small']
                             ]}
                             />                                                                                           

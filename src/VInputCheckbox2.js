@@ -11,7 +11,7 @@ const VInputCheckbox2 = (props) => {
     paddingTop: "0.2em", 
     paddingLeft: "3.5em"
   }
-  if (props?.bsSize!='sm') {
+  if (props?.bsSize=='lg') {
     style.height= '48px'
     style.paddingTop= '0.75em'
   }

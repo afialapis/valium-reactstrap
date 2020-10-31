@@ -201,7 +201,7 @@ const VInputSelectSearch = (props) => {
                       defaultValue= {innerValue || ''}
                       />
             <Input    name        = {`input_select_search_${name}_text`}
-                      className   = {`valium-reactstrap-select-search-text custom-select ${bsSize == 'sm' ? 'custom-select-sm' : ''}`}
+                      className   = {`valium-reactstrap-select-search-text custom-select ${bsSize!=undefined ? 'custom-select-'+bsSize : ''}`}
                       type        = "text"
                       innerRef    = {filterRef}
                       value       = {shownText}

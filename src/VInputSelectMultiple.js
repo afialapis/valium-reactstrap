@@ -73,7 +73,7 @@ const VInputSelectMultiple = (props) => {
       <Input    id          = {id}
                 name        = {name}
                 type        = "select"
-                className   = {`custom-select ${bsSize=='sm' ? 'custom-select-sm' : ''}`}
+                className   = {`custom-select ${bsSize!=undefined ? 'custom-select-'+bsSize : ''}`}
                 multiple
                 innerRef    = {inputRef}
                 placeholder = {placeholder || ""}

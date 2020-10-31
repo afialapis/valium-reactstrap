@@ -24,7 +24,7 @@ const inputPropTypes = {
   readOnly            : PropTypes.bool,
   required            : PropTypes.bool,
   onChange            : PropTypes.func,
-  bsSize              : PropTypes.oneOf(['lg', 'sm']),
+  bsSize              : PropTypes.oneOf(['', 'lg', 'sm']),
   keepHeight          : PropTypes.bool,
   showValidity        : PropTypes.oneOf([0, 1, 2, 4]),
   formGroupStyle      : PropTypes.object,

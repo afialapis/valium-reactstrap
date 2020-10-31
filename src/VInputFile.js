@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useCallback} from 'react'
 import PropTypes from 'prop-types'
 import {VInputAddon} from './addon/VInputAddon'
+import VIcon from './icons'
 import {InputGroupAddon, InputGroupText}     from 'reactstrap'
 import {inputPropTypes}  from './props/inputPropTypes'
 import {inputDefaultProps} from './props/inputDefaultProps'
@@ -16,7 +17,7 @@ const ProgressBar = ({progress}) => {
   return (
     <div className="bars valium-reactstrap-progress"
          style={{position: "relative",
-                 width: "calc(100% - 77px)",
+                 width: "calc(100% - 83px)",
                  left: "42px",
                  top: "-3px",
                  zIndex: "5"}}>
@@ -207,7 +208,7 @@ const _VInputFile = (props) => {
               name        = {name}
               // Do not lose the form-control class
               // TODO maybe open PR on reactstrap?
-              className   = {`form-control ${bsSize=='sm' ? 'form-control-sm' : ''}`}
+              className   = {`form-control ${bsSize!=undefined ? 'form-control-'+bsSize : ''}`}
               ref         = {inputRef}
               type        = {"file"}
               value       = {undefined}
@@ -226,16 +227,20 @@ const _VInputFile = (props) => {
       <div  style       = {{opacity   : "1", 
                             zIndex    : "3", 
                             position  : "absolute", 
-                            width     : theIcon!=undefined 
-                                          ? valid ? "calc(100% - 75px)" : "calc(100% - 77px)"
-                                          : "100%", 
+                            width     : theIcon==undefined 
+                                          ? "100%"
+                                          : (showValidity==1 || showValidity==4)
+                                            ? valid 
+                                              ? "calc(100% - 83px)" 
+                                              : "calc(100% - 83px)"
+                                            : "calc(100% - 83px)", 
                             left      : theIcon!=undefined ? "42px" : "", 
                             display   : "flex",
                             cursor    : 'pointer',
                             userSelect: 'none',
                             ...inputStyle
                           }}
-            className   = {`form-control ${className}`}
+            className   = {`form-control ${className} ${bsSize!=undefined ? 'form-control-'+bsSize : ''}`}
             onClick     ={hasValue() 
                           ? (ev) => handleDownload(ev) 
                           : (_)  => handleBrowse()}>
@@ -265,7 +270,7 @@ const _VInputFile = (props) => {
                       addonType = "append">
             <InputGroupText
                         style={{opacity:hasValue() ? 1 : 0.5}}>
-              {"x"}
+              <VIcon icon="cross"/>
             </InputGroupText>
       </InputGroupAddon>    
                   

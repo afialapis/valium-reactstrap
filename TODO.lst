@@ -18,4 +18,7 @@
 onChange+ confirm:
 
   -- Input Color: se lanza siempre
-  -- Input Number : falta
+
+bsSize:
+
+-- Input File : tamaño del input when sm/lg
