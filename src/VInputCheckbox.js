@@ -54,22 +54,3 @@ VInputCheckbox.defaultProps = {
 }
 
 export default VInputCheckbox
-
-/*
-
-  return (
-          <CustomInput type     = "switch" 
-                 id       = {makeId()} 
-                 name     = {name} 
-                 //className= {`custom-control-input ${(showValidity==1 || showValidity==4) ? valid ? 'is-valid' : 'is-invalid' : ''}`}
-                 innerRef      = {inputRef}
-                 readOnly = {readOnly!=undefined ? readOnly  : false}
-                 required = {required}
-                 bsSize   = {bsSize}
-                 style    = {inputStyle}
-                 label    = {checkboxLabel}
-                 {...checkedProps}
-                 {...showValidProps}
-          />    
-  )
-  */

@@ -10,6 +10,7 @@ import {useInnerValue} from './value/useInnerValue'
 import {getEnabledOptions} from './helpers/getEnabledOptions'
 import {parseValueDependOnOptions} from './helpers/parseValueDependOnOptions'
 import { useValidClassnames } from './helpers/useValidClassnames'
+import { makeId } from './helpers/makeId'
 
 const VInputSelect = (props) => {
 
@@ -72,7 +73,7 @@ const VInputSelect = (props) => {
                  formGroupStyle = {formGroupStyle}
                  >
       <CustomInput    
-                id          = {id}
+                id          = {id || makeId(options)}
                 name        = {name}
                 type        = "select"
                 className   = {className}
