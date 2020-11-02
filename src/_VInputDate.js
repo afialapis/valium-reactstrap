@@ -9,7 +9,7 @@ import {inputDefaultProps} from './props/inputDefaultProps'
 import isControlled from './helpers/isControlled'
 
 const _VInputDate = (props) => {
-  const {id, placeholder, readOnly, autocomplete, inline,
+  const {id, name, placeholder, readOnly, autocomplete, inline,
          label, description, feedback, icon, keepHeight, inputGroupStyle, formGroupStyle,
          required, inputStyle, onChange, transform,
          showValidity, bsSize} = props
@@ -66,6 +66,7 @@ const _VInputDate = (props) => {
 
       <DatePicker 
                   id          = {id}
+                  name        = {name}
                   weekStartsOn= {1} 
                   placeholder = {placeholder}
                   inputRef    = {inputRef}
