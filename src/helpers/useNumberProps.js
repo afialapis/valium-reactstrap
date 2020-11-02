@@ -78,12 +78,15 @@ const useFloatSumProps = (decimalSign) => {
 
   const toFloatList = (l) => {
     if (! checkFloatList(l)) {
-      return undefined
+      return [0]
     }
     return l.map((s) => parseFloat(s.toString().replace(',', '.')))
   }
   
   const sumFloatList = (l) => {
+    if (l==undefined || l=='' || l.length==0) {
+      return 0
+    }
     const fls= l.map((s) => parseFloat(s.toString().replace(',', '.')))
                 .filter((f) => ! isNotNumber(f))
     const sum= fls.reduce((a,b) => a+b, 0) 
@@ -91,6 +94,9 @@ const useFloatSumProps = (decimalSign) => {
   }
 
   const fromFloatList = (l) => {
+    if (l==undefined) {
+      return [0]
+    }
     const fromFloat = (f) => {
       if (isNotNumber(f)) {
         return ''

@@ -35,7 +35,7 @@ const _VInputWithFilter = ({className, inputFilter, placeholder, readOnly, valid
         readOnly     = {readOnly!=undefined ? readOnly  : false}
         autoComplete = {autocomplete}
         style        = {inputStyle} 
-        size         = {Math.max(value.length, 2)}
+        size         = {Math.max(value.length || 0, 2)}
         value        = {value}
         onChange     = {(ev) => onChange(ev)}
         onKeyDown    = {(ev) => onKeyDown(ev)}
@@ -48,7 +48,7 @@ const _VInputWithFilter = ({className, inputFilter, placeholder, readOnly, valid
 
 
 const getInnerSum = (summed, innerValue) => {
-  if (summed==undefined) {
+  if (summed==undefined || innerValue==undefined) {
     return ''
   }
   // Round sum to the max number of decimals
@@ -58,15 +58,6 @@ const getInnerSum = (summed, innerValue) => {
 }
 
 const getInnerSumRepr = (innerSum, decimalSign) => {
-  /*
-  if (innerSum==undefined) {
-    return ''
-  }
-  // Round sum to the max number of decimals
-  const decs= innerValue.map((f) => countDecimals(f))
-  const maxd= Math.max(...decs)
-  return innerSum.toFixed(maxd).toString().replace('.', decimalSign)
-  */
  return innerSum.toString().replace('.', decimalSign)
 }
 
@@ -139,7 +130,9 @@ const _VInputFloatSum = (props) => {
   // Update an input's value and its repr
   // innerRepr must be handled in paralell
   const updValue = useCallback((value, repr, reprIdx) => {
-    const nInnerValue= [...innerValue]
+    const nInnerValue= innerValue!=undefined
+          ? [...innerValue]
+          : [0.0]
     nInnerValue[reprIdx]= value
     updInnerValue(nInnerValue, true)
     
@@ -153,7 +146,9 @@ const _VInputFloatSum = (props) => {
   // Remove an input's value and its repr
   // innerRepr must be handled in paralell  
   const remValue = useCallback((reprIdx) => {
-    const nInnerValue= [...innerValue]
+    const nInnerValue= innerValue!=undefined
+          ? [...innerValue]
+          : [0.0]
     nInnerValue.splice(reprIdx, 1)
     updInnerValue(nInnerValue, true)
     
@@ -167,7 +162,9 @@ const _VInputFloatSum = (props) => {
   // Increment current input's value
   // innerRepr must be handled in paralell  
   const incrValue = useCallback((factor, reprIdx) => {
-      const curValue = innerValue[reprIdx] || 0.0
+      const curValue = innerValue!=undefined
+                       ? innerValue[reprIdx] || 0.0
+                       : 0.0
       const incr= step!=undefined
                   ? step
                   : 1.00
@@ -196,7 +193,7 @@ const _VInputFloatSum = (props) => {
 
     // Only allow to add new fields if we are in the last input
     if ( event.key=='+' || event.key=='-') {
-      if (reprIdx == innerValue.length-1) {
+      if (reprIdx == innerValue?.length-1) {
         // If value is positive and key is '-' and we are at the inputs beginning,
         // means "change input's sign" instead of "add new"
         let changeSign= false
@@ -223,12 +220,12 @@ const _VInputFloatSum = (props) => {
       }
     }
     
-    if (event.key=='Backspace' && event.target.value=='' && innerValue.length>1) {
+    if (event.key=='Backspace' && event.target.value=='' && innerValue?.length>1) {
       event.preventDefault()
       remValue(reprIdx)
     }
 
-  }, [innerValue.length, innerRepr, incrValue, addValue, remValue])
+  }, [innerValue?.length, innerRepr, incrValue, addValue, remValue])
 
   
   const handleBlur = useCallback((event) => {
@@ -255,7 +252,7 @@ const _VInputFloatSum = (props) => {
       
       {innerRepr.map((reprValue, reprIdx) => {
         return (
-          <div className={`valium-reactstrap-float-sum-box ${ (innerValue[reprIdx] < 0 || reprValue[0]=='-') ? 'negative' : 'positive'}`}
+          <div className={`valium-reactstrap-float-sum-box ${ ( (innerValue!=undefined && innerValue[reprIdx] < 0) || reprValue[0]=='-') ? 'negative' : 'positive'}`}
               key      = {`valium-reactstrap-float-sum-${id || name}-repr-${reprIdx}`}>
   
             <_VInputWithFilter 
