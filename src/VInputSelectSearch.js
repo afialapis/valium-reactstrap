@@ -19,7 +19,7 @@ const VInputSelectSearch = (props) => {
   const {id, name, options, label, description, feedback, icon, inline, 
          placeholder, readOnly, autocomplete, required,
          allowedValues, disallowedValues, keepHeight, formGroupStyle, inputGroupStyle,
-         inputStyle, onChange, clearable, maxShownOptions,
+         inputStyle, onChange, clearable, creatable, onCreate, maxShownOptions,
          showValidity, bsSize
          } = props
   
@@ -35,7 +35,9 @@ const VInputSelectSearch = (props) => {
   const [_initialValue, innerValue, setInnerValue]= useInnerValue(props) 
   const [enabledOptions]= useEnabledOptions(options, allowedValues, disallowedValues)
 
+
   const [shownText, setShownText]= useState('')
+  const [creating, setCreating]= useState(false)
 
 
   const [inputRef, valid, message, setValidity]= useInput({
@@ -60,23 +62,25 @@ const VInputSelectSearch = (props) => {
       document.removeEventListener('mousedown', onClickOutside)
     }
   })
-
   
   useEffect(() => {
     setShownText(
       getOptionsLabel(enabledOptions, innerValue)
     )
-  }, [innerValue, enabledOptions])
+    setValidity()
+  }, [innerValue, enabledOptions, setValidity])
 
   useEffect(() => {
     const sfilter= shownText ? shownText.toLowerCase() : ''
     const nOptionsMap= enabledOptions
           .filter((opt) => sfilter.length>0 ? opt.label.toLowerCase().includes(sfilter) : true)
     setOptionsMap(nOptionsMap)
-  }, [shownText, enabledOptions])
-
-
-
+    if (shownText.length>0 && creatable) {
+      if (nOptionsMap.length==0) {
+        setCreating(true)
+      }
+    }
+  }, [shownText, enabledOptions, creatable])
 
   const handleChange = useCallback((nValue, event) => {
     const value= parseValueDependOnOptions(nValue, enabledOptions)
@@ -125,7 +129,6 @@ const VInputSelectSearch = (props) => {
     handleChange('', event)
   }, [handleChange])
 
-
   const handleKeyDown = useCallback((event) => {
     if (event.key=='ArrowUp' || event.key=='ArrowDown') {
       event.preventDefault()
@@ -157,8 +160,12 @@ const VInputSelectSearch = (props) => {
     }
   }, [isOpen, optActive, optionsMap, handleSelect])
 
-
-
+  const handleCreate = useCallback((event) => {
+    if (onCreate!=undefined) {
+      onCreate(shownText, event)
+    }
+    setCreating(false)
+  }, [shownText, onCreate])  
 
   const getListStyle= () => {
     // TODO
@@ -219,16 +226,27 @@ const VInputSelectSearch = (props) => {
                        : {}}
                       />
 
-            {clearable
-            ?  <InputGroupAddon onClick  = {(ev) => {is_clearable ? handleClear(ev) : null}}
-                                style    = {{cursor:is_clearable ? 'pointer' : 'not-allowed'}}
+            {
+            creating
+            ? <InputGroupAddon onClick  = {(ev) => handleCreate(ev)}
+                                style    = {{cursor: 'pointer'}}
                                 addonType= "append">
-                  <InputGroupText
-                              style={{opacity: is_clearable ? 1 : 0.5}}>
-                    <VIcon icon="cross"/>
-                  </InputGroupText>
-                </InputGroupAddon>  
-              : null
+                <InputGroupText>
+                  <VIcon icon="plus"
+                         color="#28a745"/>
+                </InputGroupText>
+              </InputGroupAddon>  
+
+            : clearable
+              ?  <InputGroupAddon onClick  = {(ev) => {is_clearable ? handleClear(ev) : null}}
+                                  style    = {{cursor:is_clearable ? 'pointer' : 'not-allowed'}}
+                                  addonType= "append">
+                    <InputGroupText
+                                style={{opacity: is_clearable ? 1 : 0.5}}>
+                      <VIcon icon="cross"/>
+                    </InputGroupText>
+                  </InputGroupAddon>  
+                : null
             }                             
           </VInputAddon>
         </div>
@@ -272,7 +290,10 @@ VInputSelectSearch.propTypes = {
   options     : PropTypes.oneOfType([PropTypes.object, PropTypes.arrayOf(PropTypes.array)]),
   autocomplete : PropTypes.oneOf(["on", "off"]),
   clearable    : PropTypes.bool,
+  creatable    : PropTypes.bool,
+  onCreate     : PropTypes.func,
   maxShownOptions: PropTypes.number
+
 }
 
 

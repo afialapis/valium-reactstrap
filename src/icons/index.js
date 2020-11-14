@@ -6,9 +6,9 @@ import React from 'react'
 import VIconBase from './VIconBase'
 import library from './library'
 
-const VIcon =({icon}) => {
+const VIcon =({icon, color}) => {
   if (typeof icon == "string" && icon.length>0 && Object.keys(library).indexOf(icon)>=0)
-    return <VIconBase icon={library[icon]}/>
+    return <VIconBase icon={library[icon]} color={color}/>
   return icon
 }
 

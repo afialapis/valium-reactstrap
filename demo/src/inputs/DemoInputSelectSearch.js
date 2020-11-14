@@ -12,11 +12,20 @@ const LIST_OPTIONS= [
 
 const DemoInputSelectSearch = (options) => {
   const [aword, setAWord]= useState(undefined /*1*/)
+  const [optionList, setOptionList]= useState(LIST_OPTIONS)
+
+  const handleAddOption = (t) => {
+    setOptionList([
+      ...optionList,
+      [10, t]
+    ])
+  }
+
 
   return (
     <VInputSelectSearch
             name            = {'aword'}
-            options         = {LIST_OPTIONS}
+            options         = {optionList}
             value           = {aword}
             onChange        = {(v) => setAWord(v)}
             required        = {true}
@@ -24,6 +33,8 @@ const DemoInputSelectSearch = (options) => {
             label           = {"A word that comes to your mind"}
             description     = ""
             clearable       = {true}
+            creatable       = {true}
+            onCreate        = {(text, ev) => {handleAddOption(text); setAWord(10)}}
             {...options} 
             />
 

@@ -33,7 +33,7 @@ const Demo = () => {
   const [options, setOptions]= useState({
     keepHeight  : true,
     icon        : true,
-    showValidity: 2,
+    showValidity: 4,
     bsSize      : 'sm'
   })
 
