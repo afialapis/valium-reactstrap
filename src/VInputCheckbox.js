@@ -30,7 +30,7 @@ const _VInputCheckbox = (props) => {
                  name     = {name} 
                  className= {`custom-control ${bsSize!=undefined ? 'custom-control-'+bsSize : ''} custom-control-input ${(showValidity==1 || showValidity==4) ? valid ? 'is-valid' : 'is-invalid' : ''}`}
                  ref      = {inputRef}
-                 readOnly = {readOnly!=undefined ? readOnly  : false}
+                 disabled = {readOnly!=undefined ? readOnly  : false}
                  required = {required}
                  {...checkedProps}
           />

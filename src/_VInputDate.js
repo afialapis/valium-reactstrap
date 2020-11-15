@@ -71,7 +71,7 @@ const _VInputDate = (props) => {
                   placeholder = {placeholder}
                   inputRef    = {inputRef}
                   dateFormat  = {"DD/MM/YYYY"}
-                  readOnly    = {readOnly}
+                  disabled    = {readOnly}
                   required    = {required}
                   autocomplete= {autocomplete}
                   className   = {(showValidity==1 || showValidity==4) ? valid ? 'is-valid' : 'is-invalid' : ''}
