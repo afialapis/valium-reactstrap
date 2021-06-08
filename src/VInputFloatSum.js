@@ -48,11 +48,11 @@ const _VInputWithFilter = ({className, inputFilter, placeholder, readOnly, valid
 
 
 const getInnerSum = (summed, innerValue) => {
-  if (summed==undefined || innerValue==undefined) {
-    return ''
+  if (summed==undefined || innerValue==undefined || innerValue.length==0) {
+    return 0
   }
   // Round sum to the max number of decimals
-  const decs= innerValue.map((f) => countDecimals(f))
+  const decs= innerValue.map((f) => countDecimals(f)) 
   const maxd= Math.max(...decs)
   return summed.toFixed(maxd)
 }
@@ -72,8 +72,12 @@ const _VInputFloatSum = (props) => {
   const [inputFilter, t]= useFloatSumProps(decimalSign)
 
   const controlled= isControlled(props)
-  const initialValue= useRef(controlled ? value : defaultValue)
-  const [innerValue, setInnerValue]= useState(controlled ? value : defaultValue)
+  
+  const initialValue= (controlled ? value : defaultValue) || []
+
+
+  const initialValueRef= useRef(initialValue)
+  const [innerValue, setInnerValue]= useState(initialValue)
   const [innerSum, setInnerSum]    = useState(getInnerSum(t.sum(innerValue), innerValue))
   const [innerSumRepr, setInnerSumRepr]= useState(getInnerSumRepr(innerSum, decimalSign))
   const [innerRepr, setInnerRepr]  = useState(t.from(innerValue))
@@ -81,20 +85,28 @@ const _VInputFloatSum = (props) => {
   const [inputWithFocus, setInputWithFocus]= useState(0)
   
   
+  //console.log('Fdddddd')
+
+  
   // Update innerValue if props changes
+  
   useEffect(() => {
-    const nInnerValue= controlled ? value : defaultValue
-    if (innerValue != nInnerValue) {
+    const nInnerValue= (controlled ? value : defaultValue) || []
+    //if (innerValue != nInnerValue) {
       
       updInnerValue(nInnerValue, false)
-    }
-  }, [updInnerValue, innerValue, value, defaultValue, controlled])
+    //}
+  }, [updInnerValue, /*innerValue,*/ value, defaultValue, controlled])
 
   // Cascade when innerValue changes
   const updInnerValue = useCallback((nInnerValue, propagate) => {
     setInnerValue(nInnerValue)
 
     const nInnerSum= getInnerSum(t.sum(nInnerValue), nInnerValue)
+    
+    //console.log(nInnerValue)
+    //console.log(nInnerSum)
+
     setInnerSum(nInnerSum)
     
     setInnerSumRepr(
@@ -193,7 +205,7 @@ const _VInputFloatSum = (props) => {
 
     // Only allow to add new fields if we are in the last input
     if ( event.key=='+' || event.key=='-') {
-      if (reprIdx == innerValue?.length-1) {
+      if (reprIdx == innerValue.length-1) {
         // If value is positive and key is '-' and we are at the inputs beginning,
         // means "change input's sign" instead of "add new"
         let changeSign= false
@@ -220,22 +232,24 @@ const _VInputFloatSum = (props) => {
       }
     }
     
-    if (event.key=='Backspace' && event.target.value=='' && innerValue?.length>1) {
+    if (event.key=='Backspace' && event.target.value.length==1 && innerValue.length>1) {
       event.preventDefault()
       remValue(reprIdx)
     }
 
-  }, [innerValue?.length, innerRepr, incrValue, addValue, remValue])
+  }, [innerValue.length, innerRepr, incrValue, addValue, remValue])
 
   
+  
   const handleBlur = useCallback((event) => {
-    if (innerValue!=initialValue.current) {
+    if (innerValue!=initialValueRef.current) {
       if (onChange!=undefined) {
         onChange(innerValue, true, event)
       }
     }
     
-  }, [initialValue, innerValue, onChange])
+  }, [initialValueRef, innerValue, onChange])
+  
 
   return (
     <div className  = "valium-reactstrap-float-sum">

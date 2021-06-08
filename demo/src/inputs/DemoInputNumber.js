@@ -6,7 +6,7 @@ const DemoInputNumber = (options) => {
   const [pills, setPills]= useState(2.5)
   const [weight, setWeight]= useState(105)
   const [size, setSize]= useState(undefined /*1.44*/)
-  const [km, setKm]= useState(undefined) // [0.1000, 1.453])
+  const [km, setKm]= useState(undefined) // useState([0.1000, 1.453]) // [0.1000, 1.453])
 
   return (
     <>

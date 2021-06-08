@@ -94,7 +94,7 @@ const useFloatSumProps = (decimalSign) => {
   }
 
   const fromFloatList = (l) => {
-    if (l==undefined) {
+    if (l==undefined || l.length==0) {
       return [0]
     }
     const fromFloat = (f) => {
