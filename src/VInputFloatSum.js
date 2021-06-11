@@ -223,7 +223,7 @@ const _VInputFloatSum = (props) => {
             event.preventDefault()
             if (event.key=='+') {
 
-              addValue(0, '0')
+              addValue(0, '')
             } else {
               addValue(0, '-')
             }
@@ -232,7 +232,7 @@ const _VInputFloatSum = (props) => {
       }
     }
     
-    if (event.key=='Backspace' && event.target.value.length==1 && innerValue.length>1) {
+    if (event.key=='Backspace' && event.target.value.length<=1 && innerValue.length>1) {
       event.preventDefault()
       remValue(reprIdx)
     }

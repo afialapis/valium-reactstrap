@@ -1,6 +1,7 @@
 
 const FLT_FLOAT_EN= /^-?\d*[.]?\d*$/
 const FLT_FLOAT_ES= /^-?\d*[,]?\d*$/
+const FLT_FLOAT_BOTH= /^-?\d*[,.]?\d*$/
 
 const countDecimals = (f) => {
   try {
@@ -59,10 +60,10 @@ const useFloatProps = (decimalSign) => {
 }
 
 const useFloatSumProps = (decimalSign) => {
-  const inputFilter= 
-    decimalSign==','
-      ? FLT_FLOAT_ES
-      : FLT_FLOAT_EN
+  const inputFilter= FLT_FLOAT_BOTH
+    //decimalSign==','
+    //  ? FLT_FLOAT_ES
+    //  : FLT_FLOAT_EN
 
   const checkFloatList = (l) => {
     let valid= true
