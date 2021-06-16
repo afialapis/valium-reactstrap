@@ -146,7 +146,7 @@ const _VInputFloatSum = (props) => {
     if (nInnerValue.length > reprIdx) {
       nInnerValue[reprIdx]= value
     } else {
-      nInnerValue.push(repr)
+      nInnerValue.push(value)
     }
     /*
     const nInnerValue= innerValue!=undefined
