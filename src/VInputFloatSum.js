@@ -127,29 +127,37 @@ const _VInputFloatSum = (props) => {
   // Add a new input and focus it
   // innerRepr must be handled in paralell
   const addValue = useCallback((value, repr) => {
-    const nInnerValue= [...innerValue]
+    /*const nInnerValue= [...innerValue]
     nInnerValue.push(value)
-    updInnerValue(nInnerValue, true)
+    updInnerValue(nInnerValue, true)*/
     
     const nInnerRepr= [...innerRepr]
     nInnerRepr.push(repr)
     setInnerRepr(nInnerRepr)
 
-    setInputWithFocus(nInnerValue.length-1)
-  }, [innerValue, innerRepr, updInnerValue])
+    setInputWithFocus(nInnerRepr.length-1)
+  }, [/*innerValue, updInnerValue,*/ innerRepr ])
 
 
   // Update an input's value and its repr
   // innerRepr must be handled in paralell
   const updValue = useCallback((value, repr, reprIdx) => {
+    const nInnerValue= [...innerValue]
+    if (nInnerValue.length > reprIdx) {
+      nInnerValue[reprIdx]= value
+    } else {
+      nInnerValue.push(repr)
+    }
+    /*
     const nInnerValue= innerValue!=undefined
           ? [...innerValue]
           : [0.0]
-    nInnerValue[reprIdx]= value
+    nInnerValue[reprIdx]= value*/
     updInnerValue(nInnerValue, true)
     
     const nInnerRepr= [...innerRepr]
     nInnerRepr[reprIdx]= repr
+    
     setInnerRepr(nInnerRepr)
     
   }, [innerValue, innerRepr, updInnerValue])
